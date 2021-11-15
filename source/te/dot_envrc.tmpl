@@ -1,0 +1,6 @@
+source_up .envrc
+
+export KUBECONFIG=$( IFS=:; set -- ${PWD}/.kube/*.yaml; echo "$*" )
+
+export AWS_PROFILE=te
+export GOOGLE_CLOUD_KEYFILE_JSON=~/source/te/{{ .chezmoi.username }}-test-989d8ddd4db4.json

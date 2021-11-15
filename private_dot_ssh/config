@@ -1,0 +1,11 @@
+Include config.d/*
+
+# Default
+Host *
+  User ubuntu
+  StrictHostKeyChecking no
+  ServerAliveInterval 30
+  ForwardAgent yes
+  ControlMaster auto
+  ControlPath ~/.ssh/control/%C
+  ControlPersist yes

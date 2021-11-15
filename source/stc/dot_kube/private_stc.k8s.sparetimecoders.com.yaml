@@ -1,0 +1,28 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM4akNDQWRxZ0F3SUJBZ0lNRnEzcUp0c1dQbmd4QnphUk1BMEdDU3FHU0liM0RRRUJDd1VBTUJVeEV6QVIKQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13SGhjTk1qRXhNREV5TVRNMU5EVXlXaGNOTXpFeE1ERXlNVE0xTkRVeQpXakFWTVJNd0VRWURWUVFERXdwcmRXSmxjbTVsZEdWek1JSUJJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBCk1JSUJDZ0tDQVFFQTB1UUxJTWtXUjdXYnR2Q1FrcFdxd3dKMkNXKy9RTEFBeENGRnplOWdtTVVRSTJCWjdRN1kKN2t5YjkwNGhsWEEzUmRKUDdlS1pPNk9zZTFGS1hMWmxubG9xblM2NkhLanJnaS83ZDcwYm91S1BESWo0eFVDZQowdmtLcFlxUER1Z3huNFZtUHQ4d3dDblBvZVNUYS9PcTEvbEwxRis1eUhVQ0t2ZEJNc0RFN1ZkQmFSS09DTmsvCjlmOEQ5VDVJZzdYR1FQZzFaTFZCSVpEVkk2WFkwNmxDWTNyNnJsanJwNFowSHRsUU5XVm4rUkRPdTgwOWQ0WHAKK1hYcUYzRVROeGhRdXk1QlpuZWtLRFdxdzdIWU1yV0t3bmpQYjNWUE9GcW93VEZxa0F6K2NXc0VyMTdidVo5eApnVGRQV091am92NnRLRmkvVW9OSGhRVGdLODBueExmRllRSURBUUFCbzBJd1FEQU9CZ05WSFE4QkFmOEVCQU1DCkFRWXdEd1lEVlIwVEFRSC9CQVV3QXdFQi96QWRCZ05WSFE0RUZnUVVYeURvVjhReHRFUitPb0tkOE0wN1JKWGEKYWlnd0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFCUmNqUWZpalNaWWQxUmFtM1R0Lzc0NytmdFQ5TTBlWjhRSgpnNSs1RkFtUGZCNmFMMlQrVHRNc1dJaEpCcWkwMG1zRkI0QkxDeno3WjYvdnlCMzN5VEJISnRqS0Nmb0l5RTROCkpCQk5PaXJHYTFJWVV5N3U2ZHhoR1FTK2xISmtZNzhrYUU1OGd6MVVOMVRDQXBwSG1NZFRrTWFsdVNOZzlqemIKc0dKeXYvcFFjVUVKRTZVWDJEU2g2N1FRZXkxaWZVeEM5YUhySW5GVGg1d1JvcmdNM3hzZUxvVU8xdzR6WkEwVQo0QmlSVjZEWTBkUXpYSlhodDhGQ2p5UkorVk01Sk1SRHZLUlg1aW9oYUJSeFhvN3VWbzZzQ1FFV05TdWlwck9XCmg2Vjc3bDdBSTNDSXNkTkxoQVRKbUJNdVYzc2hvZUZUSXR5K2kvbldUYlV5ZWIwSjVaVT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+    server: https://api.stc.k8s.sparetimecoders.com
+  name: stc.k8s.sparetimecoders.com
+contexts:
+- context:
+    cluster: stc.k8s.sparetimecoders.com
+    user: stc.k8s.sparetimecoders.com
+  name: stc.k8s.sparetimecoders.com
+current-context: stc.k8s.sparetimecoders.com
+kind: Config
+preferences: {}
+users:
+- name: stc.k8s.sparetimecoders.com
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1alpha1
+      args:
+      - token
+      - -i
+      - stc.k8s.sparetimecoders.com
+      command: aws-iam-authenticator
+      env:
+      - name: AWS_PROFILE
+        value: stc
+        

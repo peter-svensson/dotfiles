@@ -1,0 +1,28 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM4akNDQWRxZ0F3SUJBZ0lNRnJldnJVNXkvM2ptTnlVOU1BMEdDU3FHU0liM0RRRUJDd1VBTUJVeEV6QVIKQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13SGhjTk1qRXhNVEV6TURrMU5UUTRXaGNOTXpFeE1URXpNRGsxTlRRNApXakFWTVJNd0VRWURWUVFERXdwcmRXSmxjbTVsZEdWek1JSUJJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBCk1JSUJDZ0tDQVFFQXF3Wk9wZHdGU29CWURnazB0eGw5NExZN2N4RkloaUtyejAraEM5ZzhJUDZ4UVZybmxHblYKWERsWHp3cTNXeDlNUjdjVjZuSFhNNENIc0xHWTd3YVVjQXgzcjdFOTV6eW5TbFBId1ZETG1GY21wc1ZnSUozYwpIdE1SMVhBbG5aZHZHMHpKYXJmcFc3K2xxaGZOQnV4emNZd2xnUlVxV0Y2ZGNxY2J5NzczMW5tYVVBYjRzTTJkCmttSU8wNm9WcUJlLzFRZVlaMEhXeUNRSXd2dkZvbTg4amN2ZDBiRWVxblByNzcrRUltOGhadlpqODZkK2JXY0kKL3loTGxwTFNVWGZaOU1UYW1sd0pTTDVabks4T0g3VWNocVFacUtMcWN6T1dXZXV2cHdUb0p2cjhwK0tManVkUQo2WDVGMEx0S2ZCU2RBSzIyeXR3USswTmFkZjhaYXkrVjlRSURBUUFCbzBJd1FEQU9CZ05WSFE4QkFmOEVCQU1DCkFRWXdEd1lEVlIwVEFRSC9CQVV3QXdFQi96QWRCZ05WSFE0RUZnUVVKRG5rWnF0NEY3elNMZDI0eHlwOWRDd3cKaVlJd0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFJNjVrRGc4TC9rOXQ1U3AzTkhHb1lVNEtVL1U5eWdaMi9EKwpFWmNEaUg4TDgwWUNSZVdvZWtJMlRabSswWXcwNTdYd1FiY2VTWDFVOVQ5TGVGdDc1LzRsVlhXOU1GZU8zcUFGCkV6d0NUK0lZVUlPdTFpMEY2SWxyTUtoL0MxaERrOFZZV1dpN1pTeWtWcTlNd3FEbjk3VlA5UCs5SG8rMEdpZkcKKytDY1ptL2JreHpkQzhMZXhiTHlndDNzM0NKUno5SndPcXV1UVRoQmJhUnFwMDlsNnpyd0w3ZHVmNDl3YnZRSwpycThBcHhoZCtVS1FvN1hrK0prdzdYUkdqQVN2Mkk1aGlvdGVhWldhYlkyTlUvMzE4VCtlVE9keUpMVmdsRkc4Cng3cWI4ZmkxU0xmV1hMM1pWZS9wY1h0alU4ZitVOWFvYXVKcEF4UDUwZTgrbDNSZEdCbz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+    server: https://api.k8s.staging.lifeinside.io
+  name: k8s.staging.lifeinside.io
+contexts:
+- context:
+    cluster: k8s.staging.lifeinside.io
+    user: k8s.staging.lifeinside.io
+  name: k8s.staging.lifeinside.io
+current-context: k8s.staging.lifeinside.io
+kind: Config
+preferences: {}
+users:
+- name: k8s.staging.lifeinside.io
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1alpha1
+      args:
+      - token
+      - -i
+      - k8s.staging.lifeinside.io
+      command: aws-iam-authenticator
+      env:
+      - name: AWS_PROFILE
+        value: lifeinside-staging
+        

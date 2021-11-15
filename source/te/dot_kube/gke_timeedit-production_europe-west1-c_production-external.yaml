@@ -1,0 +1,26 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURERENDQWZTZ0F3SUJBZ0lSQUtKaVMrYTgvQk5hb2tzaEt4eWtmcUl3RFFZSktvWklodmNOQVFFTEJRQXcKTHpFdE1Dc0dBMVVFQXhNa09HWmlOV0l3Tm1NdFlqVXhaaTAwTTJSaExUbGtOek10WlRRNE5qVmxNR1JpWWprNApNQjRYRFRFNE1EWXdPREV5TURJMU4xb1hEVEl6TURZd056RXpNREkxTjFvd0x6RXRNQ3NHQTFVRUF4TWtPR1ppCk5XSXdObU10WWpVeFppMDBNMlJoTFRsa056TXRaVFE0TmpWbE1HUmlZams0TUlJQklqQU5CZ2txaGtpRzl3MEIKQVFFRkFBT0NBUThBTUlJQkNnS0NBUUVBck1MQVlKaWR1bDF1SCs1MU1sVjVyWU9IYzVFUm04UGpHZlRtVlkzOQo4TnBRcUVIb1lVcGZlQk5MUXdwVkNJOXNTdWlqZXlHV0FwNWo4VkJsS1JDL1czNU95bFZXU01heVJHMFk5WFRNCmZFSExJS3IwSnkzdkFsWVlGZnJiVklNejJabzFEbXE5aWtSYk93dFRMZE5UVWFvM2Z0MGpSOS9TMVcxSUNBYVAKbTh3RlVvL0JEUFlNVUY1bmt4K3NoQ2lWNWxDS3ZnZEpWejFWVEFmMUFOUi9BYS9hRGpaYlkyZEZzNytTdGl3bwo3aTBwY0ZPOGpxem9pV3lhZkVhMzJSdmU4YXRZblVNMElXWjV5R3JoKzJOa2NIUGtWVWxvMW5od0JOcnhscXlRCjJYbjZkRlNvc2ZnRUN4bHZIVlpCdE1wN3REbjArT2p0VkdXbUpoZUxVSmhiendJREFRQUJveU13SVRBT0JnTlYKSFE4QkFmOEVCQU1DQWdRd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBTkJna3Foa2lHOXcwQkFRc0ZBQU9DQVFFQQpHMGs0MFlHSFc4eU9hbzkvdWVseCtVQWh2cWNSdlp5OWM2ZDVpenRNRGczNUVVZ3o3REhJWENIRmEyZkwyNXpZCklzVkJVKzBJdjhXYzF3dkptL2lnb2YzRjJvWExLZ29XWEsvb2RlR1FsenZHa0NRZEhSVmVqR2l4aEh2NFIyZUoKNlkzMXFhZllzR2VuQjAzRXdoak41cHM5SUdKdlN5TUlFbE96OTdIOHM0R2RsMm9TbWkrNzlaTDhwaGV6N290cgpQbk1UTVJEVXVOb2NVanJlZzdKd213MEFOVkFuN0swS203STNnRSsvUHM1QnJlcG5mNFlrTGx6L1FPdTVWVFVOCkpobDI5bVdyYTdxNFRxdXhra3RjVmp6eE4xVU5TQ0ZoaTlkaTdLTGx6ejdkRTN0eHJlQkkyV1NsbkVEKzJETUUKbVdJZkNRZUNBcEIxV0lmZjlKZy9BQT09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+    server: https://35.195.31.176
+  name: gke_timeedit-production_europe-west1-c_production-external
+contexts:
+- context:
+    cluster: gke_timeedit-production_europe-west1-c_production-external
+    user: gke_timeedit-production_europe-west1-c_production-external
+  name: gke_timeedit-production_europe-west1-c_production-external
+current-context: ""
+kind: Config
+preferences: {}
+users:
+- name: gke_timeedit-production_europe-west1-c_production-external
+  user:
+    auth-provider:
+      config:
+        access-token: ya29.a0ARrdaM-H_pDHIrLi_h2mG0Z1yxTEpKZ_JX5TggeLLN0gmfjPxIrpwVEB4xk6NIo7IJ0VPe8QQuTK3u6Gj7RObdVAaErhpNNDH-Wus8AMxHZttbAcsTxIQ5DET9W3o2-tpzpWudLt_gsJMYSA5zK5sC0RHNaetyq2O6fqvjg
+        cmd-args: config config-helper --format=json
+        cmd-path: /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin/gcloud
+        expiry: "2021-06-23T12:08:06Z"
+        expiry-key: '{.credential.token_expiry}'
+        token-key: '{.credential.access_token}'
+      name: gcp

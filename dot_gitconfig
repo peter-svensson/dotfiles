@@ -1,0 +1,84 @@
+[user]
+	name = Peter Svensson
+	email = peter@sparetimecoders.com
+	signingkey = 3AB79F04E4DB3893
+
+[alias]
+    ci = commit
+    ca = commit --amend
+    co = checkout
+    go = checkout -B
+    st = status
+    s = status --short --branch
+    graph = log --graph
+
+
+[core]
+    autocrlf = input
+    excludesfile = ~/.gitignore
+    attributesfile = ~/.gitattributes
+    editor = /usr/bin/vim
+    pager = delta --theme='Dracula' --dark
+    hooksPath = ~/.git-hooks
+
+[interactive]
+     diffFilter = delta --color-only --dark
+
+[color]
+    ui = auto
+    diff = auto
+    status = auto
+    branch = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[merge]
+    # Include summaries of merged commits in newly created merge commit messages
+    log = true
+
+[help]
+	autocorrect = 20
+
+[rerere]
+	enabled = 1
+
+[push]
+	default = upstream
+
+[github]
+  user = peter-svensson
+
+[pull]
+	rebase = true
+
+[commit]
+	gpgsign = true
+
+[gpg]
+	program = gpg
+
+[diff]
+	compactionHeuristic = true
+
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+
+[fetch]
+	prune = true
+
+[init]
+	defaultBranch = main

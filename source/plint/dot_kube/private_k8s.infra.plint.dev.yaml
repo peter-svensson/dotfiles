@@ -1,0 +1,30 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM4akNDQWRxZ0F3SUJBZ0lNRnEwMm5weVIrVmlMV3VMVk1BMEdDU3FHU0liM0RRRUJDd1VBTUJVeEV6QVIKQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13SGhjTk1qRXhNREV3TURjd05EVTBXaGNOTXpFeE1ERXdNRGN3TkRVMApXakFWTVJNd0VRWURWUVFERXdwcmRXSmxjbTVsZEdWek1JSUJJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBCk1JSUJDZ0tDQVFFQXZQTmRzUDhVdHZkS3oyaGFlalpsNStvVCtqMGhKRHdYZzNHZVB2eUY4OWFTdkNrUkRGaGEKWVlQMUdTcUFSUFZRVWU3dU9jTU90R1g4dTh4dWlEYzZRMzBKaDh3TUJrT2YxTVdHZW5IR3JBMVpiaGNjbU85dAppMU4wY3FBTFA2S2NORHFwSm1WR0RxY2JIRzBwcXBJVTFqbWpiVzdmdGp1M3lDYTR3dXFuaUZWbXZWNk5sclVrCkNGSHJ3RFc2WUVDOGd4MWtEY2h4K1NxL0hjOVhnYi8zbldFTjhESGE2aTZFUzlBNVdwaDJYMWNvTXRLa1BEMnEKWlZJaWZoODBGakJPNkovVG8ybW5mc3duaEhZMGVCU1NyNy9jb2dQakRNb2FGYTdqaTdvSW1JMTVaMXV1UmdjOApjT2ZSYUVXbHdhYkFqK0FUb2EzMHplUDRPUjFQcVVjVDN3SURBUUFCbzBJd1FEQU9CZ05WSFE4QkFmOEVCQU1DCkFRWXdEd1lEVlIwVEFRSC9CQVV3QXdFQi96QWRCZ05WSFE0RUZnUVVsNXpjUjNZV2wxTHBOa3hPNTVDdVNTcWUKem9Bd0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFFS2NmaW1XakpvUi9vb0JabHBFSE9CTUtveEc3OEJwSGQyTgo4d204amdTNWtvYUJwVlNwNDhCTndzclJyTmNCWFFUZlVrSmNrY0RGTjVUcnd3QlhBNUFyZ1RmWi9TTUFYUFFTCmprMVh1Vm1OK0dqV0tpMzFjeUx5bEliMjl5c3NKNVlSYUFleEhjckRJUDMwU1Y3dGpmYnBjdTBpRGF2aVNTZWcKNTdHWk0xbDI5MlNBTDNnYWpWZ2pReW55S3BqY3RoSE41cS9XbFhSSjBaNVJWVFhxYzc0SVlxdDZiN3c2ditiKwpkb0NqY2IrL000dnpPY3JaQmtqeFpDckdRZTdFd1JCdHM0K2N3ZzFMeEpad1lKQzhkajllM2trd2lMd083K0R2CnRrK0Q2a05nUnRUVFIzVDBMa1ovZGNUeGYvQ3p5T0FjdllhZzVVSUpWZlZhK2NJT2RGWT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+    server: https://api.k8s.infra.plint.dev
+  name: k8s.infra.plint.dev
+contexts:
+- context:
+    cluster: k8s.infra.plint.dev
+    user: k8s.infra.plint.dev
+  name: k8s.infra.plint.dev
+current-context: k8s.infra.plint.dev
+kind: Config
+preferences: {}
+users:
+- name: k8s.infra.plint.dev
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1alpha1
+      args:
+      - token
+      - -i
+      - k8s.infra.plint.dev
+#      - -r
+#      - arn:aws:iam::280918118349:role/KubernetesAdmin
+      command: aws-iam-authenticator
+      env:
+      - name: AWS_PROFILE
+        value: plint-infra-share
+        

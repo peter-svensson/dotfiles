@@ -1,0 +1,9 @@
+source_up .envrc
+
+export KOPS_STATE=292662267961-eu-west-1-kops-storage
+export KOPS_STATE_STORE=s3://${KOPS_STATE}
+
+
+export KUBECONFIG=$( IFS=:; set -- ${PWD}/.kube/*.yaml; echo "$*" )
+export AWS_PROFILE=stc
+

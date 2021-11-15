@@ -1,0 +1,77 @@
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+fpath=(/usr/local/share/zsh-completions /usr/local/share/zsh/site-functions $fpath)
+
+for file in ~/.{functions,exports,paths,prompt,aliases,extra,auths,historyopts}; do
+  [ -r "$file" ] && [ -f "$file" ] && source "$file";
+done
+
+
+function powerline_precmd() {
+eval "$($GOPATH/bin/powerline-go -condensed -error $? -cwd-mode dironly -shell zsh -eval -cwd-max-depth 0 -modules cwd,dotenv,exit -modules-right aws,git,kube)"
+    #eval "$($GOPATH/bin/powerline-go -error $? -condensed -cwd-mode plain  -newline -modules cwd -shell zsh -eval -modules-right git)"
+}
+
+function install_powerline_precmd() {
+  for s in "${precmd_functions[@]}"; do
+    if [ "$s" = "powerline_precmd" ]; then
+      return
+    fi
+  done
+  precmd_functions+=(powerline_precmd)
+}
+
+if [ "$TERM" != "linux" ]; then
+    install_powerline_precmd
+fi
+
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+
+# Completions
+bindkey -M viins '\C-i' complete-word
+
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+l:|=* r:|=*'
+zstyle ':completion:*' ignored-patterns 'kubectl.docker'
+
+# Faster! (?)
+zstyle ':completion::complete:*' use-cache 1
+
+# case insensitive completion
+#zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+# color code completion!!!!  Wohoo!
+zstyle ':completion:*' list-colors "=(#b) #([0-9]#)*=36=31"
+
+eval "$(direnv hook zsh)"
+
+autoload -U promptinit; promptinit
+autoload -U colors; colors
+autoload -Uz compinit && compinit -i
+
+direnv reload
+
+if type stern > /dev/null ; then
+  source <(stern --completion=zsh)
+fi
+if type kubectl > /dev/null ; then
+	source <(kubectl completion zsh)
+fi
+if type kops > /dev/null ; then
+	source <(kops completion zsh)
+fi
+if type kind > /dev/null ; then
+	source <(kind completion zsh)
+fi
+if type chezmoi > /dev/null ; then
+	source <(chezmoi completion zsh)
+fi
+
+#source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+#source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/terraform terraform
