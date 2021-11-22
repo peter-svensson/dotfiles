@@ -66,3 +66,12 @@ sso_account_id = 892944254496
 sso_role_name = AWSAdministratorAccess
 region = eu-west-1
 output = json
+
+[profile lifeinside-prod]
+sso_start_url = https://d-93670ef60f.awsapps.com/start
+sso_region = eu-west-1
+region = eu-west-1
+credential_process = aws-sso-util credential-process --profile lifeinside-prod
+sso_account_id = 008824663682
+sso_role_name = AWSAdministratorAccess
+output = json

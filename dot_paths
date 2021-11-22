@@ -4,6 +4,7 @@ prepend_path /opt/homebrew/opt/gnu-sed/libexec/gnubin
 prepend_path /opt/homebrew/opt/findutils/libexec/gnubin
 prepend_path /opt/homebrew/opt/coreutils/libexec/gnubin
 prepend_path /opt/homebrew/opt/make/libexec/gnubin
+prepend_path /opt/homebrew/opt/gnu-tar/libexec/gnubin
 prepend_path /opt/homebrew/opt/curl/bin
 prepend_path /opt/homebrew/opt/node@17/bin
 prepend_path ~/bin
