@@ -11,6 +11,7 @@
     st = status
     s = status --short --branch
     graph = log --graph
+	up = pull --rebase --autostash
 
 
 [core]
