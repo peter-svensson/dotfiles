@@ -21,10 +21,6 @@ users:
       - token
       - -i
       - k8s.infra.plint.dev
-#      - -r
-#      - arn:aws:iam::280918118349:role/KubernetesAdmin
       command: aws-iam-authenticator
-      env:
-      - name: AWS_PROFILE
-        value: plint-infra-share
+
         

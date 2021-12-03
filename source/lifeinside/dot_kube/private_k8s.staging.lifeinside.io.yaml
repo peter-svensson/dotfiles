@@ -22,7 +22,4 @@ users:
       - -i
       - k8s.staging.lifeinside.io
       command: aws-iam-authenticator
-      env:
-      - name: AWS_PROFILE
-        value: lifeinside-staging
         

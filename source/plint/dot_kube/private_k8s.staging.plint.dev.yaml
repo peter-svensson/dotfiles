@@ -22,7 +22,3 @@ users:
       - -i
       - k8s.staging.plint.dev
       command: aws-iam-authenticator
-      env:
-      - name: AWS_PROFILE
-        value: plint-staging
-        

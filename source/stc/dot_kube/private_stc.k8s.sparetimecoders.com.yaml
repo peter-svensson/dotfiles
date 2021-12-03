@@ -22,7 +22,5 @@ users:
       - -i
       - stc.k8s.sparetimecoders.com
       command: aws-iam-authenticator
-      env:
-      - name: AWS_PROFILE
-        value: stc
+
         

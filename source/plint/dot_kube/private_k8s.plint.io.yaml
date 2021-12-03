@@ -22,6 +22,4 @@ users:
       - -i
       - k8s.plint.io
       command: aws-iam-authenticator
-      env:
-      - name: AWS_PROFILE
-        value: plint-prod-nu
+

@@ -22,8 +22,5 @@ users:
       - -i
       - k8s.lifeinside.io
       command: aws-iam-authenticator
-      env:
-      - name: AWS_PROFILE
-        value: lifeinside-prod
       interactiveMode: IfAvailable
       provideClusterInfo: false

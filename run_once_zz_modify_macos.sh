@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # ~/.macos — https://mths.be/macos
-COMPUTERNAME="${1:-gwaihir}"
+COMPUTERNAME="${1:-lambda}"
 
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
