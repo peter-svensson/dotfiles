@@ -73,4 +73,4 @@ alias prune="gfind . -type d -name .git | xargs -I {} zsh -ic \"echo 'Pruning re
 alias format-scala="find src -type d -name scala | xargs scalariform -r -p=.scalariform.conf"
 alias gup="git up"
 alias hpr="hub pull-request"
-
+alias cm=chezmoi

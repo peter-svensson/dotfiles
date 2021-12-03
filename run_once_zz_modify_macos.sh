@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # ~/.macos — https://mths.be/macos
-COMPUTERNAME="${1:-lambda}"
+COMPUTERNAME="${1:-gwaihir}"
 
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
@@ -22,9 +22,6 @@ sudo scutil --set ComputerName ${COMPUTERNAME}
 sudo scutil --set HostName ${COMPUTERNAME}
 sudo scutil --set LocalHostName ${COMPUTERNAME}
 sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string ${COMPUTERNAME}
-
-# Set standby delay to 24 hours (default is 1 hour)
-sudo pmset -a standbydelay 86400
 
 # Disable the sound effects on boot
 sudo nvram SystemAudioVolume=" "
@@ -125,7 +122,6 @@ sudo touch /private/var/vm/sleepimage
 # …and make sure it can’t be rewritten
 sudo chflags uchg /private/var/vm/sleepimage
 
-
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
 ###############################################################################
@@ -167,8 +163,8 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 10
 # Set language and text formats
 # Note: if you’re in the US, replace `EUR` with `USD`, `Centimeters` with
 # `Inches`, `en_GB` with `en_US`, and `true` with `false`.
-defaults write NSGlobalDomain AppleLanguages -array "en" "se"
-defaults write NSGlobalDomain AppleLocale -string "en_GB@currency=EUR"
+defaults write NSGlobalDomain AppleLanguages -array "en" "sv"
+defaults write NSGlobalDomain AppleLocale -string "en_SE@currency=SEK"
 defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
 defaults write NSGlobalDomain AppleMetricUnits -bool true
 
@@ -582,7 +578,6 @@ sudo mdutil -E / > /dev/null
 
 # Don’t display the annoying prompt when quitting iTerm
 defaults write com.googlecode.iterm2 PromptOnQuit -bool false
-
 
 ###############################################################################
 # Time Machine                                                                #
