@@ -1,0 +1,6 @@
+authtoken: {{ (index (lastpass "devenv/ngrok") 0).note.token -}}
+region: eu
+tunnels:
+  local:
+    addr: 80
+    proto: http
