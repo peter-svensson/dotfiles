@@ -19,7 +19,7 @@ users:
       config:
         access-token: ya29.a0ARrdaM-H_pDHIrLi_h2mG0Z1yxTEpKZ_JX5TggeLLN0gmfjPxIrpwVEB4xk6NIo7IJ0VPe8QQuTK3u6Gj7RObdVAaErhpNNDH-Wus8AMxHZttbAcsTxIQ5DET9W3o2-tpzpWudLt_gsJMYSA5zK5sC0RHNaetyq2O6fqvjg
         cmd-args: config config-helper --format=json
-        cmd-path: /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin/gcloud
+        cmd-path: /opt/homebrew/bin/gcloud
         expiry: "2021-06-23T12:08:06Z"
         expiry-key: '{.credential.token_expiry}'
         token-key: '{.credential.access_token}'
