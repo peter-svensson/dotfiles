@@ -71,7 +71,19 @@ output = json
 sso_start_url = https://d-93670ef60f.awsapps.com/start
 sso_region = eu-west-1
 region = eu-west-1
-credential_process = aws-sso-util credential-process --profile lifeinside-prod
 sso_account_id = 008824663682
 sso_role_name = AWSAdministratorAccess
 output = json
+
+[profile plint-europarl]
+sso_start_url = https://d-93670bd1b0.awsapps.com/start
+sso_region = eu-west-1
+region = eu-west-1
+sso_account_id = 708748552226
+sso_role_name = AWSAdministratorAccess
+output = json
+
+[profile plint-nu]
+sso_start_url = https://d-93670bd1b0.awsapps.com/start
+sso_region = eu-west-1
+region = eu-west-1
