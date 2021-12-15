@@ -16,7 +16,7 @@ region=eu-west-1
 sso_start_url = https://d-93670bd1b0.awsapps.com/start
 sso_region = eu-west-1
 sso_account_id = 641706582645
-sso_role_name = AdministratorAccess
+sso_role_name = AWSAdministratorAccess
 region = eu-west-1
 output = json
 
@@ -40,7 +40,7 @@ output = json
 sso_start_url = https://d-93670bd1b0.awsapps.com/start
 sso_region = eu-west-1
 sso_account_id = 016579404663
-sso_role_name = AWSPowerUserAccess
+sso_role_name = AWSAdministratorAccess
 region = eu-west-1
 output = json
 
