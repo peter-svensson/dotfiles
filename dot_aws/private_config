@@ -13,7 +13,7 @@ region=eu-north-1
 region=eu-west-1
 
 [profile plint-root]
-sso_start_url = https://d-93670bd1b0.awsapps.com/start
+sso_start_url = https://plint.awsapps.com/start
 sso_region = eu-west-1
 sso_account_id = 641706582645
 sso_role_name = AWSAdministratorAccess
@@ -21,7 +21,7 @@ region = eu-west-1
 output = json
 
 [profile plint-infra-share]
-sso_start_url = https://d-93670bd1b0.awsapps.com/start
+sso_start_url = https://plint.awsapps.com/start
 sso_region = eu-west-1
 sso_account_id = 280918118349
 sso_role_name = AWSAdministratorAccess
@@ -29,7 +29,7 @@ region = eu-west-1
 output = json
 
 [profile plint-test]
-sso_start_url = https://d-93670bd1b0.awsapps.com/start
+sso_start_url = https://plint.awsapps.com/start
 sso_region = eu-west-1
 sso_account_id = 505135256759
 sso_role_name = AWSAdministratorAccess
@@ -37,7 +37,7 @@ region = eu-west-1
 output = json
 
 [profile plint-infra-network]
-sso_start_url = https://d-93670bd1b0.awsapps.com/start
+sso_start_url = https://plint.awsapps.com/start
 sso_region = eu-west-1
 sso_account_id = 016579404663
 sso_role_name = AWSAdministratorAccess
@@ -45,14 +45,14 @@ region = eu-west-1
 output = json
 
 [profile plint-prod-nu]
-sso_start_url = https://d-93670bd1b0.awsapps.com/start
+sso_start_url = https://plint.awsapps.com/start
 sso_region = eu-west-1
 sso_account_id = 143893719956
 sso_role_name = AWSAdministratorAccess
 region = eu-west-1
 
 [profile plint-staging]
-sso_start_url = https://d-93670bd1b0.awsapps.com/start
+sso_start_url = https://plint.awsapps.com/start
 sso_region = eu-west-1
 sso_account_id = 690178016966
 sso_role_name = AWSAdministratorAccess
@@ -60,7 +60,7 @@ region = eu-west-1
 output = json
 
 [profile lifeinside-staging]
-sso_start_url = https://d-93670ef60f.awsapps.com/start/
+sso_start_url = https://lifeinside.awsapps.com/start
 sso_region = eu-west-1
 sso_account_id = 892944254496
 sso_role_name = AWSAdministratorAccess
@@ -68,7 +68,7 @@ region = eu-west-1
 output = json
 
 [profile lifeinside-prod]
-sso_start_url = https://d-93670ef60f.awsapps.com/start
+sso_start_url = https://lifeinside.awsapps.com/start
 sso_region = eu-west-1
 region = eu-west-1
 sso_account_id = 008824663682
@@ -76,7 +76,7 @@ sso_role_name = AWSAdministratorAccess
 output = json
 
 [profile plint-europarl]
-sso_start_url = https://d-93670bd1b0.awsapps.com/start
+sso_start_url = https://plint.awsapps.com/start
 sso_region = eu-west-1
 region = eu-west-1
 sso_account_id = 708748552226
@@ -84,9 +84,19 @@ sso_role_name = AWSAdministratorAccess
 output = json
 
 [profile plint-sprint]
-sso_start_url = https://d-93670bd1b0.awsapps.com/start
+sso_start_url = https://plint.awsapps.com/start
 sso_region = eu-west-1
 region = eu-west-1
 sso_account_id = 569838322684
 sso_role_name = AWSAdministratorAccess
 output = json
+aws_credentials_expiration = 2021-12-22T14:42:13Z
+
+[profile plint-nrk]
+sso_start_url = https://plint.awsapps.com/start
+sso_region = eu-west-1
+region = eu-west-1
+sso_account_id = 714269099347
+sso_role_name = AWSAdministratorAccess
+output = json
+aws_credentials_expiration = 2021-12-22T14:46:48Z
