@@ -1,0 +1,26 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM4akNDQWRxZ0F3SUJBZ0lNRnJiclpxeEhCT2k5cGFHOU1BMEdDU3FHU0liM0RRRUJDd1VBTUJVeEV6QVIKQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13SGhjTk1qRXhNVEV3TWpFMU9UQXhXaGNOTXpFeE1URXdNakUxT1RBeApXakFWTVJNd0VRWURWUVFERXdwcmRXSmxjbTVsZEdWek1JSUJJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBCk1JSUJDZ0tDQVFFQXUrekk5NjlabmdZR3BwYTJndXpIMThkSjlkMmt2M043TUFsbWtBb0ZHTTZCNHJTNnFXTUkKaWVvVXVtOVBlY3hwZXVacE1ZTFM4V2MvdjgvTEZIaG9PbWFnRlR3MSs0Rk05MnArTzRwdEtnWlRCL1gyS0NNNQpJWE11UVVNTzJQY1pRTWdjUE91QkIyQnFUdmVPV24xa2VaTUpTdWt3QWIyYlFhUXl0ZFExaDdPd0JadVprN0F6Clh3R2NKRm5qZWl0MGM4NEMvL3ZVS3I2SkZJdEp3a2hzZE1DOStIRGhkYTNGVU1KS281WjdXVG1zMDFjZmdhTC8KS2tnR1NQNjNLTHl3NHJsWkxDb3BGc2JGY09TN1VKVzZEK1kyNUJjN3dWL25jQ0ZmZ0QrM0I4MExVSTZlK3FlUApuWG95TTNra2NrVVZXdWpnejRDanc2bC9kQ2sxOWVzbC93SURBUUFCbzBJd1FEQU9CZ05WSFE4QkFmOEVCQU1DCkFRWXdEd1lEVlIwVEFRSC9CQVV3QXdFQi96QWRCZ05WSFE0RUZnUVVPbVpxSTNWZFcrZks4a25LR3lSRitiU3cKZ0Zvd0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFKZzhkQ29uZ0UwUi91dk9TZGRvNVBraGZGWlFBYkF1d2p3QgpUcVRpUlJvTk9TMzM1SlBhaWczUFBUQUNCV1BNNWs1QWRXQXkwaDhCbllNUERGWDZsaExoekNjMlB1Tkx3UCthCkVoeDRQbDNCcGtzOGFaamo3aFVRUVVhRVd6UmRoeWJxeUE5LzBBbWpMZEJFa2FLNkFsWDNSRm5MbVA1Y0gwRnkKZUxMUlQrRGUwMXMyeTY5UmtwNzg4SWlOTG1SMnQvQUZMVXl4OGcxMFBwVXA3ZlFDL3EzWkZBZXpXQkVPVmxsOQoySThWdzl4WFhXNC9rS1hzcmcvN2l0cUtUcEVWUW5ObkxYTHRhdWVPaFkzc0M4ZURBQllEdjkrc3U3WjlSVUJ1CitINjJrZUVaQ2ZHalVRTWtjRGFlaW5KZCtIaXNKbWhYL0dUcXhRUGpXNG40TUNxM0ZuZz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+    server: https://api.k8s.lifeinside.io
+  name: k8s.lifeinside.io
+contexts:
+- context:
+    cluster: k8s.lifeinside.io
+    user: k8s.lifeinside.io
+  name: k8s.lifeinside.io
+current-context: k8s.staging.lifeinside.io
+kind: Config
+preferences: {}
+users:
+- name: k8s.lifeinside.io
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1alpha1
+      args:
+      - token
+      - -i
+      - k8s.lifeinside.io
+      command: aws-iam-authenticator
+      interactiveMode: IfAvailable
+      provideClusterInfo: false
