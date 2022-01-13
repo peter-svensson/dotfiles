@@ -100,3 +100,21 @@ sso_account_id = 714269099347
 sso_role_name = AWSAdministratorAccess
 output = json
 aws_credentials_expiration = 2021-12-22T14:46:48Z
+
+[profile goodfeed-admin]
+sso_start_url = https://goodfeed.awsapps.com/start
+sso_region = eu-west-1
+region = eu-west-1
+sso_account_id = 929585105493
+sso_role_name = AWSAdministratorAccess
+output = json
+aws_credentials_expiration = 2022-01-13T20:46:16Z
+
+[profile goodfeed-staging]
+sso_start_url = https://goodfeed.awsapps.com/start
+sso_region = eu-west-1
+region = eu-west-1
+sso_account_id = 643762608543
+sso_role_name = AWSAdministratorAccess
+output = json
+aws_credentials_expiration = 2022-01-13T20:46:27Z
