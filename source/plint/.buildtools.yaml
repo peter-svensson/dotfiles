@@ -1,0 +1,22 @@
+registry:
+  ecr:
+    url: 280918118349.dkr.ecr.eu-west-1.amazonaws.com
+    #url: 505135256759.dkr.ecr.eu-west-1.amazonaws.com
+
+targets:
+  local:
+    context: kind-plint
+    namespace: default
+  sprint:
+    context: k8s.sprint.plint.dev
+    namespace: default
+  staaging:
+    context: k8s.staging.plint.dev
+    namespace: default
+  prod:
+    context: k8s.plint.io
+    namespace: default
+gitops:
+  local:
+    url: git@github.com:NUAB/argocd_applications.git
+    path: apps/test

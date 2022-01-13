@@ -1,0 +1,14 @@
+registry:
+  ecr:
+    url: 643762608543.dkr.ecr.eu-west-1.amazonaws.com
+
+targets:
+  local:
+    context: kind-goodfeed
+    namespace: default
+  staging:
+    context: k8s.staging.goodfeed.io
+    namespace: default
+  prod:
+    context: k8s.goodfeed.io
+    namespace: default
