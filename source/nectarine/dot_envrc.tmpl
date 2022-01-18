@@ -1,5 +1,0 @@
-source_up .envrc
-export KUBECONFIG=$( IFS=:; set -- ${PWD}/.kube/*.yaml; echo "$*" )
-
-#export GOOGLE_APPLICATION_CREDENTIALS=$HOME/.config/gcloud/legacy_credentials/{{ .chezmoi.username }}.svensson@nectarinehealth.com/adc.json
-export GOOGLE_APPLICATION_CREDENTIALS=$HOME/.config/gcloud/application_default_credentials.json
