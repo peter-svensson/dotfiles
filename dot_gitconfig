@@ -19,7 +19,7 @@
     excludesfile = ~/.gitignore
     attributesfile = ~/.gitattributes
     editor = /usr/bin/vim
-    pager = delta --theme='Dracula' --dark
+    pager = delta --dark
     hooksPath = ~/.git-hooks
 
 [interactive]
