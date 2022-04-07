@@ -1,7 +1,6 @@
 registry:
   ecr:
     url: 280918118349.dkr.ecr.eu-west-1.amazonaws.com
-    #url: 505135256759.dkr.ecr.eu-west-1.amazonaws.com
 
 targets:
   local:
@@ -15,6 +14,15 @@ targets:
     namespace: default
   prod:
     context: k8s.plint.io
+    namespace: default
+  europarl:
+    context: k8s.europarl.plint.app
+    namespace: default
+  mps:
+    context: k8s.mps.plint.app
+    namespace: default
+  nrk:
+    context: k8s.nrk.plint.app
     namespace: default
 gitops:
   local:
