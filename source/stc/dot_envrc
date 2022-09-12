@@ -1,11 +1,15 @@
 source_up .envrc
+export KUBECONFIG=$( IFS=:; set -- ${PWD}/.kube/kind*.yaml ${PWD}/.kube/*.yaml; echo "$*" )
 
-export AWS_PROFILE=stc
+export AWS_SDK_LOAD_CONFIG=1
+
+
+export AWS_DEFAULT_REGION=eu-west-1
+export AWS_REGION=eu-west-1
+
+export AWS_SHARED_CREDENTIALS_FILE=${PWD}/.aws/credentials
+export AWS_CONFIG_FILE=${PWD}/.aws/config
 
 export KOPS_STATE=292662267961-eu-west-1-kops-storage
 export KOPS_STATE_STORE=s3://${KOPS_STATE}
-export KOPS_FEATURE_FLAGS="UseServiceAccountIAM"
-
-
-export KUBECONFIG=$( IFS=:; set -- ${PWD}/.kube/kind*.yaml ${PWD}/.kube/*.yaml; echo "$*" )
-
+export AWS_PROFILE=stc

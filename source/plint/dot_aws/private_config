@@ -2,16 +2,6 @@
 region=eu-west-1
 output=json
 
-[profile te]
-region=eu-central-1
-output=json
-
-[profile stc]
-region=eu-north-1
-
-[profile lifeinside]
-region=eu-west-1
-
 [profile plint-root]
 sso_start_url = https://plint.awsapps.com/start
 sso_region = eu-west-1
@@ -59,22 +49,6 @@ sso_role_name = AWSAdministratorAccess
 region = eu-west-1
 output = json
 
-[profile lifeinside-staging]
-sso_start_url = https://lifeinside.awsapps.com/start
-sso_region = eu-west-1
-sso_account_id = 892944254496
-sso_role_name = AWSAdministratorAccess
-region = eu-west-1
-output = json
-
-[profile lifeinside-prod]
-sso_start_url = https://lifeinside.awsapps.com/start
-sso_region = eu-west-1
-region = eu-west-1
-sso_account_id = 008824663682
-sso_role_name = AWSAdministratorAccess
-output = json
-
 [profile plint-europarl]
 sso_start_url = https://plint.awsapps.com/start
 sso_region = eu-west-1
@@ -90,7 +64,6 @@ region = eu-west-1
 sso_account_id = 569838322684
 sso_role_name = AWSAdministratorAccess
 output = json
-aws_credentials_expiration = 2021-12-22T14:42:13Z
 
 [profile plint-nrk]
 sso_start_url = https://plint.awsapps.com/start
@@ -99,22 +72,19 @@ region = eu-west-1
 sso_account_id = 714269099347
 sso_role_name = AWSAdministratorAccess
 output = json
-aws_credentials_expiration = 2021-12-22T14:46:48Z
 
-[profile goodfeed-admin]
-sso_start_url = https://goodfeed.awsapps.com/start
+[profile plint-infra-shared-readonly]
+sso_start_url = https://plint.awsapps.com/start
 sso_region = eu-west-1
 region = eu-west-1
-sso_account_id = 929585105493
-sso_role_name = AWSAdministratorAccess
+sso_account_id = 280918118349
+sso_role_name = AWSReadOnlyAccess
 output = json
-aws_credentials_expiration = 2022-01-13T20:46:16Z
 
-[profile goodfeed-staging]
-sso_start_url = https://goodfeed.awsapps.com/start
+[profile plint-mps]
+sso_start_url = https://plint.awsapps.com/start
 sso_region = eu-west-1
 region = eu-west-1
-sso_account_id = 643762608543
+sso_account_id = 591642163586
 sso_role_name = AWSAdministratorAccess
 output = json
-aws_credentials_expiration = 2022-01-13T20:46:27Z
