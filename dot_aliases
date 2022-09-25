@@ -58,6 +58,7 @@ alias bup='brew upgrade && for cask in $(brew list --cask); do brew info --cask 
 
 alias k=kubectl
 alias kc='kubectl --context '
+alias sc='stern --context '
 alias tf='terraform'
 
 
