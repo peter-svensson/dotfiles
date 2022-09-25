@@ -18,7 +18,8 @@ users:
     exec:
       apiVersion: client.authentication.k8s.io/v1beta1
       args:
-      - token
-      - -i
-      - k8s.sprint.plint.dev
-      command: aws-iam-authenticator
+        - eks
+        - get-token
+        - --cluster-name
+        - k8s.sprint.plint.dev
+      command: aws
