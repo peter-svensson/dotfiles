@@ -13,14 +13,13 @@ append_path() {
         fi
     done
 }
-
 # AWS SSO
 sso() {
-    if [ -z $1 ]; then echo "must provide profile name"; return; fi
     unset AWS_PROFILE
     export AWS_PROFILE=$1
-    aws-export-credentials --credentials-file-profile $1 &> /dev/null || aws sso login || (unset AWS_PROFILE && aws-sso-util configure profile --no-credential-process $1)
-    aws-export-credentials --credentials-file-profile $1
+    aws sts get-caller-identity &> /dev/null || aws sso login --profile $1 || (unset AWS_PROFILE && aws-sso-util configure profile --no-credential-process $1)
+    aws-export-credentials --credentials-file-profile $1 || aws sso login --profile $1 && aws-export-credentials --credentials-file-profile $1
+    sed -i '/aws_credentials_expiration/d' ${AWS_CONFIG_FILE:-~/.aws/config}
 }
 
 # AWS SSO completion
