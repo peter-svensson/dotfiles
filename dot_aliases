@@ -52,15 +52,13 @@ alias reload="exec $SHELL -l"
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
 
-alias gitup='find . -type d -name .git -printf ''Updating repository %h\n'' -execdir git up \;'
-
 alias bup='brew upgrade && for cask in $(brew list --cask); do brew info --cask $cask --json=v2 | jq -r "[.casks[].outdated,.casks[].installed,.casks[].version] | @tsv" | read outdated installed current && if [[ "$current" != "$installed" ]]; then echo "Upgrading $cask from $installed to $current"; brew upgrade --cask --greedy $cask; else echo "$cask:$current is latest version"; fi; done'
 
 alias k=kubectl
 alias kc='kubectl --context '
 alias sc='stern --context '
 alias tf='terraform'
-
+alias tff='terraform fmt -recursive'
 
 alias gvim="mvim"
 alias vi="vim"
@@ -68,10 +66,7 @@ alias updrepo="gfind . -type d -name .git ! -path '*/.terraform/*' -printf 'Upda
 alias dirtyrepo="gfind . -type d -name .git -printf '%h: ' -execdir bash -c \"if [[ -z \\\"\\\$(git status --porcelain | tail -n1)\\\" ]]; then echo Clean | color green Clean; else echo Dirty | color red Dirty; fi\" \;"
 alias branches="gfind . -type d -name .git -printf 'Repository %h: ' -execdir sh -c \"git branch -l | awk '{\\\$1=\\\$1};1' | sort | paste -d, -s | color red '* [^, ]*' green '* master'\" \;"
 alias allbranches="gfind . -type d -name .git  -not -path '*/.terraform/*' -printf 'Repository %h: ' -execdir sh -c \"git branch -a | grep -vE 'origin/ma(ster|in)' | awk '{\\\$1=\\\$1};1' | sort | paste -d, -s | color red '* [^, ]*' green '* master' green '* main'\" \;"
-alias stashes="gfind . -type d -name .git -printf 'Repository %h: ' -execdir sh -c \"git stash list | paste -d, -s\" \;"
-alias master="gfind . -type d -name .git -printf 'Repository %h:\n' -execdir sh -c \"git checkout master > /dev/null 2>&1\" \;"
 alias prune="gfind . -type d -name .git | xargs -I {} zsh -ic \"echo 'Pruning repository {}' && cd {} && gbl | grep '\[gone\]' | sed 's/^\s\+\([^ ]*\).*$/\1/' | xargs -r git branch -d \" \;"
-alias format-scala="find src -type d -name scala | xargs scalariform -r -p=.scalariform.conf"
 alias gup="git up"
 alias hpr="hub pull-request"
 alias cm=chezmoi
