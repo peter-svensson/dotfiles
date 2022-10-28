@@ -52,8 +52,6 @@ alias reload="exec $SHELL -l"
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
 
-alias bup='brew upgrade && for cask in $(brew list --cask); do brew info --cask $cask --json=v2 | jq -r "[.casks[].outdated,.casks[].installed,.casks[].version] | @tsv" | read outdated installed current && if [[ "$current" != "$installed" ]]; then echo "Upgrading $cask from $installed to $current"; brew upgrade --cask --greedy $cask; else echo "$cask:$current is latest version"; fi; done'
-
 alias k=kubectl
 alias kc='kubectl --context '
 alias sc='stern --context '
