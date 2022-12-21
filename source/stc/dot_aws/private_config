@@ -7,5 +7,5 @@ sso_start_url = https://sparetimecoders.awsapps.com/start
 sso_region = eu-west-1
 region = eu-west-1
 sso_account_id = 292662267961
-sso_role_name = AdministratorAccess
+sso_role_name = AWSAdministratorAccess
 output = json
