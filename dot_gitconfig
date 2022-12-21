@@ -75,6 +75,9 @@
 [diff]
 	compactionHeuristic = true
 
+[url "ssh://git@github.com/sparetimecoders/"]
+  insteadOf = https://github.com/sparetimecoders/
+
 [url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
 
