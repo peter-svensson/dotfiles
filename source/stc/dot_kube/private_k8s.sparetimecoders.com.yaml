@@ -1,0 +1,28 @@
+apiVersion: v1
+clusters:
+  - cluster:
+      certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUMrRENDQWVDZ0F3SUJBZ0lNRnlkNFJNQk9QQUN3UTMrK01BMEdDU3FHU0liM0RRRUJDd1VBTUJneEZqQVUKQmdOVkJBTVREV3QxWW1WeWJtVjBaWE10WTJFd0hoY05Nakl4TVRFeU1UUXdNREl6V2hjTk16SXhNVEV4TVRRdwpNREl6V2pBWU1SWXdGQVlEVlFRREV3MXJkV0psY201bGRHVnpMV05oTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGCkFBT0NBUThBTUlJQkNnS0NBUUVBNU5NRHlIdyswTk5lOUV1UE1mc2ZEQjJzL0lTMkR3dysyNnh6WnhXNnlPckUKL2FqbSs5QW5xY0NjWVRYS1M0K0oyRHVUdmh6Z21SeS8vemxibTluYUtaeEN1bEh2R1BET1B0OE5Cd1RNcTRnUAp4WHFhVVBOZGppUC9ESmx5eDBYQ1FqdHNjM01BaHpoNzVMNVp3MU9GUWNVS0wva3pNd08yRjBYcUdSdVgrVHVICkx5STZHRHBZTmtaWnluN041WC9EM21hWW10TFdVZVJValhNNlZ3Y0l5SmRkSHJXZHFEZG5sZ0FQQWduOENOMEkKaDVkRUp4TUhXQzVEK2pFZllIQjk0K2U3UkxKZTVlYklOclhnbGJCUGQ1WG1Xa0xTSmdna28vTHlrZG52VW9sWgozN0tFMGM0R1lXUUhDdUs1WEs5dE04amg2bUJiZW44NVpmb0RkS0lha1FJREFRQUJvMEl3UURBT0JnTlZIUThCCkFmOEVCQU1DQVFZd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFRmdRVWI2K0NsaTd5WjJlYTY3YlkKMjNUa095a1dWRXN3RFFZSktvWklodmNOQVFFTEJRQURnZ0VCQUVMWElUOUlCaGhMOGN3aG5ub3p1ajJlcWZZbAo2TzJkNE8vbUNZaFVzZlVSQ0JQbjhWQkdFNC9ER21oRGJDdFIzWmk5SEp3R0pLaUtoUTlzZlQ5R09HSmxtU1RsCm1rcUFVejl6blZlOVFuL0UxM0hZQ3VnUW9EWlUwVmdwTW1LMXlXQ2NFUmlzM0tURjFyQ2tmcTUzU0pZT2c0UzUKcnhFdDB5S25JWWQ2VDZ6WWpGazMyL0h3alJEVTZ4b09QcW96cHF0T01SK2xadlBGTU9ZYnlueGZTeUF2M1o0eAo2SHRqenIrWUJ6M1VrZGhzOFZQSS9JUmI4bTNOZVVicmRyOGtNTjlXZGdBSGMycFk1bm8rdUZ3NlNxd0Z2UjR1CmY4OGxvR2VvNnZrdkxhbDg2OEQ4VTh5bzBzRUI4Q216OUpUSUplZGNHa0NXNlV0U29UU0hnYnFGd01BPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+      server: https://api.k8s.sparetimecoders.com
+    name: k8s.sparetimecoders.com
+contexts:
+  - context:
+      cluster: k8s.sparetimecoders.com
+      user: k8s.sparetimecoders.com
+    name: k8s.sparetimecoders.com
+current-context: k8s.sparetimecoders.com
+kind: Config
+preferences: {}
+users:
+  - name: k8s.sparetimecoders.com
+    user:
+      exec:
+        apiVersion: client.authentication.k8s.io/v1beta1
+        args:
+          - eks
+          - get-token
+          - --cluster-name
+          - k8s.sparetimecoders.com
+        command: aws
+        env: null
+        interactiveMode: IfAvailable
+        provideClusterInfo: false
