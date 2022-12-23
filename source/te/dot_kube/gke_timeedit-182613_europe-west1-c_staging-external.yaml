@@ -13,14 +13,11 @@ current-context: ""
 kind: Config
 preferences: {}
 users:
-- name: gke_timeedit-182613_europe-west1-c_staging-external
-  user:
-    auth-provider:
-      config:
-        access-token: ya29.a0AfH6SMCuiW2-yb-d4LlnCJfXIB0bIEUIAxkBIjmJnm-psjoT0l8TbHZgetTX1o3WgLfp6i-QoUGbMCJSbeRNjEXp1_LH91FHLms_Qb9gwvhLyny_7bWmvk-LnTxc734_MLIpWXuPKrgWFnCqdjYedPeWaIaxnhqGWvTcGts
-        cmd-args: config config-helper --format=json
-        cmd-path: /opt/homebrew/bin/gcloud 
-        expiry: "2021-05-11T15:18:44Z"
-        expiry-key: '{.credential.token_expiry}'
-        token-key: '{.credential.access_token}'
-      name: gcp
+  - name: gke_timeedit-182613_europe-west1-c_staging-external
+    user:
+      exec:
+        apiVersion: client.authentication.k8s.io/v1beta1
+        command: /opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin/gke-gcloud-auth-plugin
+        installHint: Install gke-gcloud-auth-plugin for use with kubectl by following
+          https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+        provideClusterInfo: true
