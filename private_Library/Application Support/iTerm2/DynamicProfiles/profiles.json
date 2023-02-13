@@ -298,6 +298,7 @@
   "Window Type" : 13,
   "Initial Text" : "tmux attach -t init || tmux new -s init",
   "Background Image Location" : "",
+  "Custom Locale" : "en_US",
   "Blur" : false,
   "Badge Color" : {
     "Red Component" : 1,
