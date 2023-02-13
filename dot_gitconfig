@@ -86,3 +86,6 @@
 
 [init]
 	defaultBranch = main
+
+[includeIf "gitdir:~/source/autocom/"]
+ path = ~/source/autocom/.gitconfig

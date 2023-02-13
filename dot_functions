@@ -79,7 +79,7 @@ bup() {
   fi
 
   echo "Brewfile matches installation, updating packages"
-  brew upgrade
+  brew update && brew upgrade
   for cask in $(brew list --cask); do
     brew info --cask $cask --json=v2 \
     | jq -r "[.casks[].outdated,.casks[].installed,.casks[].version] \
