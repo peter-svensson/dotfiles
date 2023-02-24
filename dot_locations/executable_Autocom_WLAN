@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+exec 2>&1
+
+sudo /opt/homebrew/bin/gsed -i '$a10.103.71.234	vpn.autocom.se' /etc/hosts
