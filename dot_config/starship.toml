@@ -1,0 +1,28 @@
+# https://starship.rs/
+format = """
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$nodejs\
+$terraform\
+$aws\
+$gcloud\
+$sudo\
+$cmd_duration\
+$line_break\
+$status\
+$character"""
+
+right_format="$kubernetes"
+
+[kubernetes]
+disabled = false
+format = '[$symbol$context( \($namespace\))]($style)'
+
+[git_commit]
+tag_disabled = false
+
+[nodejs]
+format ='[$symbol($version )]($style)'

@@ -5,4 +5,4 @@ export AWS_SDK_LOAD_CONFIG=1
 export AWS_DEFAULT_REGION=eu-west-1
 export AWS_REGION=eu-west-1
 export AWS_PROFILE=saml
-
+export AWS_SHARED_CREDENTIALS_FILE=${PWD}/.aws/credentials
