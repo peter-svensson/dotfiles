@@ -1,3 +1,0 @@
-source_up .envrc
-export KOPS_STATE_STORE=s3://591642163586-eu-west-1-kops-storage
-export KOPS_CLUSTER_NAME=k8s.mps.plint.app
