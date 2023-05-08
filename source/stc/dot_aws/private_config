@@ -9,3 +9,12 @@ region = eu-west-1
 sso_account_id = 292662267961
 sso_role_name = AWSAdministratorAccess
 output = json
+aws_credential_expiration = 2023-05-06T10:17:49Z
+
+[profile stc-build]
+sso_start_url = https://sparetimecoders.awsapps.com/start
+sso_region = eu-west-1
+region = eu-west-1
+sso_account_id = 401697407976
+sso_role_name = AWSAdministratorAccess
+aws_credential_expiration = 2023-05-08T17:45:52Z

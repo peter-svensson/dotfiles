@@ -20,7 +20,6 @@
     attributesfile = ~/.gitattributes
     editor = /usr/bin/vim
     pager = delta --dark
-    hooksPath = ~/.git-hooks
 
 [interactive]
      diffFilter = delta --color-only --dark
