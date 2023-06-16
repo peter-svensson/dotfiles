@@ -1,4 +1,6 @@
 Include config.d/*
+Host bitbucket.org
+  ControlMaster no
 
 # Default
 Host *
