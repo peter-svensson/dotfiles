@@ -21,6 +21,10 @@ use_nvm() {
       echo "Parsing package.json for node version to use with direnv requires jq"
     fi
   fi
-
+ nvm_sh=~/.nvm/nvm.sh
+  if [[ -e $nvm_sh ]]; then
+    source $nvm_sh
+    nvm use $node_version
+  fi
   nvm use $node_version
 }
