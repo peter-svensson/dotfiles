@@ -86,5 +86,5 @@
 [init]
 	defaultBranch = main
 
-[includeIf "gitdir:~/source/autocom/"]
- path = ~/source/autocom/.gitconfig
+[includeIf "gitdir:~/source/smart/"]
+ path = ~/source/smart/.gitconfig
