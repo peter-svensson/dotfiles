@@ -55,6 +55,9 @@ autoload -Uz compinit && compinit -i
 
 direnv reload
 
+if type docker > /dev/null ; then
+  source <(docker completion zsh)
+fi
 if type stern > /dev/null ; then
   source <(stern --completion=zsh)
 fi
