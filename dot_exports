@@ -24,5 +24,4 @@ export _git_log_brief_format='%C(green)%h%C(reset) %s%n%C(blue)(%ar by %an)%C(re
 #export JAVA_HOME=$(/usr/libexec/java_home -v 14.0)
 export BASH_ENV=${HOME}/.bashrc
 
-export DOCKER_HOST=unix://${HOME}/.docker/run/docker.sock
 export HOMEBREW_GITHUB_API_TOKEN=$GITHUB_TOKEN
