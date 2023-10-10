@@ -14,6 +14,8 @@ tap "warrensbox/tap"
 brew "ack"
 brew "act"
 brew "readline"
+brew "pnpm", args: ["ignore-dependencies"]
+brew "docker-completion"
 brew "xz"
 brew "asciinema"
 brew "autoconf"
