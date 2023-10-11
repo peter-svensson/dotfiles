@@ -9,28 +9,11 @@ for file in ~/.{functions,exports,paths,prompt,aliases,extra,auths,historyopts};
   [ -r "$file" ] && [ -f "$file" ] && source "$file";
 done
 
-
-function powerline_precmd() {
-eval "$($GOPATH/bin/powerline-go -condensed -error $? -cwd-mode dironly -shell zsh -eval -cwd-max-depth 0 -modules cwd,dotenv,exit -modules-right aws,git,kube)"
-    #eval "$($GOPATH/bin/powerline-go -error $? -condensed -cwd-mode plain  -newline -modules cwd -shell zsh -eval -modules-right git)"
-}
-
-function install_powerline_precmd() {
-  for s in "${precmd_functions[@]}"; do
-    if [ "$s" = "powerline_precmd" ]; then
-      return
-    fi
-  done
-  precmd_functions+=(powerline_precmd)
-}
-
 if [ "$TERM" != "linux" ]; then
-    #install_powerline_precmd
     eval "$(starship init zsh)"
 fi
 
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 
 # Completions
 bindkey -M viins '\C-i' complete-word
@@ -85,3 +68,20 @@ complete -o nospace -C terraform terraform
 export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+_gobrew()
+{
+    COMP_WORDBREAKS=${COMP_WORDBREAKS//:}
+    case "$COMP_CWORD" in
+        1)
+            COMMANDS="ls ls-remote use install uninstall self-update prune version help"
+            ;;
+        2)
+            COMMANDS=`gobrew ls |sed '/*/d'| sed '/current/d' |awk NF`
+            ;;
+    esac
+    COMPREPLY=(`compgen -W "$COMMANDS" -- "${COMP_WORDS[COMP_CWORD]}"`)
+    return 0
+}
+
+complete -F _gobrew gobrew

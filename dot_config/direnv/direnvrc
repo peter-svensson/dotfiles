@@ -21,10 +21,20 @@ use_nvm() {
       echo "Parsing package.json for node version to use with direnv requires jq"
     fi
   fi
- nvm_sh=~/.nvm/nvm.sh
+  nvm_sh=~/.nvm/nvm.sh
   if [[ -e $nvm_sh ]]; then
     source $nvm_sh
     nvm use $node_version
   fi
   nvm use $node_version
+}
+
+use_go() {
+  local go_version=$1
+
+  if [ "mod" == "${go_version}" ]; then
+    gobrew use mod
+  else
+    gobrew use "${go_version}"
+  fi
 }
