@@ -25,4 +25,4 @@ export BASH_ENV=${HOME}/.bashrc
 
 export HOMEBREW_GITHUB_API_TOKEN=$GITHUB_TOKEN
 
-export GOPATH="$HOME/.gobrew/current/go"
+#export GOPATH="$HOME/.gobrew/current/go"
