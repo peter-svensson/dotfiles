@@ -1,9 +1,0 @@
-source_up .envrc
-
-export KUBECONFIG=$( IFS=:; set -- ${PWD}/.kube/kind*.yaml ${PWD}/.kube/*.yaml; echo "$*" )
-
-export AWS_PROFILE=te
-export GOOGLE_CLOUD_KEYFILE_JSON=~/source/te/{{ .chezmoi.username }}-test-989d8ddd4db4.json
-export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-export CLOUDSDK_CONFIG=~/source/te/.config
-export GOOGLE_APPLICATION_CREDENTIALS=~/source/te/.config/application_default_credentials.json
