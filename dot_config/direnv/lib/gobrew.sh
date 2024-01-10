@@ -6,5 +6,4 @@ use_go() {
     version=$(echo "${out}" | grep "Version: " | cut -d\  -f 4)
   fi
   export PATH=~/.gobrew/versions/${version}/go/bin:${PATH}
-  export GOROOT=~/.gobrew/versions/${version}/go
 }

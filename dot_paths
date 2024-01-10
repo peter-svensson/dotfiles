@@ -13,5 +13,4 @@ append_path ${GOPATH}/bin
 append_path /opt/homebrew/opt/mysql-client/bin
 append_path ${HOME}/.gobrew/current/bin
 append_path ${HOME}/.gobrew/bin
-
-
+append_path ${HOME}/go/bin
