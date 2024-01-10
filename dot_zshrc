@@ -1,13 +1,4 @@
-# Sourre Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
-
 fpath=(/usr/local/share/zsh-completions /usr/local/share/zsh/site-functions $fpath)
-
-for file in ~/.{functions,exports,paths,prompt,aliases,extra,auths,historyopts}; do
-  [ -r "$file" ] && [ -f "$file" ] && source "$file";
-done
 
 if [ "$TERM" != "linux" ]; then
     eval "$(starship init zsh)"
@@ -30,13 +21,9 @@ zstyle ':completion::complete:*' use-cache 1
 # color code completion!!!!  Wohoo!
 zstyle ':completion:*' list-colors "=(#b) #([0-9]#)*=36=31"
 
-eval "$(direnv hook zsh)"
-
 autoload -U promptinit; promptinit
 autoload -U colors; colors
 autoload -Uz compinit && compinit -i
-
-direnv reload
 
 if type docker > /dev/null ; then
   source <(docker completion zsh)
@@ -85,3 +72,17 @@ _gobrew()
 }
 
 complete -F _gobrew gobrew
+
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+for file in ~/.{functions,exports,paths,prompt,aliases,extra,auths,historyopts}; do
+  [ -r "$file" ] && [ -f "$file" ] && source "$file";
+done
+
+eval "$(direnv hook zsh)"
+
+typeset -U path
+typeset -U manpath
