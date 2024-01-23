@@ -1,3 +1,4 @@
+{{ if eq .chezmoi.os "darwin" -}}
 #!/bin/sh
-
 curl -L https://github.com/eprev/locationchanger/raw/master/locationchanger.sh | bash
+{{ end -}}

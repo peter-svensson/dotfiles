@@ -1,0 +1,16 @@
+#!/bin/sh
+
+{{ if eq .chezmoi.os "darwin" -}}
+# Switch to using brew-installed zsh as default shell
+if ! fgrep -q '/opt/homebrew/bin/zsh' /etc/shells; then
+  echo '/opt/homebrew/bin/zsh' | sudo tee -a /etc/shells;
+  chsh -s /opt/homebrew/bin/zsh;
+fi;
+{{ else if eq .chezmoi.os "linux" -}}
+# Switch to using zsh as default shell
+if ! fgrep -q '/usr/bin/zsh' /etc/shells; then
+  echo '/usr/bin/zsh' | sudo tee -a /etc/shells;
+  chsh -s /usrw/bin/zsh;
+
+fi;
+{{ end -}}

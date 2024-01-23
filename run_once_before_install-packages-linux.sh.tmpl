@@ -1,0 +1,26 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/sh
+
+sudo apt install -y unzip
+
+sudo apt update
+sudo apt install -y pipx
+pipx ensurepath
+
+sudo apt install -y direnv
+
+curl -sS https://starship.rs/install.sh | sh
+
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+rm -rf ./awscliv2.zip ./aws
+
+curl -L https://github.com/dandavison/delta/releases/download/0.16.5/git-delta_0.16.5_amd64.deb -o "git-delta.deb"
+sudo dpkg -i git-delta.deb
+rm git-delta.deb
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+sudo apt install -y zsh-syntax-highlighting
+{{ end -}}

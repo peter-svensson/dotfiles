@@ -1,3 +1,4 @@
+{{ if eq .chezmoi.os "darwin" -}}
 prepend_path /opt/homebrew/opt/grep/libexec/gnubin
 prepend_path /opt/homebrew/opt/gnu-getopt/bin
 prepend_path /opt/homebrew/opt/gnu-sed/libexec/gnubin
@@ -7,10 +8,20 @@ prepend_path /opt/homebrew/opt/make/libexec/gnubin
 prepend_path /opt/homebrew/opt/gnu-tar/libexec/gnubin
 prepend_path /opt/homebrew/opt/curl/bin
 prepend_path /opt/homebrew/opt/openssl@3/bin
+{{ end -}}
+
 prepend_path ~/bin
 prepend_path ~/.local/bin
 append_path ${GOPATH}/bin
+{{ if eq .chezmoi.os "darwin" -}}
 append_path /opt/homebrew/opt/mysql-client/bin
+{{ end -}}
+
 append_path ${HOME}/.gobrew/current/bin
 append_path ${HOME}/.gobrew/bin
 append_path ${HOME}/go/bin
+
+{{ if eq .chezmoi.os "linux" -}}
+prepend_path /snap/bin
+
+{{ end -}}

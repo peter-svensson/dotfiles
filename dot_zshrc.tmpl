@@ -4,7 +4,11 @@ if [ "$TERM" != "linux" ]; then
     eval "$(starship init zsh)"
 fi
 
+{{- if eq .chezmoi.os "darwin" }}
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+{{- else if eq .chezmoi.os "linux" }}
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+{{- end }}
 
 # Completions
 bindkey -M viins '\C-i' complete-word
@@ -25,9 +29,12 @@ autoload -U promptinit; promptinit
 autoload -U colors; colors
 autoload -Uz compinit && compinit -i
 
+{{- if eq .chezmoi.os "darwin" -}}
 if type docker > /dev/null ; then
   source <(docker completion zsh)
 fi
+{{- end }}
+
 if type stern > /dev/null ; then
   source <(stern --completion=zsh)
 fi
@@ -44,17 +51,25 @@ if type chezmoi > /dev/null ; then
 	source <(chezmoi completion zsh)
 fi
 
+{{- if eq .chezmoi.os "darwin" -}}
 if type gcloud > /dev/null ; then
   source '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
   source '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 fi
+{{- end }}
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C terraform terraform
 
+{{- if eq .chezmoi.os "darwin" -}}
 export NVM_DIR="$HOME/.nvm"
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+{{ else if eq .chezmoi.os "linux" -}}
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+{{ end -}}
 
 _gobrew()
 {
