@@ -4,51 +4,52 @@
 	signingkey = 3AB79F04E4DB3893
 
 [alias]
-    ci = commit
-    ca = commit --amend
-    co = checkout
-    go = checkout -B
-    st = status
-    s = status --short --branch
-    graph = log --graph
+  ci = commit
+  ca = commit --amend
+  co = checkout
+  go = checkout -B
+  st = status
+  s = status --short --branch
+  graph = log --graph
 	up = pull --rebase --autostash
 
 
 [core]
-    autocrlf = input
-    excludesfile = ~/.gitignore
-    attributesfile = ~/.gitattributes
-    editor = /usr/bin/vim
-    pager = delta --dark
+  autocrlf = input
+  excludesfile = ~/.gitignore
+  attributesfile = ~/.gitattributes
+  editor = /usr/bin/vim
+  pager = delta --dark
+  # hooksPath = /Users/peter/.git-hooks/
 
 [interactive]
-     diffFilter = delta --color-only --dark
+   diffFilter = delta --color-only --dark
 
 [color]
-    ui = auto
-    diff = auto
-    status = auto
-    branch = auto
+  ui = auto
+  diff = auto
+  status = auto
+  branch = auto
 
 [color "branch"]
-    current = yellow reverse
-    local = yellow
-    remote = green
+  current = yellow reverse
+  local = yellow
+  remote = green
 
 [color "diff"]
-    meta = yellow bold
-    frag = magenta bold
-    old = red bold
-    new = green bold
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
 
 [color "status"]
-    added = yellow
-    changed = green
-    untracked = cyan
+  added = yellow
+  changed = green
+  untracked = cyan
 
 [merge]
-    # Include summaries of merged commits in newly created merge commit messages
-    log = true
+  # Include summaries of merged commits in newly created merge commit messages
+  log = true
 
 [help]
 	autocorrect = 20
@@ -87,4 +88,4 @@
 	defaultBranch = main
 
 [includeIf "gitdir:~/source/smart/"]
- path = ~/source/smart/.gitconfig
+  path = ~/source/smart/.gitconfig

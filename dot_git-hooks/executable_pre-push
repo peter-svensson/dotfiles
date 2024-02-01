@@ -1,54 +1,27 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# This is git pre-push hook script to prevent "fixup!" and "squash!" commits
-# from ending up in upstream branches (master, release-* or maint-*).
-#
+# This script should be saved in a git repo as a hook file, e.g. .git/hooks/pre-push.
+# It looks for scripts in the .git/hooks/pre-<hook name>>.d directory and executes them in order,
+# passing along stdin. If any script exits with a non-zero status, this script exits.
 
-z40=0000000000000000000000000000000000000000
+script_dir=$(dirname $0)
+hook_name=$(basename $0)
 
-CUR_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-if [ "$CUR_BRANCH" != "master" ] && [[ $CUR_BRANCH != "main" ]] &&
-    [[ $CUR_BRANCH != "develop" ]]
-then
-    exit 0
+hook_dir="$script_dir/$hook_name.d"
+
+if [[ -d $hook_dir ]]; then
+  stdin=$(cat /dev/stdin)
+
+  for hook in $hook_dir/*; do
+    echo "Running $hook"
+    echo "$stdin" | $hook "$@"
+
+    exit_code=$?
+
+    if [ $exit_code != 0 ]; then
+      exit $exit_code
+    fi
+  done
 fi
-
-echo "Running pre-push hook"
-
-# shellcheck disable=SC2034
-while read -r local_ref local_sha remote_ref remote_sha
-do
-	if [ "$local_sha" = $z40 ]
-	then
-		# Handle delete
-		:
-	else
-		if [ "$remote_sha" = $z40 ]
-		then
-			# New branch, examine all commits
-			range="$local_sha"
-		else
-    		# Update to existing branch, examine new commits
-			range="$remote_sha..$local_sha"
-		fi
-        # Check for fixup! commit
-        commit=$(git rev-list -n 1 --grep '^fixup!' "$range")
-		if [ -n "$commit" ]
-		then
-			echo >&2 "Found fixup! commit in $local_ref, not pushing"
-			echo >&2 "If you really want to push this, use --no-verify."
-			exit 1
-		fi
-
-                # Check for squash! commit
-                commit=$(git rev-list -n 1 --grep '^squash!' "$range")
-		if [ -n "$commit" ]
-		then
-			echo >&2 "Found squash! commit in $local_ref, not pushing"
-			echo >&2 "If you really want to push this, use --no-verify."
-			exit 1
-		fi
-	fi
-done
 
 exit 0
