@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+HERE="$(cd "$(dirname "$0")" && pwd)"
+echo "Looks like you haven't installed pre-commit?"
+
+if test -f "${HERE}/../../.pre-commit-config.yaml"; then
+  echo "pre-commit config file exists, not continuing until pre-commit is installed"
+  exit 1
+fi
+exit 0
