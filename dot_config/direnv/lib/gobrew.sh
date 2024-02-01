@@ -7,3 +7,5 @@ use_go() {
   fi
   export PATH=~/.gobrew/versions/${version}/go/bin:${PATH}
 }
+
+use_go
