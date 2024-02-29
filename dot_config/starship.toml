@@ -12,6 +12,7 @@ $git_metrics\
 $sudo\
 $cmd_duration\
 $status\
+$package\
 $fill\
 $direnv\
 $aws\
@@ -23,6 +24,9 @@ $line_break\
 $character"""
 
 right_format=""
+
+[package]
+format = ' [$symbol$version]($style)'
 
 [direnv]
 disabled = false
