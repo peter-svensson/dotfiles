@@ -1,7 +1,7 @@
 [user]
 	name = Peter Svensson
 	email = peter@sparetimecoders.com
-	signingkey = 3AB79F04E4DB3893
+	signingKey = /Users/peter/.ssh/id_rsa.pub
 
 [alias]
   ci = commit
@@ -72,7 +72,10 @@
 	gpgsign = true
 
 [gpg]
-	program = gpg
+  format = ssh
+
+[gpg "ssh"]
+  allowedSignersFile = /Users/peter/.git_allowed_signers
 
 [diff]
 	compactionHeuristic = true
