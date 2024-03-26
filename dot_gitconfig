@@ -13,6 +13,8 @@
   graph = log --graph
 	up = pull --rebase --autostash
 
+[branch]
+  sort = -committerdate
 
 [core]
   autocrlf = input
