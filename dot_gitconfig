@@ -3,6 +3,11 @@
 	email = peter@sparetimecoders.com
 	signingKey = /Users/peter/.ssh/id_rsa.pub
 
+[committer]
+	name = Peter Svensson
+	email = peter@sparetimecoders.com
+	signingKey = /Users/peter/.ssh/id_rsa.pub
+
 [alias]
   ci = commit
   ca = commit --amend
