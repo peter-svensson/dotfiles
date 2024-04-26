@@ -1,28 +1,5 @@
 live_config_reload = true
-
-[colors.bright]
-black = "0x002b36"
-blue = "0x839496"
-cyan = "0x93a1a1"
-green = "0x586e75"
-magenta = "0x6c71c4"
-red = "0xcb4b16"
-white = "0xfdf6e3"
-yellow = "0x657b83"
-
-[colors.normal]
-black = "0x14181d"
-blue = "0x268bd2"
-cyan = "0x2aa198"
-green = "0x57bf37"
-magenta = "0xd33682"
-red = "0xdc322f"
-white = "0xc7c7c7"
-yellow = "0xb58900"
-
-[colors.primary]
-background = "0x002b36"
-foreground = "0x839496"
+import = ["~/.config/alacritty/themes/dimidium.toml"]
 
 [font]
 size = 13.0
