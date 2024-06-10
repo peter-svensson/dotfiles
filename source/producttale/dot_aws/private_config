@@ -1,0 +1,18 @@
+[default]
+region=eu-west-1
+output=json
+
+[profile production]
+sso_start_url = https://product-tale.awsapps.com/start
+sso_region = eu-west-1
+region = eu-west-1
+sso_account_id = 767398110381
+sso_role_name = AdministratorAccess
+
+[profile staging]
+sso_start_url = https://product-tale.awsapps.com/start
+sso_region = eu-west-1
+region = eu-west-1
+sso_account_id = 975050351788
+sso_role_name = AdministratorAccess
+
