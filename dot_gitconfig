@@ -101,3 +101,8 @@
 
 [includeIf "gitdir:~/source/smart/"]
   path = ~/source/smart/.gitconfig
+
+[gitbutler]
+        signCommits = true
+        aiOpenAIKeyOption = butlerAPI
+        aiOpenAIModelName = gpt-4o-mini
