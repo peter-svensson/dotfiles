@@ -43,6 +43,9 @@ fi
 if type chezmoi > /dev/null ; then
 	source <(chezmoi completion zsh)
 fi
+if type ngrok &>/dev/null; then
+  source <(ngrok completion)
+fi
 
 if type gcloud > /dev/null ; then
   source '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
