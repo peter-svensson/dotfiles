@@ -29,7 +29,7 @@
   pager = delta --dark
 
 [init]
-  templateDir = ~/.git-templates
+  #templateDir = ~/.git-templates
 
 [interactive]
    diffFilter = delta --color-only --dark
