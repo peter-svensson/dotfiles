@@ -76,6 +76,7 @@ brew "pnpm"
 brew "postgresql@16", link: true
 brew "pre-commit"
 brew "protobuf"
+brew "pulumi"
 brew "pv"
 brew "pyenv"
 brew "python-argcomplete"
