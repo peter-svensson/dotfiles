@@ -23,13 +23,13 @@
 
 [core]
   autocrlf = input
-  excludesfile = ~/.gitignore
+  excludesfile = ~/.gitignore_global
   attributesfile = ~/.gitattributes
   editor = /usr/bin/vim
   pager = delta --dark
 
 [init]
-  templateDir = ~/.git-templates
+  # templateDir = ~/.git-templates
 
 [interactive]
    diffFilter = delta --color-only --dark
@@ -103,6 +103,7 @@
   path = ~/source/smart/.gitconfig
 
 [gitbutler]
-        signCommits = true
-        aiOpenAIKeyOption = butlerAPI
-        aiOpenAIModelName = gpt-4o-mini
+  signCommits = true
+  aiOpenAIKeyOption = bringYourOwn
+  aiOpenAIModelName = gpt-4o-mini
+
