@@ -28,6 +28,23 @@
   editor = /usr/bin/vim
   pager = delta --dark
 
+[delta]
+  paging=always
+  minus-style = syntax "#450a15"
+  plus-style = syntax "#0b4820"
+  plus-emph-style = syntax "#175c2e"
+  syntax-theme = TwoDark
+#  width = 1
+#  line-numbers = true
+#  minus-emph-style = syntax "#600818"
+#  hunk-header-style = syntax bold
+#  hunk-header-decoration-style = omit
+#  file-style = yellow italic
+#  file-decoration-style = yellow ul
+#  line-numbers-zero-style = "#4b5263"
+#  line-numbers-left-format = "{nm:^4} "
+#  line-numbers-right-format = "{np:^4} "
+
 [init]
   # templateDir = ~/.git-templates
 
@@ -45,11 +62,11 @@
   local = yellow
   remote = green
 
-[color "diff"]
-  meta = yellow bold
-  frag = magenta bold
-  old = red bold
-  new = green bold
+#[color "diff"]
+#  meta = yellow bold
+#  frag = magenta bold
+#  old = red bold
+#  new = cyan bold
 
 [color "status"]
   added = yellow

@@ -7,3 +7,4 @@ idea
 .graphqlconfig
 .envrc
 .buildtools.yaml
+.hermit
