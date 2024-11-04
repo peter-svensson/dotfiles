@@ -13,6 +13,9 @@ $sudo\
 $cmd_duration\
 $status\
 $package\
+$terraform\
+$nodejs\
+$golang\
 $fill\
 $direnv\
 $line_break\
