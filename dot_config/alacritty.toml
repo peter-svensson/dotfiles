@@ -23,4 +23,4 @@ startup_mode = "Windowed"
 
 [general]
 live_config_reload = true
-import = ["~/.config/alacritty/themes/dimidium.toml"]
+import = ["~/.config/alacritty/themes/nord.toml"]

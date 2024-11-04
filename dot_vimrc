@@ -1,6 +1,6 @@
 " Use the Solarized Dark theme
 set background=dark
-colorscheme solarized8
+colorscheme nord
 
 set timeoutlen=1000 ttimeoutlen=0
 
