@@ -67,3 +67,8 @@ format = '[$symbol($version )]($style)'
 
 [docker_context]
 format = '[$symbol]($style)'
+
+[fill]
+symbol = ' '
+
+
