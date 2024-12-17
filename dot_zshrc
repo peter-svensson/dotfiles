@@ -43,11 +43,18 @@ fi
 if type chezmoi > /dev/null ; then
 	source <(chezmoi completion zsh)
 fi
-
-
-if type gcloud > /dev/null ; then
-  source '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-  source '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+if type ngrok > /dev/null; then
+  source <(ngrok completion)
+fi
+if type atuin > /dev/null ; then
+  source <(atuin init --disable-up-arrow zsh)
+fi
+if type direnv > /dev/null; then
+  source <(direnv hook zsh)
+fi
+HERMIT_ROOT_BIN="${HERMIT_ROOT_BIN:-"$HOME/bin/hermit"}"
+if type $HERMIT_ROOT_BIN > /dev/null; then
+  source <("${HERMIT_ROOT_BIN}" shell-hooks --print --zsh)
 fi
 
 autoload -U +X bashcompinit && bashcompinit
@@ -83,14 +90,5 @@ for file in ~/.{functions,exports,paths,prompt,aliases,extra,auths,historyopts};
   [ -r "$file" ] && [ -f "$file" ] && source "$file";
 done
 
-eval "$(direnv hook zsh)"
-
-HERMIT_ROOT_BIN="${HERMIT_ROOT_BIN:-"$HOME/bin/hermit"}"
-eval "$(test -x $HERMIT_ROOT_BIN && $HERMIT_ROOT_BIN shell-hooks --print --zsh)"
-
 typeset -U path
 typeset -U manpath
-
-if type atuin > /dev/null ; then
-  eval "$(atuin init --disable-up-arrow zsh)"
-fi
