@@ -44,6 +44,7 @@ if type chezmoi > /dev/null ; then
 	source <(chezmoi completion zsh)
 fi
 
+
 if type gcloud > /dev/null ; then
   source '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
   source '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
@@ -86,3 +87,7 @@ eval "$(direnv hook zsh)"
 
 typeset -U path
 typeset -U manpath
+
+if type atuin > /dev/null ; then
+  eval "$(atuin init --disable-up-arrow zsh)"
+fi
