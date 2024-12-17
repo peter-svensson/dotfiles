@@ -93,20 +93,3 @@ bup() {
     fi
   done
 }
-
-s2a() {
-    local target="${1}"
-    local role
-    if [ "${target}" = "stage" ]; then
-        role="arn:aws:iam::720349101269:role/ViwsStageDeveloper"
-    elif [ "${target}" = "prod" ]; then
-        role="arn:aws:iam::533124967459:role/ViwsProdDeveloper"
-    elif [ "${target}" = "shared" ]; then
-        role="arn:aws:iam::484134168910:role/AC-ADFS-Developers"
-    else
-        echo "No valid target: ${target}"
-        return
-    fi
-    saml2aws login -s --force --skip-prompt --role=${role} --quiet 
-    eval $( saml2aws script --shell=bash )
-}
