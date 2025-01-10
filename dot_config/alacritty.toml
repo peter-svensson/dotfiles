@@ -1,3 +1,6 @@
+[env]
+term = "xterm-256color"
+
 [font]
 size = 13.0
 
@@ -22,4 +25,4 @@ startup_mode = "Windowed"
 
 [general]
 live_config_reload = true
-import = ["~/.config/alacritty/themes/nord.toml"]
+import = ["~/.config/alacritty/themes/catppuccin_mocha.toml"]

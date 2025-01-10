@@ -1,6 +1,6 @@
-" Use the Solarized Dark theme
+" Use the Nord theme
 set background=dark
-colorscheme nord
+colorscheme catppuccin_mocha
 
 set timeoutlen=1000 ttimeoutlen=0
 
