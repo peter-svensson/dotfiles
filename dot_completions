@@ -1,0 +1,30 @@
+if type docker > /dev/null ; then
+  source <(docker completion zsh)
+fi
+if type stern > /dev/null ; then
+  source <(stern --completion=zsh)
+fi
+if type kubectl > /dev/null ; then
+	source <(kubectl completion zsh)
+fi
+if type kops > /dev/null ; then
+	source <(kops completion zsh)
+fi
+if type kind > /dev/null ; then
+	source <(kind completion zsh)
+fi
+if type chezmoi > /dev/null ; then
+	source <(chezmoi completion zsh)
+fi
+if type ngrok > /dev/null; then
+  source <(ngrok completion)
+fi
+if type atuin > /dev/null ; then
+  source <(atuin init --disable-up-arrow zsh)
+fi
+#HERMIT_ROOT_BIN="${HERMIT_ROOT_BIN:-"$HOME/bin/hermit"}"
+#if type $HERMIT_ROOT_BIN > /dev/null; then
+#  source <("${HERMIT_ROOT_BIN}" shell-hooks --print --zsh)
+#fi
+
+source ~/.orbstack/shell/init.zsh 2>/dev/null || :

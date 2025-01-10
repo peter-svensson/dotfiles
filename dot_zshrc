@@ -1,94 +1,142 @@
-fpath=(/usr/local/share/zsh-completions /usr/local/share/zsh/site-functions $fpath)
+# Start configuration added by Zim install {{{
+#
+# User configuration sourced by interactive shells
+#
 
-if [ "$TERM" != "linux" ]; then
-    eval "$(starship init zsh)"
+# -----------------
+# Zsh configuration
+# -----------------
+
+# -----------------
+# Zsh history
+# -----------------
+
+source ~/.historyopts
+#
+# Input/output
+#
+
+# Set editor default keymap to emacs (`-e`) or vi (`-v`)
+bindkey -e
+
+# Prompt for spelling correction of commands.
+#setopt CORRECT
+
+# Customize spelling correction prompt.
+#SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
+
+# Remove path separator from WORDCHARS.
+WORDCHARS=${WORDCHARS//[\/]}
+
+# -----------------
+# Zim configuration
+# -----------------
+
+# Use degit instead of git as the default tool to install and update modules.
+#zstyle ':zim:zmodule' use 'degit'
+
+# --------------------
+# Module configuration
+# --------------------
+
+#
+# git
+#
+
+# Set a custom prefix for the generated aliases. The default prefix is 'G'.
+zstyle ':zim:git' aliases-prefix 'g'
+
+#
+# input
+#
+
+# Append `../` to your input for each `.` you type after an initial `..`
+#zstyle ':zim:input' double-dot-expand yes
+
+
+#
+# termtitle
+#
+
+# Set a custom terminal title format using prompt expansion escape sequences.
+# See http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Simple-Prompt-Escapes
+# If none is provided, the default '%n@%m: %~' is used.
+#zstyle ':zim:termtitle' format '%1~'
+
+#
+# zsh-autosuggestions
+#
+
+# Disable automatic widget re-binding on each precmd. This can be set when
+# zsh-users/zsh-autosuggestions is the last module in your ~/.zimrc.
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+
+# Customize the style that the suggestions are shown with.
+# See https://github.com/zsh-users/zsh-autosuggestions/blob/master/README.md#suggestion-highlight-style
+#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
+
+#
+# zsh-syntax-highlighting
+#
+
+# Set what highlighters will be used.
+# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+
+# Customize the main highlighter styles.
+# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md#how-to-tweak-it
+#typeset -A ZSH_HIGHLIGHT_STYLES
+#ZSH_HIGHLIGHT_STYLES[comment]='fg=242'
+
+# ------------------
+# Initialize modules
+# ------------------
+
+ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
+# Download zimfw plugin manager if missing.
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+  if (( ${+commands[curl]} )); then
+    curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
+        https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+  else
+    mkdir -p ${ZIM_HOME} && wget -nv -O ${ZIM_HOME}/zimfw.zsh \
+        https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+  fi
+fi
+# Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
+  source ${ZIM_HOME}/zimfw.zsh init -q
 fi
 
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Initialize modules.
+source ${ZIM_HOME}/init.zsh
 
-# Completions
-bindkey -M viins '\C-i' complete-word
+# ------------------------------
+# Post-init module configuration
+# ------------------------------
 
-zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+l:|=* r:|=*'
-zstyle ':completion:*' ignored-patterns 'kubectl.docker'
+#
+# zsh-history-substring-search
+#
+zmodload -F zsh/terminfo +p:terminfo
+# Bind ^[[A/^[[B manually so up/down works both before and after zle-line-init
+for key ('^[[A' '^P' ${terminfo[kcuu1]}) bindkey ${key} history-substring-search-up
+for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search-down
+for key ('k') bindkey -M vicmd ${key} history-substring-search-up
+for key ('j') bindkey -M vicmd ${key} history-substring-search-down
+unset key
+# }}} End configuration added by Zim install
 
-# Faster! (?)
-zstyle ':completion::complete:*' use-cache 1
 
-# case insensitive completion
-#zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+# ------------------------------
+# Custom completions and setup
+# ------------------------------
 
-# color code completion!!!!  Wohoo!
-zstyle ':completion:*' list-colors "=(#b) #([0-9]#)*=36=31"
+source ~/.completions
+source ~/.aliases
+source ~/.auths
+source ~/.exports
+source ~/.functions
+source ~/.paths
 
-autoload -U promptinit; promptinit
-autoload -U colors; colors
-autoload -Uz compinit && compinit -i
-
-if type docker > /dev/null ; then
-  source <(docker completion zsh)
-fi
-if type stern > /dev/null ; then
-  source <(stern --completion=zsh)
-fi
-if type kubectl > /dev/null ; then
-	source <(kubectl completion zsh)
-fi
-if type kops > /dev/null ; then
-	source <(kops completion zsh)
-fi
-if type kind > /dev/null ; then
-	source <(kind completion zsh)
-fi
-if type chezmoi > /dev/null ; then
-	source <(chezmoi completion zsh)
-fi
-if type ngrok > /dev/null; then
-  source <(ngrok completion)
-fi
-if type atuin > /dev/null ; then
-  source <(atuin init --disable-up-arrow zsh)
-fi
-if type direnv > /dev/null; then
-  source <(direnv hook zsh)
-fi
-HERMIT_ROOT_BIN="${HERMIT_ROOT_BIN:-"$HOME/bin/hermit"}"
-if type $HERMIT_ROOT_BIN > /dev/null; then
-  source <("${HERMIT_ROOT_BIN}" shell-hooks --print --zsh)
-fi
-
-autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C terraform terraform
-
-export NVM_DIR="$HOME/.nvm"
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
-_gobrew()
-{
-    COMP_WORDBREAKS=${COMP_WORDBREAKS//:}
-    case "$COMP_CWORD" in
-        1)
-            COMMANDS="ls ls-remote use install uninstall self-update prune version help"
-            ;;
-        2)
-            COMMANDS=`gobrew ls |sed '/*/d'| sed '/current/d' |awk NF`
-            ;;
-    esac
-    COMPREPLY=(`compgen -W "$COMMANDS" -- "${COMP_WORDS[COMP_CWORD]}"`)
-    return 0
-}
-
-complete -F _gobrew gobrew
-
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
-
-for file in ~/.{functions,exports,paths,prompt,aliases,extra,auths,historyopts}; do
-  [ -r "$file" ] && [ -f "$file" ] && source "$file";
-done
-
-typeset -U path
-typeset -U manpath

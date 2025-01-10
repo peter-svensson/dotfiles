@@ -1,0 +1,70 @@
+# zshenv path_helper issue script.
+# Source: https://gist.github.com/romanr/2c5ee2eafc284a2530cdb6b8d64d929c
+# Based on https://gist.github.com/Linerre/f11ad4a6a934dcf01ee8415c9457e7b2
+#
+# if [ -f "/etc/zprofile" ] && grep -q "path_helper" "/etc/zprofile"; then
+#     echo "WARNING: 'path_helper' in '/etc/zprofile', please remove it." >&2
+#     echo "Path helper 'path_helper' will execute after the one in this '~/.zshenv' file and" >&2
+#     echo "potentially reorder paths." >&2
+# fi
+unsetopt GLOBAL_RCS
+
+# Uncomment to set checksum of /etc/zprofile
+CHECKSUMZ="703cd3c8"
+
+# if [[ ! -v CHECKSUMZ ]]; then
+#    echo "Checksum is not set," # "  run \"crc32 /etc/zprofile\" and add checksum to \`~/.zshenv\" "
+# fi
+
+# Apple has set in `/etc/zprofile` the execution of `path_helper` tool, which
+# disorder the `PATH` variable like set here, prepending always system
+# directories and causing some problems. Fix the following option avoid load ZSH
+# startup files which follows the current one in the ZSH startup flow. In particular,
+# `/etc/zprofile`, so disable run of `path_helper`. More info here
+# https://gist.github.com/Linerre/f11ad4a6a934dcf01ee8415c9457e7b2, where I
+# even propose this solution
+unsetopt GLOBAL_RCS
+
+# To preserve other possible settings that should be executed by launching these
+# global files, all but `/etc/zprofile` are invoked manually
+source '/etc/zshrc' # Would be after `~/.zshenv` in flow, so OK
+
+# Finally, the `/etc/zprofile` is checked for changes. This is done in case any
+# additional settings are updated in the future in that file that might not
+# want to simply ignore.
+#
+# Current contents:
+#
+# ```
+# ❯ cat /etc/zprofile
+# System-wide profile for interactive zsh(1) login shells.
+#
+# Setup user specific overrides for this in ~/.zprofile. See zshbuiltins(1)
+# and zshoptions(1) for more details.
+#
+# if [ -x /usr/libexec/path_helper ]; then
+# 	eval `/usr/libexec/path_helper -s`
+# fi
+# ```
+if [[ -v CHECKSUMZ ]]; then
+
+
+if [ "$(crc32 '/etc/zprofile')" != \
+	"$CHECKSUMZ" ]; then
+	echo "$(tput setaf 3)[WARNING]$(tput sgr 0) File \`/etc/zprofile\` seems to has been changed since checkpoint. \n" \
+		'         1. Remove or comment path_helper lines (everything) in /etc/zprofile \n' \
+		"         2. Run 'crc32 /etc/zprofile' and add checksum to beginning of ~/.zshenv"
+fi
+
+# It is also verified that the rest of the global files still do not exist, so
+# that invocation can still been avoided
+for file in '/etc/zshenv' '/etc/zlogin' '/etc/zlogout'; do
+	if [ -f "$file" ]; then
+		echo "$(tput setaf 3)[WARNING]$(tput sgr 0) File `$file` exists and" \
+			"should not. See https://gist.github.com/Linerre/f11ad4a6a934dcf01ee8415c9457e7b2#choosing-the-right-init-file"
+	fi
+done
+
+else
+   echo "Checksum is not set! Run \"crc32 /etc/zprofile\" and add checksum to \`~/.zshenv\" "
+fi
