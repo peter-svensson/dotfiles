@@ -1,0 +1,15 @@
+Host homeassistant
+  User peter
+  HostName 192.168.20.200
+  Port 22
+
+Host hass
+  User peter
+  HostName 217.31.180.233
+  Port 10022
+
+Host nas
+  User admin
+  HostName ds.sparetimecoders.com
+  Port 2222
+  LocalForward :5000 192.168.1.247:5000
