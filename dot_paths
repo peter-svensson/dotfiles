@@ -1,16 +1,4 @@
-prepend_path /opt/homebrew/opt/grep/libexec/gnubin
-prepend_path /opt/homebrew/opt/gnu-getopt/bin
-prepend_path /opt/homebrew/opt/gnu-sed/libexec/gnubin
-prepend_path /opt/homebrew/opt/findutils/libexec/gnubin
-prepend_path /opt/homebrew/opt/coreutils/libexec/gnubin
-prepend_path /opt/homebrew/opt/make/libexec/gnubin
-prepend_path /opt/homebrew/opt/gnu-tar/libexec/gnubin
-prepend_path /opt/homebrew/opt/curl/bin
-prepend_path /opt/homebrew/opt/openssl@3/bin
-prepend_path ~/bin
-prepend_path ~/.local/bin
-append_path ${GOPATH}/bin
-append_path /opt/homebrew/opt/mysql-client/bin
-append_path ${HOME}/.gobrew/current/bin
-append_path ${HOME}/.gobrew/bin
-append_path ${HOME}/go/bin
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
+
+typeset -U PATH path
