@@ -73,3 +73,5 @@ alias prune="gfind . -type d -name .git ! -path '*/.terraform/*' ! -path '*/.dir
 alias gup="git up"
 alias hpr="hub pull-request"
 alias cm=chezmoi
+
+unalias gh # Remove git help alias in favour of github cli
