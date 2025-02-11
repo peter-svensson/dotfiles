@@ -1,12 +1,12 @@
 [user]
 	name = Peter Svensson
 	email = peter@sparetimecoders.com
-	signingKey = /Users/peter/.ssh/id_rsa.pub
+	signingKey = {{ .chezmoi.homeDir }}/.ssh/id_rsa.pub
 
 [committer]
 	name = Peter Svensson
 	email = peter@sparetimecoders.com
-	signingKey = /Users/peter/.ssh/id_rsa.pub
+	signingKey = {{ .chezmoi.homeDir }}/.ssh/id_rsa.pub
 
 [alias]
   ci = commit
@@ -99,7 +99,7 @@
   format = ssh
 
 [gpg "ssh"]
-  allowedSignersFile = /Users/peter/.git_allowed_signers
+  allowedSignersFile = {{ .chezmoi.homeDir }}/.git_allowed_signers
 
 [diff]
 	compactionHeuristic = true
@@ -116,8 +116,10 @@
 [init]
 	defaultBranch = main
 
+{{- if eq .chezmoi.hostname "A6436903" }}
 [includeIf "gitdir:~/source/jeppesen/"]
   path = ~/source/jeppesen/.gitconfig
+{{- end }}
 
 [gitbutler]
   signCommits = true
