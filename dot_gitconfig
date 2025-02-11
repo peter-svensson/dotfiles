@@ -116,8 +116,8 @@
 [init]
 	defaultBranch = main
 
-[includeIf "gitdir:~/source/smart/"]
-  path = ~/source/smart/.gitconfig
+[includeIf "gitdir:~/source/jeppesen/"]
+  path = ~/source/jeppesen/.gitconfig
 
 [gitbutler]
   signCommits = true
