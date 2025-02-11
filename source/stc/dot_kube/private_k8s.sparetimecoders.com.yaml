@@ -1,29 +1,32 @@
 apiVersion: v1
 clusters:
-- cluster:
-    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUMrRENDQWVDZ0F3SUJBZ0lNRi9la0JLZ0ZuRmp3NTlQeU1BMEdDU3FHU0liM0RRRUJDd1VBTUJneEZqQVUKQmdOVkJBTVREV3QxWW1WeWJtVjBaWE10WTJFd0hoY05NalF3T1RJd01UZ3lNakF5V2hjTk16UXdPVEl3TVRneQpNakF5V2pBWU1SWXdGQVlEVlFRREV3MXJkV0psY201bGRHVnpMV05oTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGCkFBT0NBUThBTUlJQkNnS0NBUUVBNi9KUFFqVTZLbDRoMVFML3RoRmNrckJETklhNWNSTnNaSWJDak00OUZtb1oKMzJNVms0NU9JV29XbUkxYVQvNm5SYmdRS3FBQWRDbDJ4NFRMQXpnY0JqOEVxelAvcWVwOEJGemFmdWNDRDZsVQpPTHFsUGRKUU5GVExUUjlzRnFqbmdIZkNna0kzNW5hLzNyWGZZYkFJY3kwWHNOUVlxKzlYYzhsYURERlVBUWJRCkk4ckhsd3Bha1JURFBSd25YSmNGb0o0anBZckh5OVpUYTNEbTBaRGNDY09ldWxmeXBTK3RkM2ZsemhBSEZMOU8KbHVxWTY5c01MVm12eGZ1WVNLQW4zWCt4ZEJhbkJlVERhaEVLazgrcUlRTHdHT1RuWDJLeThQTlU0YzY5aFhWOQpDZjkwc3N6OEljRWFZTDlxd09SL0dkWm1TWGZtS0lKbjRrQXdDeUVUL3dJREFRQUJvMEl3UURBT0JnTlZIUThCCkFmOEVCQU1DQVFZd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFRmdRVVRBT2Y0ajBUOFgydDhFUlIKeWpNSm1uUzNZckV3RFFZSktvWklodmNOQVFFTEJRQURnZ0VCQU9xaHZlS1hheE9rdVNQaEhQOGdCdG0wQTlTNApvMHRkck1IUmtyT0pMTXRtV1QxUnp1bHZBeHBZRXlhaE5YVzR6RDdVdW13Tis4MUcyczhxekhNQWkzNlJvT0ZoClBPUHc3alQyYllyNnUxck9NdUlNV2IzbWI5K0xjZzU1VGZrN2QzRnV4MDF6a013aENvNVpJSDJGWEFFYXpyeHMKVVRSUDRpSW01Z1JKUGs4elc0SlNEcExPZllxQjhraDlUcE9NRzRWaXpiUGNWQjhuYUhCNlV3R0s4MFBKcTh1TwpvdUgxVHF3Q2tCbGxMelJaNW1CZ3lHelplTEFNajBjTDY3MHVhWmZEZEhDNTYxclpvenRwM3A3OVFtSXNvUHRQCis0UVN4SUxNM2JhNTdZeHc2U1pwMGxPWUhHU0c4dllkZGN4aGp3Y1J5eThpVnY3TGVlOUxaVzFxbTJZPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
-    server: https://api-k8s-sparetimecoders-c-4lf7b7-7e84e854fb609201.elb.eu-west-1.amazonaws.com
-    tls-server-name: api.internal.k8s.sparetimecoders.com
-  name: k8s.sparetimecoders.com
+clusters:
+  - cluster:
+      certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUMrRENDQWVDZ0F3SUJBZ0lNR0IwREk5c3o5dERJRGI4NU1BMEdDU3FHU0liM0RRRUJDd1VBTUJneEZqQVUKQmdOVkJBTVREV3QxWW1WeWJtVjBaWE10WTJFd0hoY05NalV3TVRJd01USXlNVEl6V2hjTk16VXdNVEl3TVRJeQpNVEl6V2pBWU1SWXdGQVlEVlFRREV3MXJkV0psY201bGRHVnpMV05oTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGCkFBT0NBUThBTUlJQkNnS0NBUUVBc0dvTmkxQ2s3K0RNS2pUYkZjOVgxZkVUMis1Y2NVVFMzeHhUMVFhRGU1cGMKa3ptSHllNDl3U3k0NjE5eTd3MGNzakg2c2hPdUNNc2FKbFl3QWNNU2QxUkZPODZVYTJESFBYZnlYMWRoNUtYQQpVT1czbkljMG5NSXoxTkUyWGhaR0cyQStTYVRrcVFrYjIwajhsNGFvT1E1Z005SGNRUDlGaEVBTWJRSEVCa1lvClU0UXVFU2hPSm0vYU1BZkRyRUs1NUw0cld0cUdFNlNLNlUwU3NsMzBiSjFjckxNdHJ3SUFxVExlTmZ3RDNnTXoKQ3hCR3NzNmpjWEplLzZVc2tGZXFUVERnbnAxakRlSWpSUkFNSVhNUW9OZWxFZW92L2taYXFpTDUxaEt1VVBJWgpjOUlzMnE0WlhzRGpQT0VPZkJLWVhVV0h0WXlwc0JPVXY3Mlc1UGxsWHdJREFRQUJvMEl3UURBT0JnTlZIUThCCkFmOEVCQU1DQVFZd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFRmdRVVdrYjUwT1JmU3RjTDR2M0sKSksyNWNpNDU1aEF3RFFZSktvWklodmNOQVFFTEJRQURnZ0VCQUpOL0huZDRrOFZ4VnVSOEI4c09YWEZJZ0ZRawo5bTErQllZbXFGeVA3U2FPekdGeHgxSHhLdDhTWVFTamYrb3JHOFFMcVYwRjJkRmppNUNOa2JwaXJ4bVlUSWlaCmJyUkcxUXM1WFI3TThiY2NWbUlNQ2ZaQkNDZW5vMWNZQ1NobVpScXJBUTYwNE1vWFJSRUttSHFyRnd5U2FnNEsKUGpETTdJMm5WTHlHbXI5R3BEdE5hR0VhMUt3U1JGc3pmcnNCTk9VSkNQY3JkU0FzWkRnaTZQNkVkUkNVeFFZVApVUlloK2JPSjlqTW8xM1REamNpUFlyVmc3SlRnUThJMVlBNTg3YUJWM0s4b1BQZ0N6ZlR6VlVyT2wzV00xeFA1CmFJemZ2aGJrZE9QV0tVanVsYlMrNDZ5WGNReUVFSXhZUTZGR2xLTUU3MHhhSUUxenNEQnNOWUZHOXhnPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+      server: https://api-k8s-sparetimecoders-c-4lf7b7-92ff7a2af2b483e6.elb.eu-west-1.amazonaws.com
+      tls-server-name: api.internal.k8s.sparetimecoders.com
+    name: k8s.sparetimecoders.com
 contexts:
-- context:
-    cluster: k8s.sparetimecoders.com
-    user: k8s.sparetimecoders.com
-  name: k8s.sparetimecoders.com
+  - context:
+      cluster: k8s.sparetimecoders.com
+      user: k8s.sparetimecoders.com
+    name: k8s.sparetimecoders.com
 current-context: k8s.sparetimecoders.com
 kind: Config
-preferences: {}
+preferences: { }
 users:
-- name: k8s.sparetimecoders.com
-  user:
-    exec:
-      apiVersion: client.authentication.k8s.io/v1beta1
-      args:
-      - eks
-      - get-token
-      - --cluster-name
-      - k8s.sparetimecoders.com
-      command: aws
-      env: null
-      interactiveMode: IfAvailable
-      provideClusterInfo: false
+  - name: k8s.sparetimecoders.com
+    user:
+      exec:
+        apiVersion: client.authentication.k8s.io/v1beta1
+        args:
+          - eks
+          - get-token
+          - --cluster-name
+          - k8s.sparetimecoders.com
+        command: aws
+        env: null
+        interactiveMode: IfAvailable
+        provideClusterInfo: false
+
+
