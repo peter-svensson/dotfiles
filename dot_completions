@@ -27,4 +27,7 @@ fi
 #  source <("${HERMIT_ROOT_BIN}" shell-hooks --print --zsh)
 #fi
 
-source ~/.orbstack/shell/init.zsh 2>/dev/null || :
+if type orbctl > /dev/null ; then
+  source  ~/.orbstack/shell/init.zsh 2>/dev/null || :
+fi
+
