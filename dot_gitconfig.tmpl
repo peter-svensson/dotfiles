@@ -107,9 +107,6 @@
 [url "ssh://git@github.com/sparetimecoders/"]
   insteadOf = https://github.com/sparetimecoders/
 
-[url "ssh://git@github.com/"]
-	insteadOf = https://github.com/
-
 [fetch]
 	prune = true
 
@@ -119,6 +116,9 @@
 {{- if eq .chezmoi.hostname "A6436903" }}
 [includeIf "gitdir:~/source/jeppesen/"]
   path = ~/source/jeppesen/.gitconfig
+{{- else }}
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
 {{- end }}
 
 [gitbutler]
