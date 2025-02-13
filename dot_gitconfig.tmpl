@@ -116,6 +116,13 @@
 {{- if eq .chezmoi.hostname "A6436903" }}
 [includeIf "gitdir:~/source/jeppesen/"]
   path = ~/source/jeppesen/.gitconfig
+
+[credential]
+        helper =
+        helper = /usr/local/share/gcm-core/git-credential-manager
+[credential "https://dev.azure.com"]
+        useHttpPath = true
+
 {{- else }}
 [url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
