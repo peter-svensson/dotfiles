@@ -2,4 +2,6 @@ README.md
 {{- if eq .chezmoi.hostname "A6436903" }}
 source/*
 !source/jeppesen
+{{ else }}
+source/jeppesen
 {{- end }}
