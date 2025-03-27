@@ -1,4 +1,6 @@
 source_up .envrc
+
+export PATH=${PATH}:${PWD}/.bin
 export KUBECONFIG=$( IFS=:; set -- ${PWD}/.kube/kind*.yaml ${PWD}/.kube/*.yaml; echo "$*" )
 
 export AWS_SDK_LOAD_CONFIG=1
