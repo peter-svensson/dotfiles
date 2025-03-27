@@ -1,12 +1,12 @@
 [user]
-	name = Peter Svensson
-	email = peter@sparetimecoders.com
-	signingKey = {{ .chezmoi.homeDir }}/.ssh/id_rsa.pub
+  name = Peter Svensson
+  email = peter@sparetimecoders.com
+  signingKey = {{ .chezmoi.homeDir }}/.ssh/id_rsa.pub
 
 [committer]
-	name = Peter Svensson
-	email = peter@sparetimecoders.com
-	signingKey = {{ .chezmoi.homeDir }}/.ssh/id_rsa.pub
+  name = Peter Svensson
+  email = peter@sparetimecoders.com
+  signingKey = {{ .chezmoi.homeDir }}/.ssh/id_rsa.pub
 
 [alias]
   ci = commit
@@ -16,7 +16,7 @@
   st = status
   s = status --short --branch
   graph = log --graph
-	up = pull --rebase --autostash
+  up = pull --rebase --autostash
 
 [branch]
   sort = -committerdate
@@ -34,16 +34,6 @@
   plus-style = syntax "#0b4820"
   plus-emph-style = syntax "#175c2e"
   syntax-theme = TwoDark
-#  width = 1
-#  line-numbers = true
-#  minus-emph-style = syntax "#600818"
-#  hunk-header-style = syntax bold
-#  hunk-header-decoration-style = omit
-#  file-style = yellow italic
-#  file-decoration-style = yellow ul
-#  line-numbers-zero-style = "#4b5263"
-#  line-numbers-left-format = "{nm:^4} "
-#  line-numbers-right-format = "{np:^4} "
 
 [init]
   # templateDir = ~/.git-templates
@@ -62,12 +52,6 @@
   local = yellow
   remote = green
 
-#[color "diff"]
-#  meta = yellow bold
-#  frag = magenta bold
-#  old = red bold
-#  new = cyan bold
-
 [color "status"]
   added = yellow
   changed = green
@@ -78,22 +62,30 @@
   log = true
 
 [help]
-	autocorrect = 20
+  autocorrect = 20
 
 [rerere]
-	enabled = 1
+  enabled = true
+  autoupdate = true
 
 [push]
-	default = upstream
+  default = simple
+  autoSetupRemote = true
+  followTags = true
 
 [github]
   user = peter-svensson
 
 [pull]
-	rebase = true
+  rebase = true
+[rebase]
+  autoSquash = true
+  autoStash = true
+  updateRefs = true
 
 [commit]
-	gpgsign = true
+  gpgsign = true
+  verbose = true
 
 [gpg]
   format = ssh
@@ -102,16 +94,24 @@
   allowedSignersFile = {{ .chezmoi.homeDir }}/.git_allowed_signers
 
 [diff]
-	compactionHeuristic = true
+  algorithm = histogram
+  colorMoved = plain
+  mnemonicPrefix = true
+  renames = true
 
 [url "ssh://git@github.com/sparetimecoders/"]
   insteadOf = https://github.com/sparetimecoders/
 
 [fetch]
 	prune = true
+	pruneTags = true
+	all = true
 
 [init]
 	defaultBranch = main
+
+[tag]
+  sort = version:refname
 
 {{- if eq .chezmoi.hostname "A6436903" }}
 [includeIf "gitdir:~/source/jeppesen/"]
