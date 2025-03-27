@@ -1,7 +1,0 @@
-use asdf
-
-{{- if eq .chezmoi.hostname "A6436903" }}
-export HOMEBREW_ARTIFACT_DOMAIN=http://binaryrepo.service.cloud.jeppesensystems.com:80/artifactory/psaas-homebrew
-export HOMEBREW_ARTIFACT_DOMAIN_NO_FALLBACK=1
-export HOMEBREW_DOCKER_REGISTRY_TOKEN={{ (index (lastpass "jeppesen/auths") 0).note.homebrewRegistryToken -}}
-{{- end }}

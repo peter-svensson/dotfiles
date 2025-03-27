@@ -21,9 +21,3 @@ export VISUAL=vim
 export BASH_ENV=${HOME}/.bashrc
 # Silence direnv
 export DIRENV_LOG_FORMAT=
-
-# Support partial version for node (https://github.com/asdf-vm/asdf-nodejs?tab=readme-ov-file#partial-and-codename-versions)
-export ASDF_NODEJS_LEGACY_FILE_DYNAMIC_STRATEGY=latest_available
-
-# Support go.mod versioning (https://github.com/asdf-community/asdf-golang?tab=readme-ov-file#version-selection)
-export ASDF_GOLANG_MOD_VERSION_ENABLED=true

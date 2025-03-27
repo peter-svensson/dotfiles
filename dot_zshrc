@@ -108,28 +108,6 @@ if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} 
   source ${ZIM_HOME}/zimfw.zsh init -q
 fi
 
-if (( ! ${+ASDF_DIR} )); then
-  for ASDF_DIR in \
-      {/usr/local,/opt/homebrew,/home/linuxbrew/.linuxbrew}/opt/asdf/libexec \
-      /opt/asdf-vm \
-      ${HOME}/.asdf
-  do
-    if [[ -e ${ASDF_DIR} ]] break
-  done
-fi
-export ASDF_DIR
-
-# Install using git if not already installed at ASDF_DIR
-if [[ ! -e ${ASDF_DIR} ]]; then
-  print -u2 -R "${ASDF_DIR} not found, installing asdf"
-  command git clone -q https://github.com/asdf-vm/asdf.git ${ASDF_DIR} || return 1
-  command git -C ${ASDF_DIR} checkout -q $(command git -C ${ASDF_DIR} describe --abbrev=0 --tags) -- || return 1
-fi
-local asdf_data=${ASDF_DATA_DIR:-${HOME}/.asdf}
-path=(${ASDF_DIR}/bin ${path:#${ASDF_DIR}/bin})
-fpath+=(${ASDF_DIR}/completions(FN))
-path=(${asdf_data}/shims ${path:#${asdf_data}/shims})
-
 # Initialize modules.
 source ${ZIM_HOME}/init.zsh
 
@@ -161,5 +139,11 @@ source ~/.exports
 source ~/.functions
 source ~/.paths
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C terraform terraform
+
