@@ -1,9 +1,14 @@
 # AWS SSO
-sso() {
+sso () {
+    if [ -z $1 ]
+    then
+      echo "must provide profile name"
+      return
+    fi
     unset AWS_PROFILE
     export AWS_PROFILE=$1
     aws sts get-caller-identity &> /dev/null || aws sso login --profile $1 || (unset AWS_PROFILE && aws-sso-util configure profile --no-credential-process $1)
-    aws-export-credentials --credentials-file-profile $1 || aws sso login --profile $1 && aws-export-credentials --credentials-file-profile $1
+    aws configure export-credentials --profile $1 &> /dev/null || aws sso login --profile $1 && aws configure export-credentials --profile $1 &> /dev/null
     sed -i '/aws_credential_expiration/d' ${AWS_CONFIG_FILE:-~/.aws/config}
 }
 
