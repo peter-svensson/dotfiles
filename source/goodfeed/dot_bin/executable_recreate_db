@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 
 export PGPASSWORD=postgres
+DB_NAME="${1:-prod_dump}"
+DUMP_FILES="${2:-${HOME}/Downloads/db/goodfeed_prod-backend*.sql}"
 
 psql -h goodfeed-control-plane.orb.local -U postgres -d postgres <<-EOSQL
   SELECT pg_terminate_backend(pid)
   FROM pg_stat_activity
-  WHERE datname = 'prod_dump'
+  WHERE datname = '${DB_NAME}'
     AND leader_pid IS NULL;
-  DROP DATABASE prod_dump;
-  CREATE DATABASE prod_dump WITH OWNER postgres ENCODING utf8;
+  DROP DATABASE ${DB_NAME};
+  CREATE DATABASE ${DB_NAME} WITH OWNER postgres ENCODING utf8;
 EOSQL
+
+psql -h goodfeed-control-plane.orb.local -q -U postgres -d ${DB_NAME} < "$(ls -1t ${DUMP_FILES} | head -1)"
+
+echo "Imported from: $(ls -1t ${DUMP_FILES} | head -1)"
