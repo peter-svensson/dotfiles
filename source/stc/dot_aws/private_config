@@ -1,12 +1,23 @@
-[default]
-region=eu-west-1
-output=json
+# BEGIN_AWS_SSO_CLI_sparetimecoders
 
 [profile stc]
-sso_start_url = https://sparetimecoders.awsapps.com/start
-sso_region = eu-west-1
+credential_process = /opt/homebrew/bin/aws-sso -u open -S "sparetimecoders" process --arn arn:aws:iam::292662267961:role/Administrator
 region = eu-west-1
-sso_account_id = 292662267961
-sso_role_name = Administrator
 output = json
-aws_credential_expiration = 2023-05-06T10:17:49Z
+
+[profile security]
+credential_process = /opt/homebrew/bin/aws-sso -u open -S "sparetimecoders" process --arn arn:aws:iam::468861746700:role/Administrator
+region = eu-west-1
+output = json
+
+[profile logarchive]
+credential_process = /opt/homebrew/bin/aws-sso -u open -S "sparetimecoders" process --arn arn:aws:iam::534547923679:role/Administrator
+region = eu-west-1
+output = json
+
+[profile production]
+credential_process = /opt/homebrew/bin/aws-sso -u open -S "sparetimecoders" process --arn arn:aws:iam::785666180420:role/Administrator
+region = eu-west-1
+output = json
+
+# END_AWS_SSO_CLI_sparetimecoders

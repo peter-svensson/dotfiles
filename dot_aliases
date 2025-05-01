@@ -74,4 +74,7 @@ alias gup="git up"
 alias hpr="hub pull-request"
 alias cm=chezmoi
 
+alias sso=aws-sso-profile
+
 unalias gh # Remove git help alias in favour of github cli
+

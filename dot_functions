@@ -1,30 +1,3 @@
-# AWS SSO
-sso () {
-    if [ -z $1 ]
-    then
-      echo "must provide profile name"
-      return
-    fi
-    unset AWS_PROFILE
-    export AWS_PROFILE=$1
-    aws sts get-caller-identity &> /dev/null || aws sso login --profile $1 || (unset AWS_PROFILE && aws-sso-util configure profile --no-credential-process $1)
-    aws configure export-credentials --profile $1 &> /dev/null || aws sso login --profile $1 && aws configure export-credentials --profile $1 &> /dev/null
-    sed -i '/aws_credential_expiration/d' ${AWS_CONFIG_FILE:-~/.aws/config}
-}
-
-# AWS SSO completion
-_sso() {
-    local -a completions
-    while IFS='\n' read -r comp; do
-        if [ -n "$comp" ]; then
-            completions+=${comp}
-        fi
-    done < <(grep '^\[.*\]$' ${AWS_CONFIG_FILE:-~/.aws/config} | sed 's/^\[profile \(.*\)\]$/\1/')
-    IFS=\  compadd $(echo $completions[@])
-}
-
-compdef _sso sso
-
 # Kind load
 kind_load() {
     local DIR=$(pwd)

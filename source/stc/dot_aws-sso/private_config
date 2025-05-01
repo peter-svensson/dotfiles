@@ -1,0 +1,14 @@
+SSOConfig:
+    sparetimecoders:
+        SSORegion: eu-west-1
+        StartUrl: https://sparetimecoders.awsapps.com/start
+        DefaultRegion: eu-west-1
+        Accounts:  # optional block for specifying tags & overrides
+            292662267961:
+                Name: stc
+
+ProfileFormat: '{{ FirstItem .AccountName (lower (trimSuffix "Account" (nospace .AccountAlias) ) )}}'
+ConfigVariables:
+  output: json
+AutoConfigCheck: false
+

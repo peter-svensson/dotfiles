@@ -15,4 +15,4 @@ EOSQL
 
 psql -h goodfeed-control-plane.orb.local -q -U postgres -d ${DB_NAME} < "$(ls -1t ${DUMP_FILES} | head -1)"
 
-echo "Imported from: $(ls -1t ${DUMP_FILES} | head -1)"
+echo "Imported ${DB_NAME} from: $(ls -1t ${DUMP_FILES} | head -1)"
