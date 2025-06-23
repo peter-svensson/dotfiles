@@ -1,11 +1,8 @@
-[default]
-region=eu-west-1
-output=json
+# BEGIN_AWS_SSO_CLI_opzkit
 
 [profile production]
-sso_start_url = https://opzkit.awsapps.com/start
-sso_region = eu-west-1
+credential_process = /opt/homebrew/bin/aws-sso -S "opzkit" process --arn arn:aws:iam::944650663805:role/AdministratorAccess
 region = eu-west-1
-sso_account_id = 944650663805
-sso_role_name = AdministratorAccess
 output = json
+
+# END_AWS_SSO_CLI_opzkit

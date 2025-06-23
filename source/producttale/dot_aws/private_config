@@ -1,17 +1,17 @@
 # BEGIN_AWS_SSO_CLI_producttale
 
 [profile product-tale]
-credential_process = /opt/homebrew/bin/aws-sso -u open -S "producttale" process --arn arn:aws:iam::637423200346:role/AdministratorAccess
+credential_process = /opt/homebrew/bin/aws-sso -S "producttale" process --arn arn:aws:iam::637423200346:role/AdministratorAccess
 region = eu-west-1
 output = json
 
 [profile production]
-credential_process = /opt/homebrew/bin/aws-sso -u open -S "producttale" process --arn arn:aws:iam::767398110381:role/AdministratorAccess
+credential_process = /opt/homebrew/bin/aws-sso -S "producttale" process --arn arn:aws:iam::767398110381:role/AdministratorAccess
 region = eu-west-1
 output = json
 
 [profile staging]
-credential_process = /opt/homebrew/bin/aws-sso -u open -S "producttale" process --arn arn:aws:iam::975050351788:role/AdministratorAccess
+credential_process = /opt/homebrew/bin/aws-sso -S "producttale" process --arn arn:aws:iam::975050351788:role/AdministratorAccess
 region = eu-west-1
 output = json
 

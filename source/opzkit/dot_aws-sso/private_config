@@ -1,7 +1,7 @@
 SSOConfig:
-    producttale:
+    opzkit:
         SSORegion: eu-west-1
-        StartUrl: https://product-tale.awsapps.com/start
+        StartUrl: https://opzkit.awsapps.com/start
         DefaultRegion: eu-west-1
 
 ProfileFormat: '{{ FirstItem .AccountName (lower (trimSuffix "Account" (nospace .AccountAlias) ) )}}'
@@ -9,4 +9,3 @@ ConfigVariables:
   output: json
 AutoConfigCheck: true
 AutoLogin: true
-

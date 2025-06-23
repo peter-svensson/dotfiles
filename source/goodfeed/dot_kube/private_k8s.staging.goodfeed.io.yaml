@@ -23,4 +23,7 @@ users:
         - --cluster-name
         - k8s.staging.goodfeed.io
       command: aws
+      env:
+        - name: AWS_PROFILE
+          value: goodfeed-staging
 

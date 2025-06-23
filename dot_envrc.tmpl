@@ -1,0 +1,8 @@
+export AWS_PROFILE=stc
+export AWS_REGION=eu-west-1
+export AWS_DEFAULT_REGION=eu-west-1
+
+export DOCKERHUB_USERNAME=sparetimecoders
+export DOCKERHUB_PASSWORD={{ (index (lastpass "devenv/auths") 0).note.dockerhubPassword -}}
+
+export GITHUB_TOKEN={{ (index (lastpass "devenv/auths") 0).note.githubToken -}}

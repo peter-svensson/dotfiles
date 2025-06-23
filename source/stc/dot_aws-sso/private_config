@@ -10,5 +10,6 @@ SSOConfig:
 ProfileFormat: '{{ FirstItem .AccountName (lower (trimSuffix "Account" (nospace .AccountAlias) ) )}}'
 ConfigVariables:
   output: json
-AutoConfigCheck: false
+AutoConfigCheck: true
+AutoLogin: true
 

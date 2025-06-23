@@ -1,17 +1,17 @@
 # BEGIN_AWS_SSO_CLI_goodfeed
 
 [profile goodfeed-staging]
-credential_process = /opt/homebrew/bin/aws-sso -u open -S "goodfeed" process --arn arn:aws:iam::643762608543:role/AdministratorAccess
+credential_process = /opt/homebrew/bin/aws-sso -S "goodfeed" process --arn arn:aws:iam::643762608543:role/AdministratorAccess
 region = eu-west-1
 output = json
 
 [profile goodfeed-admin]
-credential_process = /opt/homebrew/bin/aws-sso -u open -S "goodfeed" process --arn arn:aws:iam::767397951127:role/AdministratorAccess
+credential_process = /opt/homebrew/bin/aws-sso -S "goodfeed" process --arn arn:aws:iam::767397951127:role/AdministratorAccess
 region = eu-west-1
 output = json
 
 [profile goodfeed-production]
-credential_process = /opt/homebrew/bin/aws-sso -u open -S "goodfeed" process --arn arn:aws:iam::929585105493:role/AdministratorAccess
+credential_process = /opt/homebrew/bin/aws-sso -S "goodfeed" process --arn arn:aws:iam::929585105493:role/AdministratorAccess
 region = eu-west-1
 output = json
 

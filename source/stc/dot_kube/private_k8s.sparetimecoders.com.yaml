@@ -25,7 +25,9 @@ users:
           - --cluster-name
           - k8s.sparetimecoders.com
         command: aws
-        env: null
+        env:
+          - name: AWS_PROFILE
+            value: stc
         interactiveMode: IfAvailable
         provideClusterInfo: false
 

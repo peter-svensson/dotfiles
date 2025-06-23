@@ -1,10 +1,3 @@
-[".config/alacritty"]
-  type = "archive"
-  url = "https://github.com/alacritty/alacritty-theme/archive/master.tar.gz"
-  exact = true
-  stripComponents = 1
-  refreshPeriod = "168h"
-  include = ["*/themes/**"]
 [".tmux/plugins/tpm"]
   type = "archive"
   url = "https://github.com/tmux-plugins/tpm/archive/master.tar.gz"
@@ -19,4 +12,8 @@
   stripComponents = 0
   refreshPeriod = "168h"
   include = ["*/**"]
+[".config/fish"]
+  type = "git-repo"
+  url = "https://github.com/peter-svensson/fishconf.git"
+  refreshPeriod = "0h"
 

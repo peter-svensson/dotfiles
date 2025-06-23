@@ -1,0 +1,30 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUMrRENDQWVDZ0F3SUJBZ0lNR0QyQ0hReWtSSmdFSjdVT01BMEdDU3FHU0liM0RRRUJDd1VBTUJneEZqQVUKQmdOVkJBTVREV3QxWW1WeWJtVjBaWE10WTJFd0hoY05NalV3TlRBMk1Ea3dPREV4V2hjTk16VXdOVEEyTURrdwpPREV4V2pBWU1SWXdGQVlEVlFRREV3MXJkV0psY201bGRHVnpMV05oTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGCkFBT0NBUThBTUlJQkNnS0NBUUVBMXZtWkYxZE5id1F1cEZySkUvTlY2QVV6MjRaSnpHRFZibUJwK3poekhDcUkKZmJSMXIxQkIyZTQvVjdyZVhtMjNTcTJUZml2Vk5VaEdnM016VWtXZlJnT0JkZGpHTzFmUmdEdFk2eW5ZUWpPUAo4NGd1d1RBUkpPYk5Wa2NXejN1UmNsNnRyNTVhVFpiYU8rSGQzQ096V3J1MUk2eVpZQW0wMlBFb25LMThGeWNWCll3L3pNZGR2ejdNMzRKZFM4MkgvSFZHT2trT3VLb3orTCtqdlA4eWdBYWw5T0Mwc3pWSGtuN0wxaXh4aGpYNVQKbm1LVnlNTzJGaG0yUW5nN1N6SlJ3c0FTcjd6dVQwcmo5NTVlZE9wQUxRc2VRalNFL3gxenZ6TzhFdE40aGRRagovaUhsT0piUVVQcXUydEQ2YldTeUVpYlNuUW9tb3pFNjhJU0VBd1VGOFFJREFRQUJvMEl3UURBT0JnTlZIUThCCkFmOEVCQU1DQVFZd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFRmdRVVd3bkRnNVlhV1RuclhHN1EKSGIrNWUzQzQ3S1F3RFFZSktvWklodmNOQVFFTEJRQURnZ0VCQUNGTURsMm5MMmk0N1dEN3NGT1JvL1BxWVdwRQpOa0d0dUJONGJyQTBodnFDMEw2dXR1Rk0wUlFudGdySnJyYXh3ZEhFb2RGczBWYm4vblpBbE9kb2pGNk1YaGZlClhoSjRuWEczbXp5MG5lUEdhQXFxQkhDQzdhaEJ1QW1rOW14amJxQ0xXa0lDTW1zbkl4S293Y2FUMzJKUnI3REgKU04wTGRlcGtQbmtsdkZCNHhkdFFQRzFRVGRyUmhpZ0wyeVZ5QVBqZko2UmhUNFp1WXdaaGU0WXZqaFlnMXNiMAo3WG9oc3NLU1pFc2dORXlKZm9ZTmdXazU2Z0hhWVFKUzhjTDY3bVorUzF6eW1URWtwbXJPTzUvWDR3NWVGRzdjCnloREExT0VNVjZvbmQ1NnprbnBvVXZkRFBiTnFKRCtlNjUvOC9rNjRrMWYvdW1sc2JmV0xqMjU2ekhjPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+    server: https://api-k8s-staging-product-q-ij1tcb-122bcae8e03b72d6.elb.eu-west-1.amazonaws.com
+    tls-server-name: api.internal.k8s.staging.product.quest
+  name: k8s.staging.product.quest
+contexts:
+- context:
+    cluster: k8s.staging.product.quest
+    user: k8s.staging.product.quest
+  name: k8s.staging.product.quest
+current-context: k8s.staging.product.quest
+kind: Config
+preferences: {}
+users:
+  - name: k8s.staging.product.quest
+    user:
+      exec:
+        apiVersion: client.authentication.k8s.io/v1beta1
+        args:
+          - eks
+          - get-token
+          - --cluster-name
+          - k8s.staging.product.quest
+        command: aws
+      env:
+        - name: AWS_PROFILE
+          value: stc
+

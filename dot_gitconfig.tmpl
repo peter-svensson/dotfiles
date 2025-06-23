@@ -25,21 +25,18 @@
   autocrlf = input
   excludesfile = ~/.gitignore_global
   attributesfile = ~/.gitattributes
-  editor = /usr/bin/vim
-  pager = delta --dark
+  editor = /opt/homebrew/bin/nvim
+  pager = delta
 
 [delta]
-  paging=always
-  minus-style = syntax "#450a15"
-  plus-style = syntax "#0b4820"
-  plus-emph-style = syntax "#175c2e"
-  syntax-theme = TwoDark
-
-[init]
-  # templateDir = ~/.git-templates
+  dark = true
+  paging = always
+  syntax-theme = ansi
+  navigate = true
+  side-by-side = true
 
 [interactive]
-   diffFilter = delta --color-only --dark
+  diffFilter = delta --color-only
 
 [color]
   ui = auto
@@ -113,20 +110,9 @@
 [tag]
   sort = version:refname
 
-{{- if eq .chezmoi.hostname "A6436903" }}
-[includeIf "gitdir:~/source/jeppesen/"]
-  path = ~/source/jeppesen/.gitconfig
 
-[credential]
-  helper =
-  helper = /usr/local/share/gcm-core/git-credential-manager
-[credential "https://dev.azure.com"]
-  useHttpPath = true
-
-{{- else }}
 [url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
-{{- end }}
 
 [gitbutler]
   signCommits = true

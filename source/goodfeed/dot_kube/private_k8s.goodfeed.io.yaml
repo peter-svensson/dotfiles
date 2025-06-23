@@ -21,6 +21,9 @@ users:
         - get-token
         - --cluster-name
         - k8s.goodfeed.io
+      env:
+        - name: AWS_PROFILE
+          value: goodfeed-production
       command: aws
       interactiveMode: IfAvailable
       provideClusterInfo: false
