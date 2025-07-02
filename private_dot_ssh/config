@@ -13,3 +13,6 @@ Host *
   ControlMaster auto
   ControlPath ~/.ssh/control/%C
   ControlPersist yes
+
+Host github.com
+  IdentityAgent none
