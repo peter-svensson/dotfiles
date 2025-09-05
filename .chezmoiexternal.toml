@@ -12,8 +12,3 @@
   stripComponents = 0
   refreshPeriod = "168h"
   include = ["*/**"]
-[".config/fish"]
-  type = "git-repo"
-  url = "https://github.com/peter-svensson/fishconf.git"
-  refreshPeriod = "0h"
-

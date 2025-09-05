@@ -1,0 +1,99 @@
+# https://starship.rs/
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+$shell\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$git_metrics\
+$cmd_duration\
+$status\
+$package\
+$terraform\
+$nodejs\
+$golang\
+$fill\
+$direnv\
+$line_break\
+$character"""
+
+right_format="""$aws\
+$kubernetes\
+"""
+
+# Replace the "❯"
+[character]
+success_symbol = "[λ](green)"
+error_symbol = "[λ](red)"
+
+[directory]
+truncation_length = 15
+truncation_symbol = "…/"
+truncate_to_repo = true
+
+[package]
+format = ' [$symbol$version]($style)'
+
+[direnv]
+disabled = false
+
+[aws]
+symbol = ' '
+style = 'yellow'
+disabled = false
+format = '[$symbol($profile )]($style)'
+
+[kubernetes]
+symbol = ' '
+disabled = false
+format = '[$symbol$context( \($namespace\))]($style)'
+
+[git_branch]
+style = 'fg:green'
+symbol = ' '
+format = '[on](white) [$symbol$branch ]($style)'
+ignore_branches = ['main']
+
+[git_commit]
+tag_disabled = false
+
+[git_metrics]
+disabled = false
+format = '([\[+$added]($added_style) )([-$deleted\]]($deleted_style) )'
+
+[git_status]
+style = 'fg:white'
+format = '([\[$all_status$ahead_behind\]]($style))'
+up_to_date = '[✓](green)'
+ahead = '[⇡${count}](green)'
+behind = '[⇣${count}](red)'
+
+[nodejs]
+style = 'red'
+symbol = ' '
+format ='[$symbol($version )]($style)'
+detect_extensions = ['js', 'cjs', 'ts', 'mts', 'cts']
+
+[golang]
+style = 'blue'
+symbol = ' '
+format ='[$symbol($version )]($style)'
+
+[terraform]
+format = '[$symbol($version )]($style)'
+
+[docker_context]
+format = '[$symbol]($style)'
+
+[fill]
+symbol = ' '
+
+[shell]
+fish_indicator = '🐟'  # 󰈺 🐟 🐠
+zsh_indicator = '󠀥%'
+style = 'cyan bold'
+disabled = false
