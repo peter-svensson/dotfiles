@@ -16,9 +16,12 @@ use_nvm() {
 
   if [[ $node_version = "package.json" ]]; then
     if has jq; then
-      node_version=$(jq --raw-output .engines.node package.json | tr -d "<=> ")
+      node_version=$(jq --raw-output '.engines.node | select (.!=null)' package.json | tr -d "<=> ")
     else
       echo "Parsing package.json for node version to use with direnv requires jq"
+    fi
+    if [[ -z $node_version ]]; then
+      echo "No version found in package.json, falling back to .nvmrc"
     fi
   fi
 
