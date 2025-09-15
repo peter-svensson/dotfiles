@@ -5,7 +5,7 @@ tap "updatecli/updatecli"
 tap "warrensbox/tap"
 tap "score-spec/tap"
 tap "hashicorp/tap"
-
+brew "nvm"
 brew "score-compose"
 brew "score-k8s"
 brew "ack"
