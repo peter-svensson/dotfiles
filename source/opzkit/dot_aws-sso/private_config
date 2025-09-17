@@ -9,3 +9,4 @@ ConfigVariables:
   output: json
 AutoConfigCheck: true
 AutoLogin: true
+ConsoleDuration: 720
