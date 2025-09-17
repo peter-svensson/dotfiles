@@ -1,7 +1,7 @@
 mouse-hide-while-typing = true
 
 shell-integration = fish
-theme = catppuccin-mocha
+theme = Catppuccin Mocha
 window-height = 60
 window-width = 100
 copy-on-select = true
@@ -12,3 +12,5 @@ title = " "
 
 macos-titlebar-proxy-icon = hidden
 macos-titlebar-style = native
+
+font-size=12
