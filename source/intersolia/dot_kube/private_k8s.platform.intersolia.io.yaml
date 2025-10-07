@@ -1,0 +1,30 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUMrRENDQWVDZ0F3SUJBZ0lNR0dhbnJnWmJrbENPbkQ0eU1BMEdDU3FHU0liM0RRRUJDd1VBTUJneEZqQVUKQmdOVkJBTVREV3QxWW1WeWJtVjBaWE10WTJFd0hoY05NalV3T1RFM01UQXhOelV3V2hjTk16VXdPVEUzTVRBeApOelV3V2pBWU1SWXdGQVlEVlFRREV3MXJkV0psY201bGRHVnpMV05oTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGCkFBT0NBUThBTUlJQkNnS0NBUUVBa3pkYU90TTl1Z1U0Zi9KRjI5Qlk3bi80NDZvRTlabk5RVzdBc1ZqTWVCTFUKaDJ1QUxFVFJUS281QUVITkdrMmVldE05MHR3NWZuRVFSNm1XUjltWWNQMjJIc053WTEyR1hYd0hETENoK2gxRQoxRlcyS0Q5YmR6RkRCNHp1bUt0TTBBQUhNdUtabzVmU0NscTJtRVhvMTdWV0o5NExUekR2N1Y5Q09MYlkzZ0pJCm1JYTBaOTZnWjJOU3RVNi80Ui9IVnV3ZklXMU1UTjNkUXFrRFhsL1dSODNwTWV3NFVIVTF1alNGUXJjdzVveUYKNGpjajFBVnFlelZnV0xhMnNKZTlmY1IrREh1QStVdUk4ZGFSdnVraXU5eXo4VnhERi9tb3dZdE45UjBkbGIzcApkbStOVnZpWStpY1hESktMZk1aRnNwR0xvVlozeEJZSkdCQ1hoVXZIYXdJREFRQUJvMEl3UURBT0JnTlZIUThCCkFmOEVCQU1DQVFZd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFRmdRVVkrWjRhempwaFZ1Zmo2bUIKTFJJajJvK240dmN3RFFZSktvWklodmNOQVFFTEJRQURnZ0VCQUZsai9vZFJTRWkzOC94NEtiMENZRXl3c1I1SwpSVnE2WDBFRHQ2RGtpdWZhT2ZwV25kMzl3cEZhb3RacGQ2V2lLa2JFRzI2R2ZBNFhjQjdycmNhMkM2d3c4dStYCk9lS3lyVjVBVlo1aU8yY0s1UGVPTnJTZnhab2FjUVhzQTMwRFR5TVdPSFI5eUFKVDlnakk5bG9RdTJqME5ZQmsKMzdxd1A3cFpIOGlvdnBxcGlucXhWM3NDSzBHTUwvbUZaSEhDeFcvT1huN1ZMZmhQU1JkNTJGUUN6Q2pGSmRhbwpEekpTTUNwQkUrTVdkUDVCME1wd3d3S2p1SjU0aFRlY1dPK2hSZ0p4T2VwaytrMDFzUjdRUGovaElCL0VSTVhOCjlVVFBxREVuR3IwWjZ3N1VmSnJrR0dtUFVSKzZ5eXByV21sUGdoWXVPNmtNQnMrUkxMdkdjcXdFUFM0PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+    server: https://api-k8s-platform-intersol-29ungf-ec7a2adf3f18c8a6.elb.eu-north-1.amazonaws.com
+    tls-server-name: api.internal.k8s.platform.intersolia.io
+  name: k8s.platform.intersolia.io
+contexts:
+- context:
+    cluster: k8s.platform.intersolia.io
+    user: k8s.platform.intersolia.io
+  name: k8s.platform.intersolia.io
+current-context: k8s.platform.intersolia.io
+kind: Config
+preferences: {}
+users:
+- name: k8s.platform.intersolia.io
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1beta1
+      args:
+        - eks
+        - get-token
+        - --cluster-name
+        - k8s.platform.intersolia.io
+      command: aws
+      env:
+        - name: AWS_PROFILE
+          value: platform
+
