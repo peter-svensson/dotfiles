@@ -1,0 +1,30 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUMrRENDQWVDZ0F3SUJBZ0lNR0d4VmVyM0dMWkRZS1lmRU1BMEdDU3FHU0liM0RRRUJDd1VBTUJneEZqQVUKQmdOVkJBTVREV3QxWW1WeWJtVjBaWE10WTJFd0hoY05NalV4TURBMU1qSXhPVEF3V2hjTk16VXhNREExTWpJeApPVEF3V2pBWU1SWXdGQVlEVlFRREV3MXJkV0psY201bGRHVnpMV05oTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGCkFBT0NBUThBTUlJQkNnS0NBUUVBd0JLTFBiLzNRdENlUzVuWmlrejM2UEptUXUwQnNCWFJUZkxOb1pDckprRW4KaEJXUWZRVjhBcm04Y1VwazVkS1RWL1RNQitvN2g2b3lZOVFrUHRBUm1JM1JTUGxMVzlUeEJkbzZHZUxlRmJmUApOd05yZWxrUEpDUlJFamJ3N2ZhNWdhblQxSlFOaS84TzVrUlduY21YZFBieUszaE9BSUZVb2szUjRjT2hHbVV0Cmk5NTR2RnVVNHJpa3F5NmVsUldoRjkxZURGWE5BSTU5T2c1U3JwaHE2a0NZS1FhV012QmZrQUZjaE1IeVU4ei8KUytmaXFVcGdZejIrUm5yS212eEpLV01FMHR3WXZTWVdNSElTOFJnY25BL2oxWnc1NFJ3eENFR0dMQVlsYW4rUApNYlZFWDJRdjhsMUd2UzFYVGMyaVhZQXA4WTJCTkdxczFaZlVrbXkwbFFJREFRQUJvMEl3UURBT0JnTlZIUThCCkFmOEVCQU1DQVFZd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFRmdRVUZSeng5eHdIcU51eHBYNDMKeVRhK0pQZktaYTR3RFFZSktvWklodmNOQVFFTEJRQURnZ0VCQUVGa0VOaDM4SWdQcko2WjBUT1VvWDNTblhlYQpsamQvelRHQWthU0p1azljTDFYRllJSHVOK2VaOGp4QWtDdmdDK2FiY2h5cTNIYUxrQUhqdDlnWCt0VTdpNzMrCk50QmY5b1JHd1VJSFdCam5HTHNKNkJoK2pvc2N6L0VxQVpuZFp3eFdFMkxJNExaR3gzOHhQWkJMMnJaK0Q4cmoKL3pab1dmSVNONjBmaVBWREt5OGpuaVBFUmYxNVpqc1FlNDE5RnVqMS9ndEZZbURUcCtKdkV2dlU2S0xBNVVMTQpjMkVyQlhTSWErZ0pWQ1JnMHRKR2tEN3FYOVk4TURSVVBwS1VrUkxOYTJzdWpQY0xleW1ERlk4UE9RK3h4Y3VqCmlnVVg1WWs2cURBenRzT1haT2lpVTRZbEpSSDJxOGlSTHJIVVVyVDdpR0lXd1N5VU5EZ1B4bFJ5WURVPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+    server: https://api-k8s-intersolia-io-u0630d-5bb4a500e4390725.elb.eu-north-1.amazonaws.com
+    tls-server-name: api.internal.k8s.intersolia.io
+  name: k8s.intersolia.io
+contexts:
+- context:
+    cluster: k8s.intersolia.io
+    user: k8s.intersolia.io
+  name: k8s.intersolia.io
+current-context: k8s.intersolia.io
+kind: Config
+preferences: {}
+users:
+- name: k8s.intersolia.io
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1beta1
+      args:
+        - eks
+        - get-token
+        - --cluster-name
+        - k8s.intersolia.io
+      command: aws
+      env:
+        - name: AWS_PROFILE
+          value: prod
+
