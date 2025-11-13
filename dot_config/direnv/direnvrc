@@ -1,4 +1,9 @@
-# To use:
+# DEPRECATED: use_nvm function (kept for backward compatibility)
+# Modern setup uses fnm (Fast Node Manager) which has built-in automatic
+# version switching via ~/.config/fish/conf.d/fnm.fish with --use-on-cd flag.
+# fnm automatically detects .nvmrc and .node-version files without direnv.
+#
+# Legacy usage (if needed):
 # 1) Node version specified in package.json, in .envrc add:
 #      use nvm package.json
 #    This requires that package.json contains something like
