@@ -1,12 +1,3 @@
 registry:
   ecr:
-    url: 309043243080.dkr.ecr.eu-west-1.amazonaws.com
-
-targets:
-  local:
-    context: kind-intersolia
-    namespace: default
-  dev:
-    context: k8s.dev.intersolia.io
-    namespace: default
-
+    url: 893169065165.dkr.ecr.eu-west-1.amazonaws.com

@@ -5,8 +5,18 @@ credential_process = /opt/homebrew/bin/aws-sso -S "intersolia" process --arn arn
 region = eu-west-1
 output = json
 
+[profile log-archive]
+credential_process = /opt/homebrew/bin/aws-sso -S "intersolia" process --arn arn:aws:iam::367332297416:role/Administrator
+region = eu-west-1
+output = json
+
 [profile prod]
 credential_process = /opt/homebrew/bin/aws-sso -S "intersolia" process --arn arn:aws:iam::464134132502:role/Administrator
+region = eu-west-1
+output = json
+
+[profile security]
+credential_process = /opt/homebrew/bin/aws-sso -S "intersolia" process --arn arn:aws:iam::581797538006:role/Administrator
 region = eu-west-1
 output = json
 
