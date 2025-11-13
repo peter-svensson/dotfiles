@@ -1,1 +1,4 @@
 README.md
+
+# Fish shell dynamic files (managed by Fish itself, not chezmoi)
+.config/fish/fish_variables

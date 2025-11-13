@@ -1,5 +1,29 @@
+# Initialize Homebrew
+if [ -x /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+# Prepend GNU tools (override macOS defaults)
 export PATH=/opt/homebrew/opt/make/libexec/gnubin:$PATH
 export PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
 export PATH=/opt/homebrew/opt/findutils/libexec/gnubin:$PATH
 export PATH=/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH
 export PATH=/opt/homebrew/opt/grep/libexec/gnubin:$PATH
+
+# Custom binary paths
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.gobrew/current/bin:$HOME/.gobrew/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
+
+# Initialize fnm (Fast Node Manager)
+if command -v fnm &> /dev/null; then
+    eval "$(fnm env --use-on-cd --shell bash)"
+fi
+
+# Initialize direnv
+if command -v direnv &> /dev/null; then
+    eval "$(direnv hook bash)"
+fi
