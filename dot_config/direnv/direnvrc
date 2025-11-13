@@ -1,38 +1,72 @@
-# DEPRECATED: use_nvm function (kept for backward compatibility)
-# Modern setup uses fnm (Fast Node Manager) which has built-in automatic
-# version switching via ~/.config/fish/conf.d/fnm.fish with --use-on-cd flag.
-# fnm automatically detects .nvmrc and .node-version files without direnv.
+# use_fnm: fnm (Fast Node Manager) integration for direnv
+# Modern setup using fnm instead of legacy nvm
 #
-# Legacy usage (if needed):
-# 1) Node version specified in package.json, in .envrc add:
-#      use nvm package.json
-#    This requires that package.json contains something like
-#      "engines": {
-#        "node": ">=6.9.2"
-#      },
+# Usage in .envrc:
+# 1) Node version from package.json:
+#      use fnm package.json
+#    Requires package.json with:
+#      "engines": { "node": ">=18.0.0" }
 #
-# 2) Node version specified in .envrc add:
-#      use nvm 6.9.2
+# 2) Explicit Node version:
+#      use fnm 20
+#      use fnm 18.20.0
 #
-# 3) Node version specified in .nvmrc, in .envrc add:
-#      use nvm
-use_nvm() {
+# 3) From .nvmrc (if present):
+#      use fnm
+#
+# Note: fnm with --use-on-cd will automatically handle .nvmrc files
+# without direnv, but this function is useful for package.json integration.
+use_fnm() {
   local node_version=$1
 
+  # If argument is package.json, extract version
   if [[ $node_version = "package.json" ]]; then
     if has jq; then
-      node_version=$(jq --raw-output '.engines.node | select (.!=null)' package.json | tr -d "<=> ")
+      # Extract version and clean it (remove <, >, =, ~, ^, spaces)
+      node_version=$(jq --raw-output '.engines.node | select (.!=null)' package.json | tr -d '<=>~^ ' | cut -d. -f1)
     else
-      echo "Parsing package.json for node version to use with direnv requires jq"
+      log_error "Parsing package.json for Node version requires jq"
+      return 1
     fi
     if [[ -z $node_version ]]; then
-      echo "No version found in package.json, falling back to .nvmrc"
+      log_error "No version found in package.json engines.node field"
+      return 1
     fi
+    log_status "Using Node version $node_version from package.json"
   fi
 
-  nvm_sh=~/.nvm/nvm.sh
-  if [[ -e $nvm_sh ]]; then
-    source $nvm_sh
-    nvm use $node_version
+  # If no argument and .nvmrc exists, read from it
+  if [[ -z $node_version ]] && [[ -f .nvmrc ]]; then
+    node_version=$(cat .nvmrc)
+    log_status "Using Node version from .nvmrc: $node_version"
   fi
+
+  # Check if fnm is available
+  if ! has fnm; then
+    log_error "fnm not found. Install it with: brew install fnm"
+    return 1
+  fi
+
+  # Ensure fnm is initialized
+  eval "$(fnm env --use-on-cd)"
+
+  # Install version if not already installed
+  if ! fnm list | grep -q "v$node_version"; then
+    log_status "Installing Node $node_version with fnm..."
+    fnm install "$node_version"
+  fi
+
+  # Use the specified version
+  fnm use "$node_version"
+
+  # Add node binaries to PATH
+  PATH_add "$(fnm current | xargs -I {} echo "$FNM_MULTISHELL_PATH/{}/bin")"
+}
+
+# use_nvm: Backward compatibility alias for use_fnm
+# Redirects all use_nvm calls to use_fnm for seamless migration
+# Usage: Same as use_fnm - use_nvm package.json, use_nvm 20, use_nvm
+use_nvm() {
+  log_status "Note: use_nvm is deprecated, redirecting to use_fnm"
+  use_fnm "$@"
 }
