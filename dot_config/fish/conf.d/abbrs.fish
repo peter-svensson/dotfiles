@@ -1,6 +1,7 @@
 abbr -a -- nv nvim
 
 abbr -a -- cm chezmoi
+abbr -a -- rf reload-fish
 
 # Terraform
 abbr -a -- tf terraform
