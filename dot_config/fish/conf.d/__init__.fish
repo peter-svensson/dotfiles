@@ -44,6 +44,8 @@ if not test -s $__fish_cache_dir/brew_init.fish
     else if test -e /usr/local/bin/brew
         /usr/local/bin/brew shellenv >$__fish_cache_dir/brew_init.fish
     end
+end
+if test -s $__fish_cache_dir/brew_init.fish
     source $__fish_cache_dir/brew_init.fish
 end
 

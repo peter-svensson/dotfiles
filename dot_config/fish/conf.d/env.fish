@@ -29,4 +29,3 @@ set -q PYLINTHOME; or set -Ux PYLINTHOME $XDG_CACHE_HOME/pylint
 
 # Other vars
 set -q FISH_THEME; or set -U FISH_THEME "Catppuccin Mocha"
-set -x FISH_THEME2 "Catppuccin Mocha"
