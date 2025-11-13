@@ -1,0 +1,12 @@
+SSOConfig:
+    keenfinity:
+        SSORegion: eu-central-1
+        StartUrl: https://d-9967678419.awsapps.com/start
+        DefaultRegion: eu-central-1
+
+ProfileFormat: '{{ FirstItem .AccountName (lower (trimSuffix "Account" (nospace .AccountAlias) ) )}}'
+ConfigVariables:
+  output: json
+AutoConfigCheck: true
+AutoLogin: true
+ConsoleDuration: 720
