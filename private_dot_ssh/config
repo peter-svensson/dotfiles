@@ -13,3 +13,11 @@ Host *
 
 Host github.com
   IdentityAgent none
+
+# AWS EC2 instances via SSM Session Manager + EC2 Instance Connect
+# Usage: ssh i-0123456789abcdef0
+# Requires: aws-cli and session-manager-plugin
+Host i-* mi-*
+  ProxyCommand ~/.ssh/scripts/aws-ssm-ec2-proxy.sh %h %r %p
+  IdentityFile ~/.ssh/id_rsa
+  IdentitiesOnly yes
