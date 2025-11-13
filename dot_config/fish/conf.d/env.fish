@@ -27,5 +27,9 @@ set -q SQLITE_HISTORY; or set -Ux SQLITE_HISTORY $XDG_DATA_HOME/sqlite_history
 set -q WORKON_HOME; or set -Ux WORKON_HOME $XDG_DATA_HOME/venvs
 set -q PYLINTHOME; or set -Ux PYLINTHOME $XDG_CACHE_HOME/pylint
 
+# pipx configuration (avoid spaces in path)
+set -q PIPX_HOME; or set -Ux PIPX_HOME $HOME/.local/pipx
+set -q PIPX_BIN_DIR; or set -Ux PIPX_BIN_DIR $HOME/.local/bin
+
 # Other vars
 set -q FISH_THEME; or set -U FISH_THEME "Catppuccin Mocha"

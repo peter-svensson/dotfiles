@@ -18,6 +18,10 @@ export PATH="$HOME/.gobrew/current/bin:$HOME/.gobrew/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
 
+# pipx configuration (avoid spaces in path)
+export PIPX_HOME="$HOME/.local/pipx"
+export PIPX_BIN_DIR="$HOME/.local/bin"
+
 # Initialize fnm (Fast Node Manager)
 if command -v fnm &> /dev/null; then
     eval "$(fnm env --use-on-cd --shell bash)"
