@@ -2,3 +2,6 @@ README.md
 
 # Fish shell dynamic files (managed by Fish itself, not chezmoi)
 .config/fish/fish_variables
+
+# Rectangle config (handled by run_once script, not direct symlink)
+.config/rectangle/**
