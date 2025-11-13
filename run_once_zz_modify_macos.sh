@@ -79,10 +79,10 @@ defaults write com.apple.helpviewer DevMode -bool true
 sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
 
 # Restart automatically if the computer freezes
-sudo systemsetup -setrestartfreeze on
+sudo systemsetup -setrestartfreeze on 2>/dev/null || true
 
 # Never go into computer sleep mode
-sudo systemsetup -setcomputersleep Off > /dev/null
+sudo systemsetup -setcomputersleep Off > /dev/null 2>&1 || true
 
 # Disable Notification Center and remove the menu bar icon
 launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist 2> /dev/null
@@ -109,11 +109,11 @@ defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 sudo pmset -a hibernatemode 0
 
 # Remove the sleep image file to save disk space
-sudo rm /private/var/vm/sleepimage
+sudo rm -f /private/var/vm/sleepimage 2>/dev/null || true
 # Create a zero-byte file instead…
-sudo touch /private/var/vm/sleepimage
-# …and make sure it can’t be rewritten
-sudo chflags uchg /private/var/vm/sleepimage
+sudo touch /private/var/vm/sleepimage 2>/dev/null || true
+# …and make sure it can't be rewritten
+sudo chflags uchg /private/var/vm/sleepimage 2>/dev/null || true
 
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
@@ -165,7 +165,7 @@ defaults write NSGlobalDomain AppleMetricUnits -bool true
 sudo defaults write /Library/Preferences/com.apple.loginwindow showInputMenu -bool true
 
 # Set the timezone; see `sudo systemsetup -listtimezones` for other values
-sudo systemsetup -settimezone "Europe/Stockholm" > /dev/null
+sudo systemsetup -settimezone "Europe/Stockholm" > /dev/null 2>&1 || true
 
 # Disable auto-correct
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
@@ -479,8 +479,9 @@ defaults write com.apple.ActivityMonitor SortDirection -int 0
 # Address Book, Dashboard, iCal, TextEdit, and Disk Utility                   #
 ###############################################################################
 
-# Enable the debug menu in Address Book
-defaults write com.apple.addressbook ABShowDebugMenu -bool true
+# Enable the debug menu in Address Book (now called Contacts)
+defaults write com.apple.addressbook ABShowDebugMenu -bool true 2>/dev/null || true
+defaults write com.apple.Contacts ABShowDebugMenu -bool true 2>/dev/null || true
 
 # Enable Dashboard dev mode (allows keeping widgets on the desktop)
 defaults write com.apple.dashboard devmode -bool true
