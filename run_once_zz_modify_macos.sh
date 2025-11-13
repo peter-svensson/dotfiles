@@ -590,7 +590,7 @@ sudo spctl --master-disable
 
 for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
 	"Dock" "Finder" "Google Chrome" "Google Chrome Canary" "Mail" "Messages" \
-	"Opera" "Photos" "Safari" "SizeUp" "Spectacle" "SystemUIServer" \
+	"Opera" "Photos" "Safari" "Rectangle" "SystemUIServer" \
 	"iCal"; do
 	killall "${app}" &> /dev/null
 done
