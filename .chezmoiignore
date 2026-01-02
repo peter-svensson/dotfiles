@@ -6,3 +6,20 @@ CLAUDE.md
 
 # Rectangle config (handled by run_once script, not direct symlink)
 .config/rectangle/**
+
+# Claude Code runtime/cache directories (only manage CLAUDE.md and settings.json)
+.claude/debug
+.claude/downloads
+.claude/file-history
+.claude/history.jsonl
+.claude/ide
+.claude/plans
+.claude/plugins
+.claude/projects
+.claude/session-env
+.claude/shell-snapshots
+.claude/skills
+.claude/stats-cache.json
+.claude/statsig
+.claude/telemetry
+.claude/todos

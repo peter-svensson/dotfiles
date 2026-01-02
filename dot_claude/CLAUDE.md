@@ -1,0 +1,4 @@
+- Don't commit to git when branch is gitbutler/*
+- dont patch deployments since argocd will overwrite that
+- dont do git commit
+- Use  kustomize build --enable-helm --helm-command helm3  when verifying kustomize

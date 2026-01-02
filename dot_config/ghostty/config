@@ -10,7 +10,7 @@ keybind = alt+right=unbind
 
 title = " "
 
-macos-titlebar-proxy-icon = hidden
 macos-titlebar-style = native
 
 font-size=12
+keybind = shift+enter=text:\x1b\r
