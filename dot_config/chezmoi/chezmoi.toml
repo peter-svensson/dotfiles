@@ -1,0 +1,12 @@
+[diff]
+    # Use git-delta for better diff output
+    command = "delta"
+    args = ["--paging=always"]
+
+[merge]
+    # Use vimdiff for three-way merges when needed
+    command = "vimdiff"
+
+[edit]
+    # Use neovim for editing
+    command = "nvim"

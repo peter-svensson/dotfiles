@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chezmoi apply:*)",
+      "Bash(pipx list:*)",
+      "Bash(env)",
+      "Bash(export PIPX_HOME=\"$HOME/.local/pipx\")",
+      "Bash(export PIPX_BIN_DIR=\"$HOME/.local/bin\")",
+      "Bash(pipx reinstall-all:*)",
+      "Bash(pipx install:*)",
+      "Bash(source ~/.bashrc)",
+      "Bash(cat:*)",
+      "Bash(brew list:*)",
+      "Bash(defaults read:*)",
+      "Bash(plutil:*)",
+      "Bash(osascript:*)",
+      "Bash(bash:*)",
+      "Bash(fish -c:*)",
+      "Bash(pgrep:*)",
+      "Bash(tmux send-keys:*)",
+      "Bash(tmux capture-pane:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(chezmoi data:*)",
+      "Bash(chezmoi doctor:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
