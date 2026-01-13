@@ -1,4 +1,4 @@
-authtoken: {{ (index (lastpass "devenv/ngrok") 0).note.token -}}
+authtoken: {{ regexReplaceAll "(?s).*token:([^\n]+).*" (secretJSON "item" "view" "--vault-name" "Personal" "--item-title" "ngrok" "--output" "json").item.content.note "${1}" }}
 version: 2
 region: eu
 tunnels:
@@ -9,4 +9,3 @@ tunnels:
     addr: 80
     proto: http
     subdomain: stc
-

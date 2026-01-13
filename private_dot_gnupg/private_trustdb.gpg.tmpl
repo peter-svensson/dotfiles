@@ -1,1 +1,2 @@
-{{ (index (lastpassRaw "devenv/gnupg-trustdb.gpg") 0).note | b64dec }}
+{{- $result := secretJSON "item" "view" "--vault-name" "Personal" "--item-title" "gnupg-trustdb.gpg" "--output" "json" -}}
+{{- $result.item.content.note | b64dec -}}

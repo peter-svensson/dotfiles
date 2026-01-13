@@ -1,1 +1,2 @@
-{{ (index (lastpassRaw "Shared-env-goodfeed/prod-default.tfvars") 0).note }}
+{{- $result := secretJSON "item" "view" "--vault-name" "Goodfeed shared" "--item-title" "prod-default.tfvars" "--output" "json" -}}
+{{ $result.item.content.note }}

@@ -1,1 +1,2 @@
-{{ (index (lastpass "devenv/ssh key") 0).note.privateKey }}
+{{- $result := secretJSON "item" "view" "--vault-name" "Personal" "--item-title" "ssh key" "--output" "json" -}}
+{{ $result.item.content.content.SshKey.private_key -}}

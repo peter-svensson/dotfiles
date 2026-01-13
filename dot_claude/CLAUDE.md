@@ -1,4 +1,6 @@
 - Don't commit to git when branch is gitbutler/*
-- dont patch deployments since argocd will overwrite that
-- dont do git commit
 - Use  kustomize build --enable-helm --helm-command helm3  when verifying kustomize
+- Never use the git commit command after a task is finished.
+- Make sure to follow conventional commits when generating commit messages with gitbutler
+- Commit message format: `<type>(<scope>): <subject>` where type is one of: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
+- Subject must be lowercase and not end with a period

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a chezmoi dotfiles repository for managing personal configuration across macOS machines. The repository uses chezmoi's templating system to manage environment-specific configurations, secrets integration with LastPass, and multi-organization workspace support.
+This is a chezmoi dotfiles repository for managing personal configuration across macOS machines. The repository uses chezmoi's templating system to manage environment-specific configurations, secrets integration with Proton Pass CLI, and multi-organization workspace support.
 
 ## Key Architecture Concepts
 
@@ -46,18 +46,44 @@ Templates use Go's text/template syntax with chezmoi-specific functions:
 - `{{ .chezmoi.hostname }}` - Current hostname
 - `{{ .chezmoi.homeDir }}` - Home directory path
 - `{{ .chezmoi.os }}` - Operating system
-- `{{ lastpass "path/to/secret" }}` - Retrieve secrets from LastPass
+- `{{ secretJSON "item" "view" ... }}` - Retrieve secrets from Proton Pass CLI
 - `{{ include "path" }}` - Include file contents
 - `{{ joinPath .chezmoi.homeDir "path" }}` - Build file paths
 
 ### Secrets Management
 
-Secrets are retrieved from LastPass using the `lastpass` template function:
-```
-{{ (index (lastpass "devenv/auths") 0).note.githubToken }}
+Secrets are retrieved from Proton Pass using chezmoi's `secretJSON` function with the pass CLI:
+
+```go
+{{- $result := secretJSON "item" "view" "--vault-name" "Personal" "--item-title" "ssh key" "--output" "json" -}}
+{{ $result.item.content.content.SshKey.private_key }}
 ```
 
-SSH keys, GPG keys, and credentials are stored in LastPass and templated into the appropriate files during `chezmoi apply`.
+**Common patterns:**
+
+SSH keys (stored as SSH key items):
+```go
+{{ $result.item.content.content.SshKey.private_key }}
+{{ $result.item.content.content.SshKey.public_key }}
+```
+
+Notes/text content (often base64 encoded):
+```go
+{{ $result.item.content.note | b64dec }}
+```
+
+Field extraction from notes (Key:Value format):
+```go
+{{- $note := $result.item.content.note -}}
+{{ regexReplaceAll "(?s).*FieldName:([^\n]+).*" $note "${1}" }}
+```
+
+**Vault organization:**
+- `Personal` - Personal development secrets (SSH keys, GPG keys, tokens)
+- `Lifeinside shared` - Life Inside organization secrets
+- `Goodfeed shared` - Goodfeed organization secrets
+- `Opzkit` - OpzKit organization secrets
+- `ProductQuest` - ProductTale organization secrets
 
 ### Conditional Configuration
 
@@ -191,15 +217,15 @@ When editing `.tmpl` files:
 1. Use `chezmoi edit` to edit the source template
 2. Use `chezmoi cat` to preview the rendered output
 3. Use `chezmoi apply --dry-run` to test before applying
-4. Test LastPass integration by ensuring `lpass login` is active
+4. Ensure Proton Pass CLI is authenticated (`pass` command available)
 
 ### SSH and GPG Key Management
 
-SSH keys are stored as templates referencing LastPass:
-- Public keys: `id_rsa.pub.tmpl`, `keen_id_rsa.pub.tmpl`, etc.
-- Private keys: `private_id_rsa.tmpl`, `private_keen_id_rsa.tmpl`, etc.
+SSH keys are stored as templates referencing Proton Pass:
+- Public keys: `id_rsa.pub.tmpl` - fetched from SSH key items in Proton Pass
+- Private keys: `private_id_rsa.tmpl` - fetched from SSH key items in Proton Pass
 
-GPG configuration is stored in `private_dot_gnupg/` with similar LastPass integration.
+GPG configuration is stored in `private_dot_gnupg/` with base64-encoded content in Proton Pass notes.
 
 ## Important Files
 

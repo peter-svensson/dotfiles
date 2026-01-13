@@ -5,7 +5,7 @@ export KUBECONFIG=$( IFS=:; set -- ${PWD}/.kube/kind*.yaml ${PWD}/.kube/*.yaml; 
 
 export GOPRIVATE=github.com/thegoodfeed
 
-export BUILDKITE_API_TOKEN={{ (index (lastpass "devenv/auths") 0).note.buildkiteTokenGoodfeed -}}
+export BUILDKITE_API_TOKEN={{ regexReplaceAll "(?s).*BuildkiteTokenGoodfeed:([^\n]+).*" (secretJSON "item" "view" "--vault-name" "Personal" "--item-title" "auths" "--output" "json").item.content.note "${1}" }}
 
 export AWS_SSO_CONFIG=${PWD}/.aws-sso/config
 export AWS_CONFIG_FILE=${PWD}/.aws/config

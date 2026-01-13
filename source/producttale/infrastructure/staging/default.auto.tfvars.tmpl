@@ -1,1 +1,2 @@
-{{ (index (lastpassRaw "Shared-env-productquest/staging-default.tfvars") 0).note }}
+{{- $result := secretJSON "item" "view" "--vault-name" "ProductQuest" "--item-title" "staging-default.tfvars" "--output" "json" -}}
+{{ $result.item.content.note }}

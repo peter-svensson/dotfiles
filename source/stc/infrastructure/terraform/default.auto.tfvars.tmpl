@@ -1,1 +1,2 @@
-{{ (index (lastpassRaw "stc-default.tfvars") 0).note }}
+{{- $result := secretJSON "item" "view" "--vault-name" "Personal" "--item-title" "stc-default.tfvars" "--output" "json" -}}
+{{ $result.item.content.note }}
