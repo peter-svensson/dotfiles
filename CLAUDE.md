@@ -46,36 +46,39 @@ Templates use Go's text/template syntax with chezmoi-specific functions:
 - `{{ .chezmoi.hostname }}` - Current hostname
 - `{{ .chezmoi.homeDir }}` - Home directory path
 - `{{ .chezmoi.os }}` - Operating system
-- `{{ secretJSON "item" "view" ... }}` - Retrieve secrets from Proton Pass CLI
+- `{{ template "protonPass*" (dict ...) }}` - Retrieve secrets using helper templates (see Secrets Management)
 - `{{ include "path" }}` - Include file contents
 - `{{ joinPath .chezmoi.homeDir "path" }}` - Build file paths
 
 ### Secrets Management
 
-Secrets are retrieved from Proton Pass using chezmoi's `secretJSON` function with the pass CLI:
+Secrets are retrieved from Proton Pass using helper templates in `.chezmoitemplates/`. The chezmoi config (`dot_config/chezmoi/chezmoi.toml`) configures `pass-cli` as the secret command.
+
+**Available helper templates:**
+
+| Template | Purpose | Usage |
+|----------|---------|-------|
+| `protonPassNoteField` | Extract `Key:Value` field from note | `{{ template "protonPassNoteField" (dict "vault" "Personal" "item" "auths" "field" "GithubToken") }}` |
+| `protonPassSshPrivateKey` | Get SSH private key | `{{ template "protonPassSshPrivateKey" (dict "vault" "Personal" "item" "ssh key") }}` |
+| `protonPassSshPublicKey` | Get SSH public key | `{{ template "protonPassSshPublicKey" (dict "vault" "Personal" "item" "ssh key") }}` |
+| `protonPassNote` | Get note content (base64 decoded) | `{{ template "protonPassNote" (dict "vault" "Personal" "item" "gnupg-trustdb.gpg") }}` |
+| `protonPassNoteRaw` | Get note content (raw, no decode) | `{{ template "protonPassNoteRaw" (dict "vault" "Opzkit" "item" "cicd-default.tfvars") }}` |
+| `protonPassItem` | Get full item JSON for custom access | `{{ template "protonPassItem" (dict "vault" "Personal" "item" "auths") }}` |
+
+**Examples:**
 
 ```go
-{{- $result := secretJSON "item" "view" "--vault-name" "Personal" "--item-title" "ssh key" "--output" "json" -}}
-{{ $result.item.content.content.SshKey.private_key }}
-```
+# Extract a token from a note with Key:Value format
+export GITHUB_TOKEN={{ template "protonPassNoteField" (dict "vault" "Personal" "item" "auths" "field" "GithubToken") }}
 
-**Common patterns:**
+# Get an SSH private key
+{{ template "protonPassSshPrivateKey" (dict "vault" "Personal" "item" "ssh key") }}
 
-SSH keys (stored as SSH key items):
-```go
-{{ $result.item.content.content.SshKey.private_key }}
-{{ $result.item.content.content.SshKey.public_key }}
-```
+# Get base64-encoded binary content (like GPG keys)
+{{ template "protonPassNote" (dict "vault" "Personal" "item" "gnupg-privatekey1") }}
 
-Notes/text content (often base64 encoded):
-```go
-{{ $result.item.content.note | b64dec }}
-```
-
-Field extraction from notes (Key:Value format):
-```go
-{{- $note := $result.item.content.note -}}
-{{ regexReplaceAll "(?s).*FieldName:([^\n]+).*" $note "${1}" }}
+# Get raw note content (like tfvars files)
+{{ template "protonPassNoteRaw" (dict "vault" "Goodfeed shared" "item" "prod-default.tfvars") }}
 ```
 
 **Vault organization:**
@@ -229,6 +232,7 @@ GPG configuration is stored in `private_dot_gnupg/` with base64-encoded content 
 
 ## Important Files
 
+- `.chezmoitemplates/` - Reusable template helpers (protonPass* functions for secrets)
 - `.chezmoiexternal.toml` - External resource management (tmux plugins, Hammerspoon spoons)
 - `.chezmoiignore` - Files to exclude from chezmoi management
 - `run_once_000_install-packages-darwin.sh.tmpl` - Package installation bootstrap

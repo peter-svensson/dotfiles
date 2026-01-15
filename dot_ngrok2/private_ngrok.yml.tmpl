@@ -1,4 +1,4 @@
-authtoken: {{ regexReplaceAll "(?s).*token:([^\n]+).*" (secretJSON "item" "view" "--vault-name" "Personal" "--item-title" "ngrok" "--output" "json").item.content.note "${1}" }}
+authtoken: {{ template "protonPassNoteField" (dict "vault" "Personal" "item" "ngrok" "field" "token") }}
 version: 2
 region: eu
 tunnels:

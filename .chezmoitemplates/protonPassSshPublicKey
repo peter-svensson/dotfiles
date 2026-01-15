@@ -1,0 +1,4 @@
+{{- /* Returns the public key from a Proton Pass SSH key item */ -}}
+{{- /* Usage: {{ template "protonPassSshPublicKey" (dict "vault" "Personal" "item" "ssh key") }} */ -}}
+{{- $result := secretJSON "item" "view" "--vault-name" .vault "--item-title" .item "--output" "json" -}}
+{{- $result.item.content.content.SshKey.public_key -}}

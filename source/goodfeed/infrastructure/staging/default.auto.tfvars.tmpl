@@ -1,2 +1,1 @@
-{{- $result := secretJSON "item" "view" "--vault-name" "Goodfeed shared" "--item-title" "staging-default.tfvars" "--output" "json" -}}
-{{ $result.item.content.note }}
+{{ template "protonPassNoteRaw" (dict "vault" "Goodfeed shared" "item" "staging-default.tfvars") }}

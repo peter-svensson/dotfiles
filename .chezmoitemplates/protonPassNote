@@ -1,0 +1,4 @@
+{{- /* Returns the note content from a Proton Pass item, base64 decoded */ -}}
+{{- /* Usage: {{ template "protonPassNote" (dict "vault" "Personal" "item" "gnupg-trustdb.gpg") }} */ -}}
+{{- $result := secretJSON "item" "view" "--vault-name" .vault "--item-title" .item "--output" "json" -}}
+{{- $result.item.content.note | b64dec -}}

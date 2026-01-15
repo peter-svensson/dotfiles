@@ -1,0 +1,5 @@
+{{- /* Extracts a field value from a Proton Pass note with Key:Value format */ -}}
+{{- /* Usage: {{ template "protonPassNoteField" (dict "vault" "Personal" "item" "auths" "field" "GithubToken") }} */ -}}
+{{- $result := secretJSON "item" "view" "--vault-name" .vault "--item-title" .item "--output" "json" -}}
+{{- $pattern := printf "(?s).*%s:([^\n]+).*" .field -}}
+{{- regexReplaceAll $pattern $result.item.content.note "${1}" -}}

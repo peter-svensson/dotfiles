@@ -1,2 +1,1 @@
-{{- $result := secretJSON "item" "view" "--vault-name" "Personal" "--item-title" "ssh key old" "--output" "json" -}}
-{{ $result.item.content.content.SshKey.private_key -}}
+{{ template "protonPassSshPrivateKey" (dict "vault" "Personal" "item" "ssh key old") -}}

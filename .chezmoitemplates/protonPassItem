@@ -1,0 +1,3 @@
+{{- /* Returns the full Proton Pass item JSON for a vault/item combo */ -}}
+{{- /* Usage: {{ template "protonPassItem" (dict "vault" "Personal" "item" "auths") }} */ -}}
+{{- secretJSON "item" "view" "--vault-name" .vault "--item-title" .item "--output" "json" -}}

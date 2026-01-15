@@ -1,2 +1,1 @@
-{{- $result := secretJSON "item" "view" "--vault-name" "Opzkit" "--item-title" "cicd-default.tfvars" "--output" "json" -}}
-{{ $result.item.content.note }}
+{{ template "protonPassNoteRaw" (dict "vault" "Opzkit" "item" "cicd-default.tfvars") }}

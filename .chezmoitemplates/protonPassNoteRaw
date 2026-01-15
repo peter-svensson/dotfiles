@@ -1,0 +1,4 @@
+{{- /* Returns the raw note content from a Proton Pass item (no base64 decode) */ -}}
+{{- /* Usage: {{ template "protonPassNoteRaw" (dict "vault" "Personal" "item" "my-item") }} */ -}}
+{{- $result := secretJSON "item" "view" "--vault-name" .vault "--item-title" .item "--output" "json" -}}
+{{- $result.item.content.note -}}

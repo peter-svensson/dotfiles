@@ -54,7 +54,10 @@
       "Bash(# Check full LastPass item structure echo \"\"=== devenv/ssh key \\(full\\) ===\"\" lpass show \"\"devenv/ssh key\"\" --json)",
       "Bash(jq '.' echo \"\" echo \"=== Shared-env-lifeinside/ssh k8s key \\(full\\) ===\" lpass show \"Shared-env-lifeinside/ssh k8s key\" --json)",
       "Bash(# Extract private keys from LastPass in clean format echo \"\"========================================\"\" echo \"\"devenv/ssh key - PRIVATE KEY\"\" echo \"\"========================================\"\" lpass show \"\"devenv/ssh key\"\" --json)",
-      "Bash(# Extract private key using different method lpass show \"\"devenv/ssh key\"\" --json)"
+      "Bash(# Extract private key using different method lpass show \"\"devenv/ssh key\"\" --json)",
+      "WebFetch(domain:www.chezmoi.io)",
+      "Bash(chezmoi execute-template:*)",
+      "Bash(chezmoi cat:*)"
     ],
     "deny": [],
     "ask": []

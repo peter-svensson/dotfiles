@@ -3,5 +3,5 @@ export AWS_REGION=eu-west-1
 export AWS_DEFAULT_REGION=eu-west-1
 
 export DOCKERHUB_USERNAME=sparetimecoders
-export DOCKERHUB_PASSWORD={{ regexReplaceAll "(?s).*DockerhubPassword:([^\n]+).*" (secretJSON "item" "view" "--vault-name" "Personal" "--item-title" "auths" "--output" "json").item.content.note "${1}" }}
-export GITHUB_TOKEN={{ regexReplaceAll "(?s).*GithubToken:([^\n]+).*" (secretJSON "item" "view" "--vault-name" "Personal" "--item-title" "auths" "--output" "json").item.content.note "${1}" }}
+export DOCKERHUB_PASSWORD={{ template "protonPassNoteField" (dict "vault" "Personal" "item" "auths" "field" "DockerhubPassword") }}
+export GITHUB_TOKEN={{ template "protonPassNoteField" (dict "vault" "Personal" "item" "auths" "field" "GithubToken") }}
