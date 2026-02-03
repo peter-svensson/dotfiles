@@ -1,5 +1,7 @@
 function but-pull-all --description "Update all GitButler projects to latest remote state"
-    argparse 'f/force' -- $argv
+    argparse 'f/force' 't/timeout=!_validate_int --min 1' -- $argv
+
+    set -l timeout_secs (if set -q _flag_timeout; echo $_flag_timeout; else; echo 30; end)
 
     set -l projects_file "$HOME/Library/Application Support/com.gitbutler.app/projects.json"
     set -l filter $argv[1]
@@ -21,9 +23,12 @@ function but-pull-all --description "Update all GitButler projects to latest rem
         if test -d "$path/.git/gitbutler"
             set matched (math $matched + 1)
             # Check status first without colors
-            set -l check_output (but -C "$path" pull --check 2>&1)
+            set -l check_output (timeout $timeout_secs but -C "$path" pull --check 2>&1)
+            set -l check_status $status
 
-            if echo "$check_output" | grep -q "Up to date"
+            if test $check_status -eq 124
+                echo "$name: "(set_color red)"timed out during check"(set_color normal)
+            else if echo "$check_output" | grep -q "Up to date"
                 echo "$name: "(set_color green)"up to date"(set_color normal)
             else if echo "$check_output" | grep -q "bad object"
                 # Broken refs detected
@@ -44,7 +49,10 @@ function but-pull-all --description "Update all GitButler projects to latest rem
             else
                 # Has changes or errors - run with full colored output
                 echo "$name:"
-                but -C "$path" pull
+                timeout $timeout_secs but -C "$path" pull
+                if test $status -eq 124
+                    echo (set_color red)"  timed out after "$timeout_secs"s"(set_color normal)
+                end
                 echo ""
             end
         end

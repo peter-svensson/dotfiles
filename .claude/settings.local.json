@@ -57,7 +57,8 @@
       "Bash(# Extract private key using different method lpass show \"\"devenv/ssh key\"\" --json)",
       "WebFetch(domain:www.chezmoi.io)",
       "Bash(chezmoi execute-template:*)",
-      "Bash(chezmoi cat:*)"
+      "Bash(chezmoi cat:*)",
+      "Bash(wc:*)"
     ],
     "deny": [],
     "ask": []

@@ -5,3 +5,4 @@ complete -c but-pull-all -f -a '(jq -r ".[].path" "$HOME/Library/Application Sup
 
 # Flags
 complete -c but-pull-all -s f -l force -d 'Clean broken refs automatically'
+complete -c but-pull-all -s t -l timeout -d 'Timeout in seconds per repo (default: 30)' -r
