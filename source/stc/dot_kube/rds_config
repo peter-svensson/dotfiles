@@ -1,0 +1,5 @@
+# k8s-rds-tunnel configuration
+# Format: cluster_name rds_host region [port]
+# Port defaults to 5432 if omitted
+
+k8s.sparetimecoders.com shared.cluster-c3oon0qusrf8.eu-west-1.rds.amazonaws.com eu-west-1 5432

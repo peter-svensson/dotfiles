@@ -2,6 +2,7 @@ source_up .envrc
 
 export PATH=${PATH}:${PWD}/.bin
 export KUBECONFIG=$( IFS=:; set -- ${PWD}/.kube/kind*.yaml ${PWD}/.kube/*.yaml; echo "$*" )
+export K8S_RDS_CONFIG=${PWD}/.kube/rds_config
 
 export GOPRIVATE=github.com/thegoodfeed
 
@@ -10,3 +11,13 @@ export BUILDKITE_API_TOKEN={{ template "protonPassNoteField" (dict "vault" "Pers
 export AWS_SSO_CONFIG=${PWD}/.aws-sso/config
 export AWS_CONFIG_FILE=${PWD}/.aws/config
 #export AWS_SDK_LOAD_CONFIG=1
+
+
+# Load acctest environment if .acctest-mode file exists
+# To enable: touch .acctest-mode && direnv allow
+# To disable: rm .acctest-mode && direnv allow
+if [ -f ".acctest-mode" ]; then
+  source_env acctest/.envrc.acctest
+fi
+
+export POSTGRES_CONNECTION_STRING=postgres://postgres:postgres@goodfeed-control-plane.orb.local:5432/postgres

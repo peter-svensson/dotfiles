@@ -2,6 +2,7 @@ source_up .envrc
 
 export PATH=${PATH}:${PWD}/.bin
 export KUBECONFIG=$( IFS=:; set -- ${PWD}/.kube/kind*.yaml ${PWD}/.kube/*.yaml; echo "$*" )
+export K8S_RDS_CONFIG=${PWD}/.kube/rds_config
 
 export GOPRIVATE=github.com/intersolia
 
