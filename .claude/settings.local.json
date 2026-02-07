@@ -58,7 +58,9 @@
       "WebFetch(domain:www.chezmoi.io)",
       "Bash(chezmoi execute-template:*)",
       "Bash(chezmoi cat:*)",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "Bash(chezmoi add:*)",
+      "Bash(chmod:*)"
     ],
     "deny": [],
     "ask": []

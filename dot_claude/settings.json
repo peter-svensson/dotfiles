@@ -1,5 +1,6 @@
 {
-  "hooks": {
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
   "permissions": {
     "allow": [
@@ -9,7 +10,6 @@
       "WebSearch",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
-
       "Bash(ls:~/source/**)",
       "Bash(cat:~/source/**)",
       "Bash(head:~/source/**)",
@@ -21,7 +21,6 @@
       "Bash(tree:~/source/**)",
       "Bash(mkdir:~/source/**)",
       "Bash(chmod:~/source/**)",
-
       "Bash(go build:*)",
       "Bash(go test:*)",
       "Bash(go mod tidy:*)",
@@ -37,24 +36,20 @@
       "Bash(gofmt:*)",
       "Bash(golangci-lint:*)",
       "Bash(staticcheck:*)",
-
       "Bash(npm install:*)",
       "Bash(npm run:*)",
       "Bash(npx:*)",
       "Bash(node:*)",
-
       "Bash(make:*)",
       "Bash(pre-commit run:*)",
       "Bash(pre-commit clean:*)",
       "Bash(pre-commit install-hooks:*)",
       "Bash(pre-commit autoupdate:*)",
-
       "Bash(docker build:*)",
       "Bash(docker exec:*)",
       "Bash(docker inspect:*)",
       "Bash(docker pull:*)",
       "Bash(docker port:*)",
-
       "Bash(kubectl get:*)",
       "Bash(kubectl describe:*)",
       "Bash(kubectl logs:*)",
@@ -66,17 +61,14 @@
       "Bash(kubectl config:*)",
       "Bash(kubectl explain:*)",
       "Bash(kubectl patch:*)",
-
       "Bash(kind get:*)",
       "Bash(helm template:*)",
       "Bash(helm lint:*)",
       "Bash(helm install:*)",
       "Bash(kustomize build:*)",
       "Bash(yq:*)",
-
       "Bash(terraform init:*)",
       "Bash(terraform validate:*)",
-
       "Bash(git fetch:*)",
       "Bash(git stash:*)",
       "Bash(git checkout:*)",
@@ -84,17 +76,42 @@
       "Bash(git check-ignore:*)",
       "Bash(git add:*)",
       "Bash(git rm:*)",
-
       "Bash(gh release list:*)",
       "Bash(gh run list:*)",
       "Bash(gh run view:*)",
       "Bash(gh api:*)",
       "Bash(gh pr view:*)",
       "Bash(gh pr diff:*)",
-
       "Bash(curl:*)",
       "Bash(pgrep:*)",
       "Bash(lsof:*)"
+    ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/tmux-notify.sh",
+            "timeout": 5,
+            "async": true
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/tmux-notify.sh",
+            "timeout": 5,
+            "async": true
+          }
+        ]
+      }
     ]
   }
 }
