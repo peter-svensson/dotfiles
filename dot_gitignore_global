@@ -5,6 +5,9 @@
 idea
 .idea
 .graphqlconfig
+graphql.config.yml
 .envrc
 .buildtools.yaml
+.direnv
+.env
 .hermit
