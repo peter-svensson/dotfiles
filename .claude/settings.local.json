@@ -60,7 +60,8 @@
       "Bash(chezmoi cat:*)",
       "Bash(wc:*)",
       "Bash(chezmoi add:*)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "Bash(gh api:*)"
     ],
     "deny": [],
     "ask": []
