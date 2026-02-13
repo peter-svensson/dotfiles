@@ -16,8 +16,8 @@ function but-pull-all --description "Update all GitButler projects to latest rem
     for path in (jq -r '.[].path' "$projects_file")
         set -l name (basename "$path")
 
-        # Skip if filter provided and doesn't match
-        if test -n "$filter"; and not string match -q "*$filter*" "$name"
+        # Skip if filter provided and doesn't match name or path
+        if test -n "$filter"; and not string match -q "*$filter*" "$name"; and not string match -q "*$filter*" "$path"
             continue
         end
         if test -d "$path/.git/gitbutler"
