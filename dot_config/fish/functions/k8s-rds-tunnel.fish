@@ -73,6 +73,13 @@ function k8s-rds-tunnel --description "Port forward to RDS via SSM through a k8s
         return 1
     end
 
+    # Check if local port is already in use
+    if lsof -i :$local_port -sTCP:LISTEN >/dev/null 2>&1
+        echo (set_color red)"Port $local_port is already in use"(set_color normal)
+        echo "Use --port to specify a different local port"
+        return 1
+    end
+
     echo "Using node: $instance_id"
     echo "Forwarding localhost:$local_port → $rds_host:$remote_port via $instance_id"
     echo ""

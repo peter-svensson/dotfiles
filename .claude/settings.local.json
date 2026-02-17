@@ -61,7 +61,9 @@
       "Bash(wc:*)",
       "Bash(chezmoi add:*)",
       "Bash(chmod:*)",
-      "Bash(gh api:*)"
+      "Bash(gh api:*)",
+      "WebSearch",
+      "Bash(glow:*)"
     ],
     "deny": [],
     "ask": []
