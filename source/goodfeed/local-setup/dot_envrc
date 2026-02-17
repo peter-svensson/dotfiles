@@ -1,0 +1,24 @@
+source_up .envrc
+
+# OrbStack provides .orb.local DNS for kind clusters
+# This allows running multiple kind clusters without port conflicts
+export KIND_HOST=goodfeed-control-plane.orb.local
+
+# Database configuration
+export DB_HOST=${KIND_HOST}
+export DB_PORT=5432
+export DB_USER=postgres
+export DB_PASSWORD=postgres
+
+# RabbitMQ configuration
+export RABBITMQ_HOST=${KIND_HOST}
+export RABBITMQ_PORT=5672
+export RABBITMQ_MANAGEMENT_PORT=15672
+export RABBITMQ_URL=amqp://user:password@${KIND_HOST}:5672/
+
+# MinIO/S3 configuration
+export S3_ENDPOINT=http://${KIND_HOST}:9000
+export MINIO_ENDPOINT=${KIND_HOST}:9000
+export MINIO_CONSOLE=http://${KIND_HOST}:9001
+export AWS_ACCESS_KEY_ID=minio
+export AWS_SECRET_ACCESS_KEY=minio123
