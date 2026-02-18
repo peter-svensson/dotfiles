@@ -14,3 +14,4 @@ abbr -a -- kc kubectl --context
 abbr -a -- sc stern --context
 
 abbr -a -- gup git up
+abbr -a -- ggone "git branch -vv | grep ': gone]' | awk '{print \$1}' | xargs git branch -D"
