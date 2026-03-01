@@ -1,7 +1,17 @@
 {
+  "cleanupPeriodDays": 365,
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  },
   "env": {
+    "DISABLE_TELEMETRY": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
+  "enableAllProjectMcpServers": false,
+  "alwaysThinkingEnabled": true,
   "permissions": {
     "allow": []
   },
@@ -14,6 +24,18 @@
             "type": "command",
             "command": "python3 ~/.claude/hooks/gitbutler-commit-hook.py",
             "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/go-format.sh",
+            "timeout": 10
           }
         ]
       }
@@ -43,42 +65,6 @@
         ]
       }
     ]
-  },
-  "mcpServers": {
-    "github": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-github"
-      ],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "$GITHUB_TOKEN"
-      },
-      "description": "GitHub operations - PRs, issues, repos"
-    },
-    "memory": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-memory"
-      ],
-      "description": "Persistent memory across sessions"
-    },
-    "sequential-thinking": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ],
-      "description": "Chain-of-thought reasoning"
-    },
-    "context7": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@context7/mcp-server"
-      ],
-      "description": "Live documentation lookup"
-    }
   }
 }
+

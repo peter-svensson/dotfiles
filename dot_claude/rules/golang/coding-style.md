@@ -10,7 +10,17 @@ paths:
 
 ## Formatting
 
-- **gofumpt** and **goimports** are mandatory — no style debates
+- **gofumpt** and **goimports** are mandatory — auto-applied via PostToolUse hook on every `.go` edit
+
+## Pre-Completion Gate (MANDATORY)
+
+Do NOT declare any Go task complete until ALL of these pass with zero errors:
+1. `go build ./...`
+2. `go vet ./...`
+3. `golangci-lint run ./...`
+4. `go test -race ./...` (on affected packages at minimum)
+
+If any check fails, fix the issue and re-run. Never skip this step, never report completion with outstanding warnings.
 
 ## Design Principles
 
