@@ -54,14 +54,25 @@
 - **No premature abstraction**: Don't create utilities until the same code is written three times.
 - **Bias toward action**: Decide and move for anything easily reversed; state the assumption. Ask before committing to interfaces, data models, architecture, or destructive ops. When assigned a task, proceed directly to implementation — do not spend the session exploring and asking clarifying questions unless explicitly asked to plan first.
 - **Finish the job**: Handle edge cases you can see. Clean up what you touched. Flag broken adjacent things. But don't invent new scope — thoroughness is not gold-plating.
+- **Verify at every level**: Prefer structure-aware tools (ast-grep, LSPs, compilers) over text pattern matching when searching for code structure. Review your own output critically.
+- **Look up versions**: When adding dependencies, CI actions, or tool versions, always look up the current stable version — never assume from memory.
 
 ## Code Discipline
+
+### Hard Limits
+- ≤100 lines per function, cyclomatic complexity ≤8
+- ≤5 positional parameters — use options objects/structs beyond that
 
 ### Zero Warnings Policy
 Fix every warning from every tool — linters, type checkers, compilers, tests. If a warning truly can't be fixed, add an inline ignore with a justification comment. Never leave warnings unaddressed.
 
 ### Comments
 No commented-out code — delete it. If you need a comment to explain WHAT the code does, refactor the code instead. Comments explain WHY, not WHAT.
+
+### Error Handling
+- Fail fast with clear, actionable messages
+- Never swallow exceptions silently
+- Include context: what operation failed, what input caused it, suggested fix
 
 ### Testing Philosophy
 - **Test behavior, not implementation** — if a refactor breaks tests but not code, the tests were wrong
@@ -74,3 +85,33 @@ Evaluate: architecture → code quality → tests → performance. For each issu
 
 ### PR Descriptions
 Describe what the code does now — not discarded approaches, prior iterations, or alternatives. Use plain, factual language. Avoid hype words: critical, crucial, essential, significant, comprehensive, robust, elegant.
+
+## CLI Tools
+
+Prefer these over slower defaults:
+
+| Tool | Replaces | Usage |
+|------|----------|-------|
+| `rg` (ripgrep) | grep | `rg "pattern"` — fast regex search |
+| `fd` | find | `fd "*.py"` — fast file finder |
+| `ast-grep` | — | `ast-grep --pattern '$FUNC($$$)' --lang py` — AST-based code search |
+| `shellcheck` | — | `shellcheck script.sh` — shell script linter |
+| `shfmt` | — | `shfmt -i 2 -w script.sh` — shell formatter |
+| `actionlint` | — | `actionlint .github/workflows/` — GitHub Actions linter |
+| `zizmor` | — | `zizmor .github/workflows/` — Actions security audit |
+
+Prefer `ast-grep` over ripgrep when searching for code structure (function calls, class definitions, imports). Use ripgrep for literal strings and log messages.
+
+## Shell & CI
+
+### Shell Scripts
+- All bash scripts must start with `set -euo pipefail`
+- Lint with `shellcheck` and format with `shfmt` before committing
+
+### GitHub Actions
+- Pin actions to SHA hashes with version comments: `actions/checkout@<full-sha>  # vX.Y.Z`
+- Use `persist-credentials: false` on checkout actions
+- Scan workflows with `actionlint` and `zizmor` before committing
+
+### Parallel Agents
+- Parallel subagents require worktrees — each subagent MUST work in its own worktree, not the main repo
