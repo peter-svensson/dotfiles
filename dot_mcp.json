@@ -7,7 +7,7 @@
         "@modelcontextprotocol/server-github"
       ],
       "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "$GITHUB_TOKEN"
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
       },
       "description": "GitHub operations - PRs, issues, repos"
     },
@@ -42,7 +42,7 @@
         "exa-mcp-server"
       ],
       "env": {
-        "EXA_API_KEY": "f23137c2-c801-4c96-9c05-a56e1e81cb88"
+        "EXA_API_KEY": "${EXA_API_KEY}"
       }
     }
   }
