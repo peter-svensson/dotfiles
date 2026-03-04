@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Colors
+red='\033[0;31m'
+reset='\033[0m'
+
+usage() {
+  echo "Usage: k8s-rds-psql <name> --context <cluster> [--port <local-port>] [--namespace <ns>]"
+  echo ""
+  echo "  <name>        Database name, username, and secret name"
+  echo "  --context     Kubernetes context (required)"
+  echo "  --port        Local port (must match k8s-rds-tunnel, default: 35432)"
+  echo "  --namespace   Kubernetes namespace (default: same as name)"
+}
+
+# Parse arguments
+context=""
+local_port=""
+namespace=""
+name=""
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -c|--context)
+      context="$2"
+      shift 2
+      ;;
+    -p|--port)
+      local_port="$2"
+      if ! [[ "$local_port" =~ ^[0-9]+$ ]] || (( local_port < 1 || local_port > 65535 )); then
+        echo -e "${red}Invalid port: $local_port${reset}" >&2
+        exit 1
+      fi
+      shift 2
+      ;;
+    -n|--namespace)
+      namespace="$2"
+      shift 2
+      ;;
+    -*)
+      echo -e "${red}Unknown option: $1${reset}" >&2
+      exit 1
+      ;;
+    *)
+      name="$1"
+      shift
+      ;;
+  esac
+done
+
+if [[ -z "$name" ]]; then
+  usage
+  exit 1
+fi
+
+if [[ -z "$context" ]]; then
+  echo -e "${red}--context is required${reset}" >&2
+  echo "Usage: k8s-rds-psql <name> --context <cluster>"
+  exit 1
+fi
+
+local_port="${local_port:-35432}"
+namespace="${namespace:-$name}"
+db_name="${name//-/_}"
+
+# Get password from k8s secret
+secret_name="${name}-secrets"
+echo "Looking up password from secret '$secret_name' in namespace '$namespace'..."
+if ! password=$(kubectl --context "$context" -n "$namespace" get secret "$secret_name" -o jsonpath='{.data.DB_PASSWORD}' 2>&1); then
+  echo -e "${red}Failed to get secret: $password${reset}" >&2
+  exit 1
+fi
+
+password=$(echo "$password" | base64 --decode)
+
+echo "Connecting to database '$db_name' as user '$db_name' on localhost:$local_port..."
+PGPASSWORD="$password" psql -h localhost -p "$local_port" -U "$db_name" -d "$db_name"
