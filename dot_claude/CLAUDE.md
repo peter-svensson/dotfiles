@@ -1,5 +1,3 @@
-- Always use `/opt/homebrew/bin/claude` (the stable symlink)
-- NEVER use the versioned `claude` path (`/opt/homebrew/Caskroom/claude-code/<version>/claude`) which breaks on upgrades
 - always unzip files to a temporary directory
 - Always add all files to git before running pre-commit since it stashes all unstaged files when running
 - I use GNU versions of rm and cp which ask for confirmation on replace and remove.

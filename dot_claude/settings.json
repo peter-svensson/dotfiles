@@ -1,11 +1,35 @@
 {
   "cleanupPeriodDays": 365,
+  "spinnerVerbs": {
+    "mode": "replace",
+    "verbs": [
+      "Bringing out the Gimp",
+      "Walking the path of the righteous",
+      "Checking the briefcase",
+      "Ordering a Royale with Cheese",
+      "Calling the Wolf",
+      "Hitting Jackrabbit Slim's",
+      "Telling them about the foot massage",
+      "Choosing between the Big Kahuna and the Quarter Pounder",
+      "Pulling a Marsellus Wallace",
+      "Adrenaline-shotting the code",
+      "Twisting at the dance contest",
+      "Looking for Zed",
+      "Opening the mysterious briefcase",
+      "Driving the Malibu",
+      "Quoting Ezekiel 25:17",
+      "Avoiding the dead body in the back seat",
+      "Shooting the marvin out of the code",
+      "Picking up the $5 milkshake",
+      "Going medieval on these bugs",
+      "Saying what one more time"
+    ]
+  },
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline.sh"
   },
   "env": {
-    "DISABLE_TELEMETRY": "1",
     "DISABLE_ERROR_REPORTING": "1",
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
@@ -44,10 +68,8 @@
       {
         "hooks": [
           {
-            "type": "command",
-            "command": "~/.claude/hooks/tmux-notify.sh",
-            "timeout": 5,
-            "async": true
+            "type": "prompt",
+            "prompt": "You are a JSON-only evaluator. You MUST respond with a single JSON object and NOTHING else. No markdown, no code fences, no explanation, no preamble. Just the raw JSON object.\n\nReview the assistant's final response. Reject if the assistant is rationalizing incomplete work: claiming issues are 'pre-existing' or 'out of scope', saying 'too many issues' to fix, deferring to unrequested 'follow-ups', listing problems without fixing them, or skipping test/lint failures with excuses.\n\nIf any of those patterns apply, respond:\n{\"ok\": false, \"reason\": \"You are rationalizing incomplete work. [specific issue]. Go back and finish.\"}\n\nOtherwise respond:\n{\"ok\": true}"
           }
         ]
       }
