@@ -3,8 +3,8 @@ export AWS_REGION=eu-west-1
 export AWS_DEFAULT_REGION=eu-west-1
 
 export DOCKERHUB_USERNAME=sparetimecoders
-export DOCKERHUB_PASSWORD={{ template "protonPassNoteField" (dict "vault" "Personal" "item" "auths" "field" "DockerhubPassword") }}
-export GITHUB_TOKEN={{ template "protonPassNoteField" (dict "vault" "Personal" "item" "auths" "field" "GithubToken") }}
+export DOCKERHUB_PASSWORD={{ protonPass "pass://Personal/auths/DockerhubPassword" | trim }}
+export GITHUB_TOKEN={{ protonPass "pass://Personal/auths/GithubToken" | trim }}
 
-export DISCOGS_TOKEN={{ template "protonPassNoteField" (dict "vault" "Personal" "item" "auths" "field" "Discogs") }}
+export DISCOGS_TOKEN={{ protonPass "pass://Personal/auths/Discogs" | trim }}
 

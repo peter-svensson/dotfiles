@@ -6,7 +6,7 @@ export K8S_RDS_CONFIG=${PWD}/.kube/rds_config
 
 export GOPRIVATE=github.com/thegoodfeed
 
-export BUILDKITE_API_TOKEN={{ template "protonPassNoteField" (dict "vault" "Personal" "item" "auths" "field" "BuildkiteTokenGoodfeed") }}
+export BUILDKITE_API_TOKEN={{ protonPass "pass://Personal/auths/BuildkiteTokenGoodfeed" | trim }}
 
 export AWS_SSO_CONFIG=${PWD}/.aws-sso/config
 export AWS_CONFIG_FILE=${PWD}/.aws/config

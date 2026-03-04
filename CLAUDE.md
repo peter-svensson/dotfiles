@@ -46,39 +46,36 @@ Templates use Go's text/template syntax with chezmoi-specific functions:
 - `{{ .chezmoi.hostname }}` - Current hostname
 - `{{ .chezmoi.homeDir }}` - Home directory path
 - `{{ .chezmoi.os }}` - Operating system
-- `{{ template "protonPass*" (dict ...) }}` - Retrieve secrets using helper templates (see Secrets Management)
+- `{{ protonPass "pass://Vault/Item/Field" }}` - Retrieve a secret field value
+- `{{ protonPassJSON "pass://Vault/Item" }}` - Retrieve full item JSON for custom access
 - `{{ include "path" }}` - Include file contents
 - `{{ joinPath .chezmoi.homeDir "path" }}` - Build file paths
 
 ### Secrets Management
 
-Secrets are retrieved from Proton Pass using helper templates in `.chezmoitemplates/`. The chezmoi config (`dot_config/chezmoi/chezmoi.toml`) configures `pass-cli` as the secret command.
+Secrets are retrieved from Proton Pass using chezmoi's built-in `protonPass` and `protonPassJSON` functions. The URI format is `pass://Vault/Item` or `pass://Vault/Item/Field`.
 
-**Available helper templates:**
+**Built-in functions:**
 
-| Template | Purpose | Usage |
+| Function | Purpose | Usage |
 |----------|---------|-------|
-| `protonPassNoteField` | Extract `Key:Value` field from note | `{{ template "protonPassNoteField" (dict "vault" "Personal" "item" "auths" "field" "GithubToken") }}` |
-| `protonPassSshPrivateKey` | Get SSH private key | `{{ template "protonPassSshPrivateKey" (dict "vault" "Personal" "item" "ssh key") }}` |
-| `protonPassSshPublicKey` | Get SSH public key | `{{ template "protonPassSshPublicKey" (dict "vault" "Personal" "item" "ssh key") }}` |
-| `protonPassNote` | Get note content (base64 decoded) | `{{ template "protonPassNote" (dict "vault" "Personal" "item" "gnupg-trustdb.gpg") }}` |
-| `protonPassNoteRaw` | Get note content (raw, no decode) | `{{ template "protonPassNoteRaw" (dict "vault" "Opzkit" "item" "cicd-default.tfvars") }}` |
-| `protonPassItem` | Get full item JSON for custom access | `{{ template "protonPassItem" (dict "vault" "Personal" "item" "auths") }}` |
+| `protonPass` | Get a specific field value | `{{ protonPass "pass://Personal/auths/GithubToken" \| trim }}` |
+| `protonPassJSON` | Get full item JSON | `{{ (protonPassJSON "pass://Personal/ssh key").item.content.content.SshKey.private_key }}` |
 
 **Examples:**
 
 ```go
-# Extract a token from a note with Key:Value format
-export GITHUB_TOKEN={{ template "protonPassNoteField" (dict "vault" "Personal" "item" "auths" "field" "GithubToken") }}
+# Extract a token
+export GITHUB_TOKEN={{ protonPass "pass://Personal/auths/GithubToken" | trim }}
 
 # Get an SSH private key
-{{ template "protonPassSshPrivateKey" (dict "vault" "Personal" "item" "ssh key") }}
+{{ (protonPassJSON "pass://Personal/ssh key").item.content.content.SshKey.private_key }}
 
 # Get base64-encoded binary content (like GPG keys)
-{{ template "protonPassNote" (dict "vault" "Personal" "item" "gnupg-privatekey1") }}
+{{ (protonPassJSON "pass://Personal/gnupg-privatekey1").item.content.note | b64dec }}
 
 # Get raw note content (like tfvars files)
-{{ template "protonPassNoteRaw" (dict "vault" "Goodfeed shared" "item" "prod-default.tfvars") }}
+{{ (protonPassJSON "pass://Goodfeed shared/prod-default.tfvars").item.content.note }}
 ```
 
 **Vault organization:**

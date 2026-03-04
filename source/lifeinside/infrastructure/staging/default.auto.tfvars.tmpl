@@ -1,1 +1,1 @@
-{{ template "protonPassNoteRaw" (dict "vault" "Lifeinside shared" "item" "staging-default.tfvars") }}
+{{ (protonPassJSON "pass://Lifeinside shared/staging-default.tfvars").item.content.note }}

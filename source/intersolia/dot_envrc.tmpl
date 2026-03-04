@@ -14,7 +14,7 @@ export AWS_REGION=eu-north-1
 export AWS_DEFAULT_REGION=eu-north-1
 
 # Stategraph/Terraform
-export STATEGRAPH_API_KEY={{ template "protonPassNoteField" (dict "vault" "Intersolia" "item" "auths" "field" "StategraphApiKey") }}
+export STATEGRAPH_API_KEY={{ protonPass "pass://Intersolia/auths/StategraphApiKey" | trim }}
 export STATEGRAPH_API_BASE="https://stategraph.platform.intersolia.io"
 export TF_HTTP_USERNAME="session"
 export TF_HTTP_PASSWORD="${STATEGRAPH_API_KEY}"

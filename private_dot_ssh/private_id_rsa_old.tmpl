@@ -1,1 +1,1 @@
-{{ template "protonPassSshPrivateKey" (dict "vault" "Personal" "item" "ssh key old") -}}
+{{ (protonPassJSON "pass://Personal/ssh key old").item.content.content.SshKey.private_key -}}

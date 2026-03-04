@@ -10,7 +10,3 @@
 [edit]
     # Use neovim for editing
     command = "nvim"
-
-[secret]
-    # Use Proton Pass CLI for secrets
-    command = "pass-cli"

@@ -1,4 +1,4 @@
-authtoken: {{ template "protonPassNoteField" (dict "vault" "Personal" "item" "ngrok" "field" "token") }}
+authtoken: {{ protonPass "pass://Personal/auths/ngrokToken" | trim }}
 version: 2
 region: eu
 tunnels:

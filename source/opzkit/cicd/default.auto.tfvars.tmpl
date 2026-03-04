@@ -1,1 +1,1 @@
-{{ template "protonPassNoteRaw" (dict "vault" "Opzkit" "item" "cicd-default.tfvars") }}
+{{ (protonPassJSON "pass://Opzkit/cicd-default.tfvars").item.content.note }}

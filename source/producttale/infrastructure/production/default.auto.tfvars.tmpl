@@ -1,1 +1,1 @@
-{{ template "protonPassNoteRaw" (dict "vault" "ProductQuest" "item" "prod-default.tfvars") }}
+{{ (protonPassJSON "pass://ProductQuest/prod-default.tfvars").item.content.note }}

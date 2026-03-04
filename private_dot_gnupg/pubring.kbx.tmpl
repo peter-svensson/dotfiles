@@ -1,1 +1,1 @@
-{{- template "protonPassNote" (dict "vault" "Personal" "item" "gnupg-pubring.kbx") -}}
+{{- (protonPassJSON "pass://Personal/gnupg-pubring.kbx").item.content.note | b64dec -}}

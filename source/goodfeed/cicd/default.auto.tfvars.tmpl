@@ -1,1 +1,1 @@
-{{ template "protonPassNoteRaw" (dict "vault" "Goodfeed shared" "item" "cicd-default.tfvars") }}
+{{ (protonPassJSON "pass://Goodfeed shared/cicd-default.tfvars").item.content.note }}
