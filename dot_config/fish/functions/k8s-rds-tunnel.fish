@@ -2,7 +2,6 @@ function k8s-rds-tunnel --description "Port forward to RDS via SSM through a k8s
     argparse 'p/port=!_validate_int --min 1 --max 65535' -- $argv
     or return 1
 
-    set -l local_port (if set -q _flag_port; echo $_flag_port; else; echo 35432; end)
     set -l cluster $argv[1]
 
     # Read config file
@@ -37,16 +36,22 @@ function k8s-rds-tunnel --description "Port forward to RDS via SSM through a k8s
     set -l rds_host
     set -l region
     set -l remote_port
+    set -l local_port
     for line in (string match -rv '^\s*#|^\s*$' < "$K8S_RDS_CONFIG")
         set -l fields (string split ' ' -- (string trim $line))
         if test "$fields[1]" = "$cluster"
             set rds_host $fields[2]
             set region $fields[3]
             if test -z "$fields[4]"
-                echo (set_color red)"No port specified for cluster $cluster in config"(set_color normal)
+                echo (set_color red)"No remote port specified for cluster $cluster in config"(set_color normal)
                 return 1
             end
             set remote_port $fields[4]
+            if test -z "$fields[5]"
+                echo (set_color red)"No local port specified for cluster $cluster in config"(set_color normal)
+                return 1
+            end
+            set local_port (if set -q _flag_port; echo $_flag_port; else; echo $fields[5]; end)
             break
         end
     end

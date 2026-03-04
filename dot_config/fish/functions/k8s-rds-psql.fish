@@ -9,7 +9,7 @@ function k8s-rds-psql --description "Connect to RDS PostgreSQL via tunnel using 
         echo ""
         echo "  <name>        Database name, username, and secret name"
         echo "  --context     Kubernetes context (required)"
-        echo "  --port        Local port (default: 35432, must match k8s-rds-tunnel)"
+        echo "  --port        Local port (must match k8s-rds-tunnel, default from rds_config)"
         echo "  --namespace   Kubernetes namespace (default: same as name)"
         return 1
     end

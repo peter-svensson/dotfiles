@@ -1,5 +1,5 @@
 # k8s-rds-tunnel configuration
-# Format: cluster_name rds_host region port
+# Format: cluster_name rds_host region remote_port local_port
 
-k8s.staging.goodfeed.io backend.cluster-cnwdhsmgzjzz.eu-west-1.rds.amazonaws.com eu-west-1 15432
-k8s.goodfeed.io backend.cluster-c3xiiwbnbw86.eu-west-1.rds.amazonaws.com eu-west-1 25432
+k8s.staging.goodfeed.io backend.cluster-cnwdhsmgzjzz.eu-west-1.rds.amazonaws.com eu-west-1 5432 15432
+k8s.goodfeed.io backend.cluster-c3xiiwbnbw86.eu-west-1.rds.amazonaws.com eu-west-1 5432 25432

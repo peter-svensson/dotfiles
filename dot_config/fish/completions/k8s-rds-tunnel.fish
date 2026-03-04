@@ -10,4 +10,4 @@ end
 complete -c k8s-rds-tunnel -f -a '(__k8s_rds_tunnel_clusters)'
 
 # Flags
-complete -c k8s-rds-tunnel -s p -l port -d 'Local port (default: 35432)' -r
+complete -c k8s-rds-tunnel -s p -l port -d 'Local port (default from rds_config)' -r
