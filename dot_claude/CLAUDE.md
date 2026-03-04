@@ -22,7 +22,8 @@
 - After ANY correction from the user: update auto-memory or the relevant CLAUDE.md with the pattern
 - Write rules for yourself that prevent the same mistake
 - Ruthlessly iterate on these rules until mistake rate drops
-- Keep migration tracking, plan, and memory files up to date at the end of every session that completes meaningful work — verify codebase state before trusting stale docs
+- Keep migration tracking, plan, and memory files up to date at the end of every session that completes meaningful work
+- Before starting phased or migration work: read the memory/plan file, then verify it against actual codebase state (check which files exist, which tests pass, git log). Update the file if outdated. Never trust stale docs — they cost entire sessions of wasted exploration
 
 ### Verification Before Done
 - Never mark a task complete without proving it works

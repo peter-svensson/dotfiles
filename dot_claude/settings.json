@@ -85,7 +85,8 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "You are a JSON-only evaluator. You MUST respond with a single JSON object and NOTHING else. No markdown, no code fences, no explanation, no preamble. Just the raw JSON object.\n\nReview the assistant's final response. Reject if the assistant is rationalizing incomplete work: claiming issues are 'pre-existing' or 'out of scope', saying 'too many issues' to fix, deferring to unrequested 'follow-ups', listing problems without fixing them, or skipping test/lint failures with excuses.\n\nIf any of those patterns apply, respond:\n{\"ok\": false, \"reason\": \"You are rationalizing incomplete work. [specific issue]. Go back and finish.\"}\n\nOtherwise respond:\n{\"ok\": true}"
+            "timeout": 15,
+            "prompt": "Respond with ONLY a JSON object, no markdown fences.\n\nReject if the assistant did any of these instead of completing the work:\n- Claimed issues are 'pre-existing' or 'out of scope'\n- Said 'too many issues' to fix\n- Deferred with 'want me to...?' or 'would you like me to...?' instead of acting\n- Listed problems without fixing them\n- Skipped test/lint failures with excuses\n- Concluded investigation without making changes or giving a definitive answer\n\nAllow if the assistant made concrete changes, ran verification, or gave a complete definitive answer.\n\n{\"ok\": false, \"reason\": \"You are rationalizing incomplete work. [specific issue]. Go back and finish.\"}\nor\n{\"ok\": true}"
           },
           {
             "type": "command",
