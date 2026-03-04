@@ -11,6 +11,7 @@ set -q LESS_TERMCAP_ue; or set -Ux LESS_TERMCAP_ue (set_color normal)
 
 # Set editor variables.
 set -q PAGER; or set -Ux PAGER less
+set -q LESS; or set -Ux LESS -R
 set -q VISUAL; or set -Ux VISUAL nvim
 set -q EDITOR; or set -Ux EDITOR nvim
 

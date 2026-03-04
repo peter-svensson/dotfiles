@@ -16,6 +16,11 @@ end
 # Utils
 #
 
+# Initialize fnm after cd $HOME so the --use-on-cd hook has PATH set up correctly.
+if type -q fnm
+  fnm env --use-on-cd --shell fish | source
+end
+
 # Initialize direnv.
 if type -q direnv
   direnv hook fish | source
