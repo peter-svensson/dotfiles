@@ -42,7 +42,11 @@ function k8s-rds-tunnel --description "Port forward to RDS via SSM through a k8s
         if test "$fields[1]" = "$cluster"
             set rds_host $fields[2]
             set region $fields[3]
-            set remote_port (if test -n "$fields[4]"; echo $fields[4]; else; echo 5432; end)
+            if test -z "$fields[4]"
+                echo (set_color red)"No port specified for cluster $cluster in config"(set_color normal)
+                return 1
+            end
+            set remote_port $fields[4]
             break
         end
     end
