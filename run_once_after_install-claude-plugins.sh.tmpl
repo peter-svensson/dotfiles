@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# hash: 2026-03-05-v1
+# Installs user-scoped Claude Code plugins idempotently.
+# chezmoi re-runs this script when the hash comment above changes.
+
+if ! command -v claude &>/dev/null; then
+  echo "claude CLI not found, skipping plugin install"
+  exit 0
+fi
+
+add_marketplace() {
+  local name="$1" repo="$2"
+  if claude plugin marketplace list 2>/dev/null | grep -q "$name"; then
+    return
+  fi
+  echo "Adding marketplace: $name ($repo)"
+  claude plugin marketplace add --name "$name" "$repo"
+}
+
+install_plugin() {
+  local plugin="$1"
+  if claude plugin list 2>/dev/null | grep -q "^${plugin%%@*}"; then
+    return
+  fi
+  echo "Installing plugin: $plugin"
+  claude plugin install --scope user "$plugin"
+}
+
+add_marketplace "worktrunk" "max-sixty/worktrunk"
+
+install_plugin "terraform-skill@antonbabenko"
+install_plugin "frontend-design@claude-plugins-official"
+install_plugin "deploy-on-aws@agent-plugins-for-aws"
+install_plugin "code-review@claude-plugins-official"
+install_plugin "claude-md-management@claude-plugins-official"
+install_plugin "modern-go-guidelines@goland-claude-marketplace"
+install_plugin "mgrep@Mixedbread-Grep"
+install_plugin "hookify@claude-plugins-official"
+install_plugin "security-guidance@claude-plugins-official"
+install_plugin "context7@claude-plugins-official"
+install_plugin "worktrunk@worktrunk"
+
+echo "Claude Code plugins installed."

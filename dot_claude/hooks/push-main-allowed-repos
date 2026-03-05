@@ -1,0 +1,3 @@
+# Repos where direct push to main is allowed (one absolute path per line)
+# Use ~ for home directory
+~/.local/share/chezmoi

@@ -21,3 +21,12 @@ CLAUDE.md
 .claude/statsig
 .claude/telemetry
 .claude/todos
+
+# Claude Code plugin runtime state (only manage config.json)
+.claude/plugins/cache
+.claude/plugins/marketplaces
+.claude/plugins/blocklist.json
+.claude/plugins/install-counts-cache.json
+.claude/plugins/installed_plugins.json
+.claude/plugins/known_marketplaces.json
+.claude/plugins/repos
