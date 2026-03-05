@@ -37,9 +37,13 @@ if err != nil {
 }
 ```
 
-## Graphql schemas
+## GraphQL (gqlgen)
 
-Always run go generate ./... when changing a graphql schema
+- We use [gqlgen](https://github.com/99designs/gqlgen) for GraphQL in all Go services
+- After changing a `.graphqls` schema file, run:
+  1. `go generate ./...`
+  2. `goimports -w .`
+  3. `gofumpt -w .`
 
 ## Goose migrations
 

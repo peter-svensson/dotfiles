@@ -40,6 +40,22 @@ func NewUserService(repo UserRepository, logger Logger) *UserService {
 }
 ```
 
+## Goose Migrations
+
+All SQL migration files using [goose](https://github.com/pressly/goose) **must** include direction headers:
+
+```sql
+-- +goose Up
+CREATE TABLE ...;
+
+-- +goose Down
+DROP TABLE ...;
+```
+
+- `-- +goose Up` is **required** — goose silently ignores the file without it
+- `-- +goose Down` is optional but recommended for rollbacks
+- Headers must be exact: `-- +goose Up` (two dashes, space, `+goose`, space, direction)
+
 ## Reference
 
 See skill: `golang-patterns` for comprehensive Go patterns including concurrency, error handling, and package organization.

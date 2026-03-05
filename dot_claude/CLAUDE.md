@@ -98,6 +98,9 @@ Prefer these over slower defaults:
 | `shfmt` | — | `shfmt -i 2 -w script.sh` — shell formatter |
 | `actionlint` | — | `actionlint .github/workflows/` — GitHub Actions linter |
 | `zizmor` | — | `zizmor .github/workflows/` — Actions security audit |
+| `prek` | pre-commit | `prek run --all-files` — fast pre-commit runner |
+| `wt` | git worktree | `wt switch branch` - manage parallel worktrees |
+| `trash` | rm | `trash file` - moves to macOS Trash (recoverable). **Never use `rm -rf`** |
 
 Prefer `ast-grep` over ripgrep when searching for code structure (function calls, class definitions, imports). Use ripgrep for literal strings and log messages.
 
