@@ -63,7 +63,8 @@
           },
           {
             "type": "command",
-            "command": "CMD=$(jq -r '.tool_input.command'); if echo \"$CMD\" | grep -qE 'git[[:space:]]+push.*(main|master)'; then echo 'BLOCKED: Use feature branches, not direct push to main' >&2; exit 2; fi"
+            "command": "~/.claude/hooks/block-push-main.sh",
+            "timeout": 10
           }
         ]
       }
@@ -85,8 +86,8 @@
         "hooks": [
           {
             "type": "prompt",
-            "timeout": 15,
-            "prompt": "Respond with ONLY a JSON object, no markdown fences.\n\nReject if the assistant did any of these instead of completing the work:\n- Claimed issues are 'pre-existing' or 'out of scope'\n- Said 'too many issues' to fix\n- Deferred with 'want me to...?' or 'would you like me to...?' instead of acting\n- Listed problems without fixing them\n- Skipped test/lint failures with excuses\n- Concluded investigation without making changes or giving a definitive answer\n\nAllow if the assistant made concrete changes, ran verification, or gave a complete definitive answer.\n\n{\"ok\": false, \"reason\": \"You are rationalizing incomplete work. [specific issue]. Go back and finish.\"}\nor\n{\"ok\": true}"
+            "prompt": "Respond with ONLY a JSON object, no markdown fences.\n\nReject if the assistant did any of these instead of completing the work:\n- Claimed issues are 'pre-existing' or 'out of scope'\n- Said 'too many issues' to fix\n- Deferred with 'want me to...?' or 'would you like me to...?' instead of acting\n- Listed problems without fixing them\n- Skipped test/lint failures with excuses\n- Concluded investigation without making changes or giving a definitive answer\n\nAllow if the assistant made concrete changes, ran verification, or gave a complete definitive answer.\n\n{\"ok\": false, \"reason\": \"You are rationalizing incomplete work. [specific issue]. Go back and finish.\"}\nor\n{\"ok\": true}",
+            "timeout": 15
           },
           {
             "type": "command",
@@ -115,6 +116,14 @@
     "type": "command",
     "command": "~/.claude/statusline.sh"
   },
+  "extraKnownMarketplaces": {
+    "worktrunk": {
+      "source": {
+        "source": "github",
+        "repo": "max-sixty/worktrunk"
+      }
+    }
+  },
   "spinnerVerbs": {
     "mode": "replace",
     "verbs": [
@@ -140,5 +149,9 @@
       "Saying what one more time"
     ]
   },
-  "alwaysThinkingEnabled": true
+  "alwaysThinkingEnabled": true,
+  "skipDangerousModePermissionPrompt": true,
+  "enabledPlugins": {
+    "worktrunk@worktrunk": true
+  }
 }

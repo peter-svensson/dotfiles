@@ -99,8 +99,7 @@ Prefer these over slower defaults:
 | `actionlint` | — | `actionlint .github/workflows/` — GitHub Actions linter |
 | `zizmor` | — | `zizmor .github/workflows/` — Actions security audit |
 | `prek` | pre-commit | `prek run --all-files` — fast pre-commit runner |
-| `wt` | git worktree | `wt switch branch` - manage parallel worktrees |
-| `trash` | rm | `trash file` - moves to macOS Trash (recoverable). **Never use `rm -rf`** |
+| `trash` | rm | `trash file` — moves to macOS Trash (recoverable). **Never use `rm -rf`** |
 
 Prefer `ast-grep` over ripgrep when searching for code structure (function calls, class definitions, imports). Use ripgrep for literal strings and log messages.
 
@@ -115,5 +114,17 @@ Prefer `ast-grep` over ripgrep when searching for code structure (function calls
 - Use `persist-credentials: false` on checkout actions
 - Scan workflows with `actionlint` and `zizmor` before committing
 
-### Parallel Agents
+### Worktrees (Plain Git Repos)
+
+When NOT on a `gitbutler/workspace` branch, use git worktrees for parallel work:
 - Parallel subagents require worktrees — each subagent MUST work in its own worktree, not the main repo
+- For feature work that benefits from isolation: `git worktree add ../<repo>-<branch> -b <branch>`
+- Clean up after merging: `git worktree remove ../<repo>-<branch>`
+- List active worktrees: `git worktree list`
+
+### prek (Git Hooks)
+
+Install prek in every repo that has a `.pre-commit-config.yaml`:
+- `prek install` — installs git hooks
+- `prek run` — run hooks before committing
+- Configure auto-updates: `prek auto-update --cooldown-days 7`
