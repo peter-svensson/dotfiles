@@ -8,32 +8,28 @@
       ],
       "env": {
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
-      },
-      "description": "GitHub operations - PRs, issues, repos"
+      }
     },
     "memory": {
       "command": "npx",
       "args": [
         "-y",
         "@modelcontextprotocol/server-memory"
-      ],
-      "description": "Persistent memory across sessions"
+      ]
     },
     "sequential-thinking": {
       "command": "npx",
       "args": [
         "-y",
         "@modelcontextprotocol/server-sequential-thinking"
-      ],
-      "description": "Chain-of-thought reasoning"
+      ]
     },
     "context7": {
       "command": "npx",
       "args": [
         "-y",
         "@upstash/context7-mcp"
-      ],
-      "description": "Live documentation lookup"
+      ]
     },
     "exa": {
       "command": "npx",
