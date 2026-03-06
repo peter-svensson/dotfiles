@@ -116,11 +116,13 @@ Prefer `ast-grep` over ripgrep when searching for code structure (function calls
 
 ### Worktrees (Plain Git Repos)
 
-When NOT on a `gitbutler/workspace` branch, use git worktrees for parallel work:
-- Parallel subagents require worktrees — each subagent MUST work in its own worktree, not the main repo
-- For feature work that benefits from isolation: `git worktree add ../<repo>-<branch> -b <branch>`
-- Clean up after merging: `git worktree remove ../<repo>-<branch>`
-- List active worktrees: `git worktree list`
+When NOT on a `gitbutler/workspace` branch and the task involves code changes:
+- Before editing files in any git repo, create a worktree: `wt switch -c <branch-name>`
+- Use `wt` (worktrunk) commands, not raw `git worktree` commands
+- One worktree per repo per task — reuse it for subsequent edits in the same repo
+- Parallel subagents require worktrees — each subagent MUST work in its own worktree
+- List worktrees: `wt list`
+- Clean up is the user's responsibility (via `wt remove`)
 
 ### prek (Git Hooks)
 

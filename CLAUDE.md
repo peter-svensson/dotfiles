@@ -163,6 +163,15 @@ chezmoi cat ~/.gitconfig
 
 ## Development Workflow
 
+### Editing Policy (CRITICAL)
+
+**Always edit chezmoi source files, never target files directly.**
+
+- When asked to edit a file like `~/.gitconfig`, edit the corresponding source file in this repo (e.g., `dot_gitconfig.tmpl`), then run `chezmoi apply` to propagate.
+- Use `chezmoi source-path <target>` to find the source file for any managed target.
+- If asked to edit a file that is NOT managed by chezmoi, ask the user whether it should be added (`chezmoi add <file>`) before editing the local copy directly.
+- Editing target files directly will cause chezmoi to overwrite those changes on the next `chezmoi apply`.
+
 ### Adding Organization-Specific Configuration
 
 When adding configuration for a new project/organization:
