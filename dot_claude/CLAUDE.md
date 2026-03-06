@@ -1,6 +1,8 @@
 - always unzip files to a temporary directory
 - Always add all files to git before running pre-commit since it stashes all unstaged files when running
 - I use GNU versions of rm and cp which ask for confirmation on replace and remove.
+- My shell is fish. All suggested shell commands and scripts must use fish-compatible syntax (no bash-isms like `while read`, `$()` subshells in pipes, `export FOO=bar`, etc.). Use fish idioms: `for x in (command)`, `set -x FOO bar`, etc.
+- Files managed by chezmoi must not be edited directly in the home directory. Edit the source files in the chezmoi source directory instead (`chezmoi source-path` to find it).
 - Always explicitly specify the context when running `kubectl` commands using `--context <context>`. Check the project's `.buildtools.yaml` or `.envrc` for the expected k8s context. Never rely on the current default context — it may point to a different cluster (e.g., production instead of local). For local development, the context typically follows the pattern: `kind-<project-name>`
 
 ## Workflow Orchestration
