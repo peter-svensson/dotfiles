@@ -148,5 +148,11 @@
   "skipDangerousModePermissionPrompt": true,
   "enabledPlugins": {
     "worktrunk@worktrunk": true
+  },
+   "sandbox": {
+    "filesystem": {
+      "allowWrite": ["~/Library/Caches/go-build"],
+      "allowRead": ["~/.ssh/id_rsa.pub"]
+    }
   }
 }

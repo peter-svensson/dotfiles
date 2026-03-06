@@ -1,6 +1,6 @@
 #!/bin/sh
-# Claude Code hook: send tmux notifications on Stop and Notification events
-# Sends bell to the Claude pane's tty so monitor-bell flags the window
+# Claude Code hook: send bell on Stop and Notification events
+# Bell triggers tmux monitor-bell (window coloring) and alert-bell (macOS notification)
 
 # Only notify if inside a tmux session
 [ -z "$TMUX" ] && exit 0
@@ -13,12 +13,7 @@ pane_tty=$(tmux display-message -p -t "$TMUX_PANE" '#{pane_tty}')
 event=$(cat | jq -r '.hook_event_name // empty')
 
 case "$event" in
-    Stop)
-        tmux display-message -t "$TMUX_PANE" "Claude finished responding"
-        printf '\a' > "$pane_tty"
-        ;;
-    Notification)
-        tmux display-message -t "$TMUX_PANE" "Claude is waiting for input"
+    Stop|Notification)
         printf '\a' > "$pane_tty"
         ;;
 esac

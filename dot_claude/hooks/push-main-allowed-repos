@@ -1,3 +1,8 @@
 # Repos where direct push to main is allowed (one absolute path per line)
 # Use ~ for home directory
 ~/.local/share/chezmoi
+~/source/stc/messaging/messaging
+~/source/stc/messaging/go-messaging-amqp
+~/source/stc/messaging/go-messaging-nats
+~/source/stc/messaging/node-messaging-amqp
+~/source/stc/messaging/node-messaging-amqp
