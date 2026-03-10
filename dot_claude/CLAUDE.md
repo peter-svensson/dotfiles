@@ -116,6 +116,9 @@ Prefer `ast-grep` over ripgrep when searching for code structure (function calls
 - Use `persist-credentials: false` on checkout actions
 - Scan workflows with `actionlint` and `zizmor` before committing
 
+### GitHub API
+- NEVER use the `mcp__github__create_or_update_file` tool (or the GitHub Contents API) to create/update files. It creates unsigned commits server-side, bypassing local git signing. Always commit and push from the local machine instead.
+
 ### Worktrees (Plain Git Repos)
 
 When NOT on a `gitbutler/workspace` branch and the task involves code changes:
