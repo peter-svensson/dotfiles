@@ -15,6 +15,9 @@ export AWS_DEFAULT_REGION=eu-north-1
 
 # Stategraph/Terraform
 export STATEGRAPH_API_KEY={{ protonPass "pass://Intersolia/auths/StategraphApiKey" | trim }}
+
 export STATEGRAPH_API_BASE="https://stategraph.platform.intersolia.io"
+export STATEGRAPH_TENANT_ID=254f9e3a-868a-4e6f-8e64-4a4edc0e99e9
+
 export TF_HTTP_USERNAME="session"
 export TF_HTTP_PASSWORD="${STATEGRAPH_API_KEY}"
