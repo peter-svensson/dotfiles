@@ -18,3 +18,4 @@ complete -c k8s-rds-psql -f
 complete -c k8s-rds-psql -s c -l context -d 'Kubernetes context (required)' -r -a '(__k8s_rds_psql_contexts)'
 complete -c k8s-rds-psql -s p -l port -d 'Local port (must match k8s-rds-tunnel)' -r
 complete -c k8s-rds-psql -s n -l namespace -d 'Kubernetes namespace (default: same as name)' -r -a '(__k8s_rds_psql_namespaces)'
+complete -c k8s-rds-psql -s s -l secret-name -d 'Kubernetes secret name (default: <name>-secrets)' -r

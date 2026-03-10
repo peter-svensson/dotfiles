@@ -6,18 +6,20 @@ red='\033[0;31m'
 reset='\033[0m'
 
 usage() {
-  echo "Usage: k8s-rds-psql <name> --context <cluster> [--port <local-port>] [--namespace <ns>]"
+  echo "Usage: k8s-rds-psql <name> --context <cluster> [--port <local-port>] [--namespace <ns>] [--secret-name <secret>]"
   echo ""
-  echo "  <name>        Database name, username, and secret name"
-  echo "  --context     Kubernetes context (required)"
-  echo "  --port        Local port (must match k8s-rds-tunnel, default: 35432)"
-  echo "  --namespace   Kubernetes namespace (default: same as name)"
+  echo "  <name>          Database name, username, and secret name"
+  echo "  --context       Kubernetes context (required)"
+  echo "  --port          Local port (must match k8s-rds-tunnel, default: 35432)"
+  echo "  --namespace     Kubernetes namespace (default: same as name)"
+  echo "  --secret-name   Kubernetes secret name (default: <name>-secrets)"
 }
 
 # Parse arguments
 context=""
 local_port=""
 namespace=""
+secret_name=""
 name=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -35,6 +37,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     -n|--namespace)
       namespace="$2"
+      shift 2
+      ;;
+    -s|--secret-name)
+      secret_name="$2"
       shift 2
       ;;
     -*)
@@ -64,7 +70,7 @@ namespace="${namespace:-$name}"
 db_name="${name//-/_}"
 
 # Get password from k8s secret
-secret_name="${name}-secrets"
+secret_name="${secret_name:-${name}-secrets}"
 echo "Looking up password from secret '$secret_name' in namespace '$namespace'..."
 if ! password=$(kubectl --context "$context" -n "$namespace" get secret "$secret_name" -o jsonpath='{.data.DB_PASSWORD}' 2>&1); then
   echo -e "${red}Failed to get secret: $password${reset}" >&2
