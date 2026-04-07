@@ -16,21 +16,14 @@ sudo softwareupdate --install-rosetta
 # chezmoi
 ```bash
 brew install chezmoi
-brew install lastpass-cli
-lpass login peter@sparetimecoders.com
 ```
 
 ```bash
 chezmoi init --apply peter-svensson
 ```
 
-## Adding stuff to Lastpass
+## Secrets Management (Proton Pass)
 
-```bash
-echo "$(cat ~/.gnupg/pubring.kbx | base64)" | lpass add --sync=now --non-interactive --notes "lambda/gnupg-pubring.kbx"
-```
+Secrets are managed via Proton Pass using chezmoi's built-in `protonPass` and `protonPassJSON` template functions.
 
-### SSH keys
-```bash
-printf "Private Key: %s\nPublic Key: %s" "$(cat ~/.ssh/id_rsa_plint_git)" "$(cat ~/.ssh/id_rsa_plint_git.pub)" | lpass add --sync=now --non-interactive --note-type=ssh-key "plint/git ssh key"
-```
+Ensure the Proton Pass CLI is installed and authenticated before running `chezmoi apply`.
