@@ -1,5 +1,8 @@
 # conf.d runs first!
 
+# Force CLI tools to use English regardless of macOS language settings
+set -gx LANGUAGE en_US.UTF-8
+
 # https://fishshell.com/docs/current/tutorial.html
 # https://github.com/jorgebucaran/fish-shell-cookbook
 # https://github.com/fish-shell/fish-shell/blob/master/share/config.fish
@@ -62,4 +65,7 @@ end
 # Added by OrbStack: command-line tools and integration
 # This won't be added again if you remove it.
 source ~/.orbstack/shell/init2.fish 2>/dev/null || :
+
+# Scaleway CLI autocomplete initialization.
+eval (scw autocomplete script shell=fish)
 
