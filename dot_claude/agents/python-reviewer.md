@@ -40,7 +40,7 @@ When invoked:
 - **Mutable default arguments**: `def f(x=[])` — use `def f(x=None)`
 
 ### HIGH — Code Quality
-- Functions > 50 lines, > 5 parameters (use dataclass)
+- Functions > 100 lines, > 5 parameters (use dataclass)
 - Deep nesting (> 4 levels)
 - Duplicate code patterns
 - Magic numbers without named constants

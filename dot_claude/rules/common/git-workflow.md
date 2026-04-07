@@ -10,8 +10,6 @@
 
 Types: feat, fix, refactor, docs, test, chore, perf, ci
 
-Note: Attribution disabled globally via ~/.claude/settings.json.
-
 ## Pull Request Workflow
 
 When creating PRs:
@@ -23,25 +21,14 @@ When creating PRs:
 
 ## Feature Implementation Workflow
 
-1. **Plan First**
-   - Use **planner** agent to create implementation plan
+1. **Plan First** (for non-trivial features)
+   - Use **planner** agent for complex features
    - Identify dependencies and risks
    - Break down into phases
 
-2. **TDD Approach**
-   - Use **tdd-guide** agent
-   - Write tests first (RED)
-   - Implement to pass tests (GREEN)
-   - Refactor (IMPROVE)
-   - Verify 80%+ coverage
-
-3. **Code Review**
-   - Use **code-reviewer** agent immediately after writing code
-   - Address CRITICAL and HIGH issues
-   - Fix MEDIUM issues when possible
-
-4. **Commit & Push**
-   - Detailed commit messages
+2. **Implement**
+   - Bias toward action for straightforward work
+   - Use **tdd-guide** agent when the user requests TDD or the feature has complex edge cases
    - Follow conventional commits format
 
 ## GitButler Workflow (when on gitbutler/workspace branch)
