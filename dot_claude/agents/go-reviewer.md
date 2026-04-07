@@ -37,7 +37,7 @@ When invoked:
 - **Mutex misuse**: Not using `defer mu.Unlock()`
 
 ### HIGH -- Code Quality
-- **Large functions**: Over 50 lines
+- **Large functions**: Over 100 lines
 - **Deep nesting**: More than 4 levels
 - **Non-idiomatic**: `if/else` instead of early return
 - **Package-level variables**: Mutable global state
