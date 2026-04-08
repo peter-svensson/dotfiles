@@ -19,3 +19,6 @@ export STATEGRAPH_API_KEY={{ protonPass "pass://Intersolia/auths/StategraphApiKe
 export STATEGRAPH_API_BASE="https://stategraph.platform.intersolia.io"
 export STATEGRAPH_TENANT_ID=254f9e3a-868a-4e6f-8e64-4a4edc0e99e9
 export TF_CMD=terraform
+
+# Grafana logs token
+export CLAUDE_GRAFANA_TOKEN={{ protonPass "pass://Intersolia/auths/ClaudeGrafanaToken" | trim }}
