@@ -62,11 +62,19 @@ function bup -d "Update homebrew, upgrade installed packages, and cleanup"
         else
           echo "Warning: failed to reinstall $cask, skipping"
         end
-      else if not brew upgrade --cask --greedy $cask
-        # Upgrade failed, likely stale caskroom dir -- clean up and force reinstall
-        echo "Retrying $cask: cleaning caskroom and reinstalling"
-        command rm -rf "$caskroom/$cask"
-        brew install --cask --force $cask; or echo "Warning: failed to reinstall $cask, skipping"
+      else
+        # Remove old version dirs before upgrading to prevent rename errors
+        for old_ver in (command ls -1 "$caskroom/$cask/" 2>/dev/null)
+          if test "$old_ver" != "$current"
+            command rm -rf "$caskroom/$cask/$old_ver"
+          end
+        end
+        if not brew upgrade --cask --greedy $cask
+          # Upgrade still failed -- nuke caskroom and force reinstall
+          echo "Retrying $cask: cleaning caskroom and reinstalling"
+          command rm -rf "$caskroom/$cask"
+          brew install --cask --force $cask; or echo "Warning: failed to reinstall $cask, skipping"
+        end
       end
     else
       echo "$cask:$current is latest version"
