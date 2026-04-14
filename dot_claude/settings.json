@@ -95,6 +95,12 @@
             "command": "~/.claude/hooks/tmux-notify.sh",
             "timeout": 5,
             "async": true
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/worktree-cleanup.sh",
+            "timeout": 30,
+            "async": true
           }
         ]
       }
