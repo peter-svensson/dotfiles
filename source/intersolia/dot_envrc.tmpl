@@ -22,3 +22,13 @@ export TF_CMD=terraform
 
 # Grafana logs token
 export CLAUDE_GRAFANA_TOKEN={{ protonPass "pass://Intersolia/auths/ClaudeGrafanaToken" | trim }}
+
+# Upcloud token
+export UPCLOUD_USERNAME=terraform-dev
+export UPCLOUD_PASSWORD={{ protonPass "pass://Intersolia/auths/UpCloudToken" | trim }}
+
+# Turbo remote repo
+export TURBO_TOKEN=${GITHUB_TOKEN}
+export TURBO_API=https://turbo-cache.platform.intersolia.io
+export TURBO_TEAM=intersolia
+export TURBO_TEAMID=team_intersolia
