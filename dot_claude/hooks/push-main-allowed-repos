@@ -1,5 +1,8 @@
-# Repos where direct push to main is allowed (one absolute path per line)
-# Use ~ for home directory
+# Repos where direct push to main is allowed.
+# Entry formats:
+#   <absolute-path>          local repo root (use ~ for $HOME)
+#   cmd-contains: <string>   command-substring match, for remote pushes via ssh
+cmd-contains: ssh peter@homeassistant
 ~/.local/share/chezmoi
 ~/source/stc/messaging/messaging
 ~/source/stc/messaging/go-messaging-amqp
