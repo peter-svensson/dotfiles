@@ -95,3 +95,45 @@ When NOT on `gitbutler/workspace` and the task involves code changes:
 
 For repos with `.pre-commit-config.yaml`:
 - `prek install` / `prek run` / `prek auto-update --cooldown-days 7`
+
+## Git & PR Hygiene
+
+- Never run `git add -A`, `git add .`, or `git add --all`. The git-staging-guard hook blocks them. Stage explicit file lists only.
+- Before staging: run `git status` and `git diff --stat`, then confirm the file list with the user.
+- Never stage binaries (exe, bin, so, dylib, archives, media, PDFs, sqlite). The hook blocks them.
+- Never stage one-off migration tools, backfill scripts, or debug instrumentation in a feature PR. Land separately.
+- Never modify `.gitignore` on a feature branch. Land separately on main first.
+- Never stage files unrelated to the accepted findings/task scope. If you discover other issues, surface them and ask before touching.
+- After staging, verify with `git diff --cached --stat` that staged files match the intended list. If anything unexpected appears, `git restore --staged <file>` and report.
+- On `gitbutler/workspace`: use `but rub <cliId> <branch>` for hunk assignment, verify with `but status --json`, then `but commit --only`. Never raw `git add`.
+
+## Source of Truth
+
+- Read the actual file, log, or document before summarizing status. Never answer from memory about current state of roadmaps, docs, schemas, or feature completion.
+- For production incidents: read recent logs and inspect current code BEFORE proposing a hypothesis. Do not dismiss errors as "benign", "expected behavior", "bot traffic", or "spot reclaim" without evidence quoted from logs or code.
+- If the user corrects a factual claim, restate the corrected fact in one sentence before continuing. Update auto-memory if the corrected fact is durable.
+- When a memory record names a specific file/function/flag, verify it still exists (grep / read) before acting on it. Stale memory is common.
+
+## Debug Protocol
+
+For non-trivial production issues, do not propose a fix on first hypothesis. Instead:
+
+1. Gather evidence in parallel: recent logs, recent deploys/commits (last 7 days), current config/deployment state, schema/client-version drift.
+2. Output 3 ranked hypotheses with confidence + supporting evidence (file:line, log timestamp, commit SHA).
+3. Propose the cheapest verification step for the top hypothesis.
+4. Only after the user accepts a hypothesis: write the fix.
+
+Spawn parallel Task subagents for the evidence gathering when the issue spans multiple services or surfaces.
+
+## Design Confirmation
+
+Before writing code for any non-trivial change (new feature, refactor, architecture-touching fix), restate in 3-5 bullets:
+
+1. Data flow involved
+2. Services/files that will change
+3. User-facing behavior expected
+4. Explicit assumptions (event level, clock semantics, caching boundary, deduplication strategy, persistence layer)
+
+Wait for user confirmation before coding. A 30-second confirmation prevents a 30-minute revert.
+
+Trigger words that require this step: "implement", "add support for", "wire up", "integrate", "migrate", "refactor", "extract", any work touching events, schedulers, caches, or cross-service boundaries.

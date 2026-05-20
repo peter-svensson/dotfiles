@@ -1,17 +1,17 @@
 {
-  "attribution": {
-    "commit": "",
-    "pr": ""
-  },
   "cleanupPeriodDays": 365,
   "env": {
     "DISABLE_ERROR_REPORTING": "1",
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
   "permissions": {
     "allow": [
-       "Bash(*)"
+      "Bash(*)"
     ],
     "deny": [
       "Bash(rm -rf *)",
@@ -71,6 +71,11 @@
             "type": "command",
             "command": "~/.claude/hooks/block-push-main.sh",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/git-staging-guard.sh",
+            "timeout": 10
           }
         ]
       }
@@ -123,6 +128,21 @@
     "type": "command",
     "command": "~/.claude/statusline.sh"
   },
+  "enabledPlugins": {
+    "worktrunk@worktrunk": true,
+    "terraform-skill@antonbabenko": true,
+    "frontend-design@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "modern-go-guidelines@goland-claude-marketplace": false,
+    "mgrep@Mixedbread-Grep": true,
+    "hookify@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true,
+    "codex@openai-codex": false,
+    "caveman@caveman": true,
+    "context7@claude-plugins-official": true,
+    "deploy-on-aws@agent-plugins-for-aws": false
+  },
   "extraKnownMarketplaces": {
     "worktrunk": {
       "source": {
@@ -135,6 +155,22 @@
         "source": "github",
         "repo": "openai/codex-plugin-cc"
       }
+    },
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "juliusbrussee/caveman"
+      }
+    }
+  },
+  "sandbox": {
+    "filesystem": {
+      "allowWrite": [
+        "~/Library/Caches/go-build"
+      ],
+      "allowRead": [
+        "~/.ssh/id_rsa.pub"
+      ]
     }
   },
   "spinnerVerbs": {
@@ -164,24 +200,8 @@
   },
   "alwaysThinkingEnabled": true,
   "skipDangerousModePermissionPrompt": true,
-  "enabledPlugins": {
-    "worktrunk@worktrunk": true,
-    "terraform-skill@antonbabenko": true,
-    "frontend-design@claude-plugins-official": true,
-    "code-review@claude-plugins-official": true,
-    "claude-md-management@claude-plugins-official": true,
-    "modern-go-guidelines@goland-claude-marketplace": true,
-    "mgrep@Mixedbread-Grep": true,
-    "hookify@claude-plugins-official": true,
-    "security-guidance@claude-plugins-official": true,
-    "codex@openai-codex": true,
-    "context7@claude-plugins-official": false,
-    "deploy-on-aws@agent-plugins-for-aws": false
-  },
-   "sandbox": {
-    "filesystem": {
-      "allowWrite": ["~/Library/Caches/go-build"],
-      "allowRead": ["~/.ssh/id_rsa.pub"]
-    }
-  }
+  "editorMode": "vim",
+  "teammateMode": "auto",
+  "remoteControlAtStartup": true,
+  "agentPushNotifEnabled": true
 }
