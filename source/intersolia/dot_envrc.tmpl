@@ -24,11 +24,18 @@ export TF_CMD=terraform
 export CLAUDE_GRAFANA_TOKEN={{ protonPass "pass://Intersolia/auths/ClaudeGrafanaToken" | trim }}
 
 # Upcloud token
-export UPCLOUD_USERNAME=terraform-dev
-export UPCLOUD_PASSWORD={{ protonPass "pass://Intersolia/auths/UpCloudToken" | trim }}
+export UPCLOUD_TOKEN={{ protonPass "pass://Intersolia/auths/UpCloudToken" | trim }}
 
 # Turbo remote repo
 export TURBO_TOKEN=${GITHUB_TOKEN}
 export TURBO_API=https://turbo-cache.platform.intersolia.io
 export TURBO_TEAM=intersolia
 export TURBO_TEAMID=team_intersolia
+
+# Scaleway — profiles in .scw/config.yaml (rendered from Proton Pass by chezmoi).
+# No SCW_ACCESS_KEY/SECRET_KEY here: env vars override the profile in scw's
+# precedence, which would pin one key and ignore SCW_PROFILE.
+export SCW_CONFIG_PATH=${PWD}/.scw/config.yaml
+export SCW_PROFILE=staging
+
+#KUBECONFIG_KEY=142c1281-6019-498d-9a1f-145106181bbe

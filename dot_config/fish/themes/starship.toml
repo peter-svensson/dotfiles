@@ -22,6 +22,7 @@ $line_break\
 $character"""
 
 right_format="""$aws\
+${env_var.SCW_PROFILE}\
 $kubernetes\
 """
 
@@ -46,6 +47,12 @@ symbol = ' '
 style = 'yellow'
 disabled = false
 format = '[$symbol($profile )]($style)'
+
+[env_var.SCW_PROFILE]
+variable = 'SCW_PROFILE'
+symbol = '🪐 '
+style = 'purple'
+format = '[$symbol$env_value ]($style)'
 
 [kubernetes]
 symbol = ' '

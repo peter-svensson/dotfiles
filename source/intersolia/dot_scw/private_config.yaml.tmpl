@@ -1,0 +1,16 @@
+{{- /* Scaleway per-root profiles for intersolia.
+       Secrets pulled from Proton Pass at `chezmoi apply` time.
+       Rendered file is mode 0600 (private_ prefix). Do NOT edit the rendered
+       ~/source/intersolia/.scw/config.yaml directly — edit this template.
+       Switch profile per shell with `scw-profile <name>`; rotate by updating
+       Proton Pass and re-running `chezmoi apply`.
+       One Scaleway account => one organization id, shared across projects. */ -}}
+{{- $org := "94dd90e5-5110-46df-a475-16333418e670" -}}
+profiles:
+  staging:
+    access_key: {{ protonPass "pass://Intersolia/scw-staging/access_key" | trim }}
+    secret_key: {{ protonPass "pass://Intersolia/scw-staging/secret_key" | trim }}
+    default_project_id: {{ protonPass "pass://Intersolia/scw-staging/project_id" | trim }}
+    default_organization_id: {{ $org }}
+    default_region: fr-par
+    default_zone: fr-par-1
