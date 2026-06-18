@@ -11,8 +11,8 @@ function aws-sso-profile
       return 1
   end
 
-  eval $(/opt/homebrew/bin/aws-sso $_args eval -p $argv[1])
-  if [ "$AWS_SSO_PROFILE" != "$1" ]
+  eval $(/opt/homebrew/bin/aws-sso $_args $argv[2..-1] eval -p $argv[1])
+  if [ "$AWS_SSO_PROFILE" != "$argv[1]" ]
       return 1
   end
 end
