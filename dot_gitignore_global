@@ -11,3 +11,4 @@ graphql.config.yml
 .direnv
 .env
 .hermit
+**/.claude/settings.local.json
