@@ -19,3 +19,6 @@ complete -c k8s-rds-psql -s c -l context -d 'Kubernetes context (required)' -r -
 complete -c k8s-rds-psql -s p -l port -d 'Local port (must match k8s-rds-tunnel)' -r
 complete -c k8s-rds-psql -s n -l namespace -d 'Kubernetes namespace (default: same as name)' -r -a '(__k8s_rds_psql_namespaces)'
 complete -c k8s-rds-psql -s s -l secret-name -d 'Kubernetes secret name (default: <name>-secrets)' -r
+complete -c k8s-rds-psql -s u -l username -d 'Database username (default: derived from <name>)' -r
+complete -c k8s-rds-psql -l from-secret -d 'Read DB_NAME and DB_USERNAME from the secret'
+complete -c k8s-rds-psql -l print-local-url -d 'Print the local port-forwarded connection URL and exit'

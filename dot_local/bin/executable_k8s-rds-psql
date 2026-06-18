@@ -6,13 +6,29 @@ red='\033[0;31m'
 reset='\033[0m'
 
 usage() {
-  echo "Usage: k8s-rds-psql <name> --context <cluster> [--port <local-port>] [--namespace <ns>] [--secret-name <secret>]"
+  echo "Usage: k8s-rds-psql <name> --context <cluster> [--port <local-port>] [--namespace <ns>] [--secret-name <secret>] [--username <user>] [--from-secret]"
   echo ""
   echo "  <name>          Database name, username, and secret name"
   echo "  --context       Kubernetes context (required)"
   echo "  --port          Local port (must match k8s-rds-tunnel, default: 35432)"
   echo "  --namespace     Kubernetes namespace (default: same as name)"
   echo "  --secret-name   Kubernetes secret name (default: <name>-secrets)"
+  echo "  --username        Database username (default: derived from <name>)"
+  echo "  --from-secret     Read DB_NAME and DB_USERNAME from the secret instead of deriving from <name>"
+  echo "  --print-local-url Print the local port-forwarded connection URL to stdout and exit (no psql)"
+}
+
+# URL-encode per RFC 3986 unreserved set; everything else percent-encoded.
+urlencode() {
+  local s="$1" out="" i c
+  for (( i = 0; i < ${#s}; i++ )); do
+    c="${s:i:1}"
+    case "$c" in
+      [a-zA-Z0-9.~_-]) out+="$c" ;;
+      *) printf -v c '%%%02X' "'$c"; out+="$c" ;;
+    esac
+  done
+  printf '%s' "$out"
 }
 
 # Parse arguments
@@ -20,6 +36,9 @@ context=""
 local_port=""
 namespace=""
 secret_name=""
+username=""
+from_secret=""
+print_local_url=""
 name=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -42,6 +61,18 @@ while [[ $# -gt 0 ]]; do
     -s|--secret-name)
       secret_name="$2"
       shift 2
+      ;;
+    -u|--username)
+      username="$2"
+      shift 2
+      ;;
+    --from-secret)
+      from_secret="1"
+      shift
+      ;;
+    --print-local-url)
+      print_local_url="1"
+      shift
       ;;
     -*)
       echo -e "${red}Unknown option: $1${reset}" >&2
@@ -69,15 +100,37 @@ local_port="${local_port:-35432}"
 namespace="${namespace:-$name}"
 db_name="${name//-/_}"
 
-# Get password from k8s secret
+get_secret_key() {
+  kubectl --context "$context" -n "$namespace" get secret "$secret_name" -o jsonpath="{.data.$1}" 2>&1
+}
+
+# Get credentials from k8s secret
 secret_name="${secret_name:-${name}-secrets}"
-echo "Looking up password from secret '$secret_name' in namespace '$namespace'..."
-if ! password=$(kubectl --context "$context" -n "$namespace" get secret "$secret_name" -o jsonpath='{.data.DB_PASSWORD}' 2>&1); then
+echo "Looking up credentials from secret '$secret_name' in namespace '$namespace'..." >&2
+
+if ! password=$(get_secret_key DB_PASSWORD); then
   echo -e "${red}Failed to get secret: $password${reset}" >&2
   exit 1
 fi
-
 password=$(echo "$password" | base64 --decode)
 
-echo "Connecting to database '$db_name' as user '$db_name' on localhost:$local_port..."
-PGPASSWORD="$password" psql -h localhost -p "$local_port" -U "$db_name" -d "$db_name"
+if [[ -n "$from_secret" ]]; then
+  if secret_db_name=$(get_secret_key DB_NAME) && [[ -n "$secret_db_name" ]]; then
+    db_name=$(echo "$secret_db_name" | base64 --decode)
+  fi
+  if [[ -z "$username" ]] && secret_username=$(get_secret_key DB_USERNAME) && [[ -n "$secret_username" ]]; then
+    username=$(echo "$secret_username" | base64 --decode)
+  fi
+fi
+
+# --username overrides; otherwise default to the derived db_name
+username="${username:-$db_name}"
+
+if [[ -n "$print_local_url" ]]; then
+  printf 'postgres://%s:%s@localhost:%s/%s\n' \
+    "$(urlencode "$username")" "$(urlencode "$password")" "$local_port" "$(urlencode "$db_name")"
+  exit 0
+fi
+
+echo "Connecting to database '$db_name' as user '$username' on localhost:$local_port..." >&2
+PGPASSWORD="$password" psql -h localhost -p "$local_port" -U "$username" -d "$db_name"

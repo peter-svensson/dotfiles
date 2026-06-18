@@ -68,7 +68,7 @@ function k8s-rds-tunnel --description "Port forward to RDS via SSM through a k8s
 
     # Get a node instance ID from the cluster
     echo "Getting node from cluster $cluster..."
-    set -l instance_id (kubectl --context $cluster get nodes -o jsonpath='{.items[0].spec.providerID}' 2>&1)
+    set -l instance_id (kubectl --context $cluster get nodes -l node-role.kubernetes.io/nodes -o jsonpath='{.items[0].spec.providerID}' 2>&1)
     if test $status -ne 0
         echo (set_color red)"Failed to get node from cluster: $instance_id"(set_color normal)
         return 1
