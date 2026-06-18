@@ -1,0 +1,8 @@
+# BEGIN_AWS_SSO_CLI_unbound
+
+[profile unbound]
+credential_process = /opt/homebrew/bin/aws-sso -S "unbound" process --arn arn:aws:iam::724902258495:role/K8sAmbixAdmin
+region = eu-west-1
+output = json
+
+# END_AWS_SSO_CLI_unbound

@@ -1,0 +1,8 @@
+# Trust all .envrc under the intersolia + ambix source trees so git worktrees
+# don't each need a separate `direnv allow`. Managed by chezmoi.
+#
+# Trade-off: any .envrc under these prefixes is auto-executed by direnv without
+# a prompt. Fine for first-party repos; be mindful when checking out untrusted
+# branches/repos beneath these paths.
+[whitelist]
+prefix = ["/Users/peter/source/intersolia", "/Users/peter/source/ambix"]
