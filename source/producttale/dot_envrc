@@ -1,9 +1,0 @@
-source_up .envrc
-export KUBECONFIG=$( IFS=:; set -- ${PWD}/.kube/kind*.yaml ${PWD}/.kube/*.yaml; echo "$*" )
-export K8S_RDS_CONFIG=${PWD}/.kube/rds_config
-
-export GOPRIVATE=github.com/producttale
-
-export AWS_SSO_CONFIG=${PWD}/.aws-sso/config
-export AWS_CONFIG_FILE=${PWD}/.aws/config
-#export AWS_SDK_LOAD_CONFIG=1

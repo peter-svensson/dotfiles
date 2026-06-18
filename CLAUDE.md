@@ -27,10 +27,10 @@ The `source/` directory contains organization-specific configurations:
 - `source/stc/` - Spare Time Coders
 - `source/keenfinity/` - Keenfinity
 - `source/lifeinside/` - Life Inside
-- `source/producttale/` - Product Tale
 - `source/opzkit/` - OpzKit
 - `source/goodfeed/` - GoodFeed
 - `source/intersolia/` - Intersolia
+- `source/ambix/` - Ambix
 
 Each organization directory contains:
 - `dot_aws/` - AWS configuration
