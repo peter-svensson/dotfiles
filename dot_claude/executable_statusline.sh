@@ -131,8 +131,27 @@ SEP='\033[2m│\033[0m'
 # Get short model name (e.g., "Opus" instead of "Claude 3.5 Opus")
 short_model=$(echo "$model_name" | sed -E 's/Claude [0-9.]+ //; s/^Claude //')
 
-# LINE 1: [Model] folder | branch
+# Caveman badge — read current mode from flag file written by caveman hooks.
+# Apply upstream security guards: refuse symlinks, cap read length, allowlist mode.
+caveman_badge=""
+caveman_flag="${CLAUDE_CONFIG_DIR:-$HOME/.claude}/.caveman-active"
+if [ -f "$caveman_flag" ] && [ ! -L "$caveman_flag" ]; then
+    caveman_mode=$(head -c 64 "$caveman_flag" 2>/dev/null | tr -d '\n\r' | tr '[:upper:]' '[:lower:]' | tr -cd 'a-z0-9-')
+    case "$caveman_mode" in
+        off) ;;
+        full|"") caveman_badge=$(printf '\033[38;5;172m[CAVEMAN]\033[0m') ;;
+        lite|ultra|wenyan-lite|wenyan|wenyan-full|wenyan-ultra|commit|review|compress)
+            caveman_suffix=$(printf '%s' "$caveman_mode" | tr '[:lower:]' '[:upper:]')
+            caveman_badge=$(printf '\033[38;5;172m[CAVEMAN:%s]\033[0m' "$caveman_suffix")
+            ;;
+    esac
+fi
+
+# LINE 1: [Caveman] [Model] folder | branch
 line1=$(printf '\033[37m[%s]\033[0m' "$short_model")
+if [ -n "$caveman_badge" ]; then
+    line1="$caveman_badge $line1"
+fi
 line1="$line1 $(printf '\033[94m📁 %s\033[0m' "$folder_name")"
 if [ -n "$git_branch" ]; then
     line1="$line1 $(printf '%b \033[96m🌿 %s\033[0m' "$SEP" "$git_branch")"
