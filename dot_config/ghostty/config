@@ -2,6 +2,12 @@ mouse-hide-while-typing = true
 
 shell-integration = fish
 theme = Catppuccin Mocha
+
+# Align glyph widths with tmux's compiled wcwidth tables. Ghostty defaults to
+# `unicode` (Unicode 15 / grapheme-cluster widths) which tmux 3.6 doesn't speak,
+# so wide/emoji glyphs (status-line icons, progress bars) drift columns under
+# tmux -> redraw desync / garbled Claude TUI. legacy = wcwidth, matches tmux.
+grapheme-width-method = legacy
 window-height = 60
 window-width = 100
 copy-on-select = true
