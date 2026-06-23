@@ -21,6 +21,12 @@ function git-update-all --description "Fetch + checkout default branch + rebase 
             continue
         end
 
+        # No origin remote: local-only repo, nothing to fetch. Inform and skip.
+        if not git -C "$dir" remote get-url origin >/dev/null 2>&1
+            echo "$name: "(set_color yellow)"skip (no remote)"(set_color normal)
+            continue
+        end
+
         # Dirty tree would be clobbered by rebase/checkout. Stash (incl. untracked) with --stash, else skip.
         set -l stashed 0
         set -l dirty (git -C "$dir" status --porcelain)
