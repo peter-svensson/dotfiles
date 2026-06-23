@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# hash: 2026-03-05-v1
+# hash: 2026-06-23-v2
 # Installs user-scoped Claude Code plugins idempotently.
 # chezmoi re-runs this script when the hash comment above changes.
 
@@ -16,30 +16,37 @@ add_marketplace() {
     return
   fi
   echo "Adding marketplace: $name ($repo)"
-  claude plugin marketplace add --name "$name" "$repo"
+  claude plugin marketplace add "$repo"
 }
 
 install_plugin() {
   local plugin="$1"
-  if claude plugin list 2>/dev/null | grep -q "^${plugin%%@*}"; then
+  if claude plugin list 2>/dev/null | grep -qF "$plugin"; then
     return
   fi
   echo "Installing plugin: $plugin"
   claude plugin install --scope user "$plugin"
 }
 
+# claude-plugins-official is a built-in default marketplace; the rest must be added.
+add_marketplace "goland-claude-marketplace" "JetBrains/go-modern-guidelines"
+add_marketplace "Mixedbread-Grep" "https://github.com/mixedbread-ai/mgrep.git"
+add_marketplace "openai-codex" "openai/codex-plugin-cc"
+add_marketplace "caveman" "juliusbrussee/caveman"
 add_marketplace "worktrunk" "max-sixty/worktrunk"
+add_marketplace "ponytail" "DietrichGebert/ponytail"
 
-install_plugin "terraform-skill@antonbabenko"
 install_plugin "frontend-design@claude-plugins-official"
-install_plugin "deploy-on-aws@agent-plugins-for-aws"
 install_plugin "code-review@claude-plugins-official"
 install_plugin "claude-md-management@claude-plugins-official"
-install_plugin "modern-go-guidelines@goland-claude-marketplace"
-install_plugin "mgrep@Mixedbread-Grep"
 install_plugin "hookify@claude-plugins-official"
 install_plugin "security-guidance@claude-plugins-official"
 install_plugin "context7@claude-plugins-official"
+install_plugin "modern-go-guidelines@goland-claude-marketplace"
+install_plugin "mgrep@Mixedbread-Grep"
+install_plugin "codex@openai-codex"
+install_plugin "caveman@caveman"
 install_plugin "worktrunk@worktrunk"
+install_plugin "ponytail@ponytail"
 
 echo "Claude Code plugins installed."
