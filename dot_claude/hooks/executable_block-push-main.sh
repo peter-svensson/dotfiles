@@ -9,6 +9,15 @@ set -euo pipefail
 
 CMD=$(jq -r '.tool_input.command')
 
+# Block destructive force push. --force-with-lease / --force-if-includes are allowed:
+# they refuse to overwrite work that landed on the remote since the last fetch.
+SAFE_STRIPPED=${CMD//--force-with-lease/}
+SAFE_STRIPPED=${SAFE_STRIPPED//--force-if-includes/}
+if echo "$SAFE_STRIPPED" | grep -qE 'git[[:space:]]+push[^;&|]*[[:space:]](--force|-f)([[:space:]]|$)'; then
+  echo "BLOCKED: use --force-with-lease instead of --force/-f." >&2
+  exit 2
+fi
+
 # Only check git push commands targeting main/master
 if ! echo "$CMD" | grep -qE 'git[[:space:]]+push.*(main|master)'; then
   exit 0

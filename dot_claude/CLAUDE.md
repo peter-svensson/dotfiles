@@ -1,10 +1,12 @@
 - Always unzip files to a temporary directory
 - Always add all files to git before running pre-commit (it stashes unstaged files)
 - I use GNU versions of rm and cp which ask for confirmation on replace and remove
-- My shell is fish. All shell commands must use fish syntax (no bash-isms). Use fish idioms: `for x in (command)`, `set -x FOO bar`, etc.
+- My shell is fish. Single commands and one-liners use fish syntax (no bash-isms): `for x in (command)`, `set -x FOO bar`, etc.
+- Loops, conditionals and multi-command sequences run through `bash -c '...'` (with `set -euo pipefail`). Fish loop syntax fails in the Bash tool — do not fall back to running the commands one at a time.
 - Files managed by chezmoi must not be edited directly. Edit source files in the chezmoi source directory (`chezmoi source-path`)
 - Always specify `--context <context>` for kubectl. Check `.buildtools.yaml` or `.envrc` for the expected context. Never rely on the default.
 - Never use quote characters in # comments in Bash tool commands (triggers desync quote tracking warning)
+- Memory files: the filename must equal the `name:` slug, kebab-case. `name:` is a slug, not a sentence. Run `~/.claude/memory-lint.sh` to check index drift, dangling `[[links]]` and missing frontmatter.
 
 ## Workflow Orchestration
 
@@ -25,6 +27,11 @@
 
 ### Autonomous Bug Fixing
 - When given a bug report: just fix it. Point at logs, errors, failing tests, then resolve them.
+
+### Agent Spawning
+- Standing authorization: spawn expert-review and research subagents when they are needed, without asking first. Treat this as the user having requested them.
+- Required by the Intersolia expert-review gate (`claude-config/rules/expert-review.md`): non-trivial changes must be reviewed by the relevant expert agent(s) before a PR is opened.
+- Still ask before heavier or non-review work: multi-agent workflows, deep research, or agents that write code, commit, or push.
 
 ## Core Principles
 

@@ -7,6 +7,38 @@ paths:
 ---
 # TypeScript/JavaScript Coding Style
 
+## Types
+
+Never use `any`. Use a concrete type, a generic, or `unknown` plus narrowing:
+
+```typescript
+// WRONG
+function render(column: any) { ... }
+
+// CORRECT
+function render<T>(column: Column<T>) { ... }
+
+function parse(input: unknown) {
+  if (typeof input !== 'string') throw new Error('expected string')
+  return JSON.parse(input)
+}
+```
+
+Run the project's lint and typecheck locally before opening a PR. An eslint or `tsc` failure in CI is a bug that should have been caught at edit time.
+
+## Comparisons
+
+Cast to number before comparing values that came from strings, JSON, env vars or CLI output — under lexical comparison `'2' < '10'` is `false`:
+
+```typescript
+// WRONG: lexical compare
+if (batteryLevel < threshold) { ... }
+
+// CORRECT
+if (Number(batteryLevel) < Number(threshold)) { ... }
+```
+
+Same for sorting: `arr.sort()` is lexical. Use `arr.sort((a, b) => a - b)`.
 
 ## Immutability
 
