@@ -7,7 +7,8 @@ set -euo pipefail
 #   1. Bulk add: `git add -A`, `git add .`, `git add --all`
 #   2. Staging binaries (extensions: exe, bin, so, dylib, dll, a, o, dat, db, sqlite, sqlite3)
 #   3. Staging files larger than 1MB
-#   4. Staging .gitignore changes on non-main/master branches
+#   4. Staging .gitignore changes on non-main/master branches, unless the branch
+#      name contains "gitignore" (a dedicated single-purpose PR)
 #
 # Exemption: web assets (png/jpg/jpeg/webp/avif/svg/gif + mp4/webm video) under
 # public/ in the ambix `web` repo (incl. its `web.*` worktrees) pass the binary
@@ -31,13 +32,22 @@ if [[ "${CLAUDE_ALLOW_BULK_ADD:-}" != "1" ]]; then
   fi
 fi
 
-# Extract candidate files: strip "git add" + flags
-FILES=$(echo "$CMD" \
-  | sed -E 's/.*git[[:space:]]+add[[:space:]]+//' \
-  | sed -E 's/[[:space:]]*(&&|\|\||;).*//' \
-  | tr -s '[:space:]' '\n' \
-  | grep -vE '^-' \
-  || true)
+# Extract candidate files: the operands of the `git add` invocation ONLY.
+#
+# grep -o so we take just the `git add ...` span out of the command, stopping at
+# the next &&/||/; — NOT a line-oriented sed over the whole thing. The previous
+# version stripped the prefix with `sed 's/.*git add //'`, which only rewrites
+# lines that actually contain "git add"; every other line of a multi-line
+# command passed through untouched and was then tokenised as a filename. So
+# `git add foo.sh && git commit -F - <<EOF ... .gitignore ... EOF` saw
+# ".gitignore" as a staged file and blocked the commit over its own message.
+# Any commit message mentioning a blocked extension hit the same false positive.
+FILES=$(echo "$CMD" |
+  grep -oE 'git[[:space:]]+add[[:space:]][^&|;]*' |
+  sed -E 's/^git[[:space:]]+add[[:space:]]+//' |
+  tr -s '[:space:]' '\n' |
+  grep -vE '^-' ||
+  true)
 
 if [[ -z "$FILES" ]]; then
   exit 0
@@ -90,12 +100,23 @@ while IFS= read -r f; do
   fi
 
   # 4. .gitignore on feature branch
+  #
+  # `*gitignore*` is an escape hatch, not a loophole. The rule exists to stop
+  # .gitignore drift riding along inside an unrelated PR — but "land separately
+  # on main first" stopped being reachable once main became a protected branch:
+  # a feature branch is blocked here, and a direct commit to main is blocked by
+  # the repo's own pre-commit hook and rejected by branch protection. With no
+  # valid path, genuine .gitignore fixes simply never get made.
+  #
+  # A dedicated branch IS the rule's intent satisfied, so name it accordingly
+  # and the guard steps aside. Anything else still gets blocked.
   if [[ "$(basename "$f")" == ".gitignore" ]]; then
     case "$cur_branch" in
-      main|master|gitbutler/workspace) ;;
+      main | master | gitbutler/workspace | *gitignore*) ;;
       *)
         echo "BLOCKED: .gitignore change on feature branch ($cur_branch)." >&2
-        echo ".gitignore drift usually leaks into unrelated PRs. Land separately on main first." >&2
+        echo ".gitignore drift usually leaks into unrelated PRs." >&2
+        echo "Use a dedicated branch whose name contains 'gitignore', so the change lands as its own PR." >&2
         exit 2
         ;;
     esac
