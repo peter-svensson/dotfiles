@@ -10,6 +10,7 @@
     "pr": ""
   },
   "permissions": {
+    "defaultMode": "auto",
     "allow": [
       "Bash(*)"
     ],
@@ -23,8 +24,6 @@
       "Bash(wget *| bash*)",
       "Bash(curl *|bash*)",
       "Bash(curl *| bash*)",
-      "Bash(git push --force*)",
-      "Bash(git push *--force*)",
       "Bash(git reset --hard*)",
       "Edit(~/.bashrc)",
       "Edit(~/.zshrc)",
@@ -47,6 +46,7 @@
       "Read(~/Library/Application Support/**/solflare*/**)"
     ]
   },
+  "model": "claude-opus-5",
   "enableAllProjectMcpServers": false,
   "hooks": {
     "PreToolUse": [
@@ -76,6 +76,11 @@
             "type": "command",
             "command": "~/.claude/hooks/git-staging-guard.sh",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/git-fresh.sh",
+            "timeout": 25
           }
         ]
       }
@@ -88,6 +93,11 @@
             "type": "command",
             "command": "~/.claude/hooks/go-format.sh",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/ts-lint.sh",
+            "timeout": 70
           }
         ]
       }
@@ -135,13 +145,12 @@
     "code-review@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
     "modern-go-guidelines@goland-claude-marketplace": false,
-    "mgrep@Mixedbread-Grep": true,
     "hookify@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
     "codex@openai-codex": false,
     "caveman@caveman": true,
     "context7@claude-plugins-official": true,
-    "deploy-on-aws@agent-plugins-for-aws": false
+    "ponytail@ponytail": true
   },
   "extraKnownMarketplaces": {
     "worktrunk": {
@@ -160,6 +169,12 @@
       "source": {
         "source": "github",
         "repo": "juliusbrussee/caveman"
+      }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
       }
     }
   },
@@ -200,6 +215,7 @@
   },
   "alwaysThinkingEnabled": true,
   "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
   "editorMode": "vim",
   "teammateMode": "auto",
   "remoteControlAtStartup": true,

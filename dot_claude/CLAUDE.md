@@ -1,8 +1,9 @@
 - Always unzip files to a temporary directory
 - Always add all files to git before running pre-commit (it stashes unstaged files)
 - I use GNU versions of rm and cp which ask for confirmation on replace and remove
-- My shell is fish. Single commands and one-liners use fish syntax (no bash-isms): `for x in (command)`, `set -x FOO bar`, etc.
-- Loops, conditionals and multi-command sequences run through `bash -c '...'` (with `set -euo pipefail`). Fish loop syntax fails in the Bash tool — do not fall back to running the commands one at a time.
+- My interactive shell is fish, but the Bash tool and `!` prompt commands eval in zsh. Write POSIX/zsh syntax there: `&&` not `; and`, `for x in $(cmd); do ...; done` not `... ; end`.
+- Loops, conditionals and multi-command sequences run through `bash -c '...'` (with `set -euo pipefail`). Do not fall back to running the commands one at a time.
+- Use fish syntax only for commands I will run myself in my own shell.
 - Files managed by chezmoi must not be edited directly. Edit source files in the chezmoi source directory (`chezmoi source-path`)
 - Always specify `--context <context>` for kubectl. Check `.buildtools.yaml` or `.envrc` for the expected context. Never rely on the default.
 - Never use quote characters in # comments in Bash tool commands (triggers desync quote tracking warning)

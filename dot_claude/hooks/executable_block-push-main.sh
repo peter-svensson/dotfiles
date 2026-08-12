@@ -13,7 +13,9 @@ CMD=$(jq -r '.tool_input.command')
 # they refuse to overwrite work that landed on the remote since the last fetch.
 SAFE_STRIPPED=${CMD//--force-with-lease/}
 SAFE_STRIPPED=${SAFE_STRIPPED//--force-if-includes/}
-if echo "$SAFE_STRIPPED" | grep -qE 'git[[:space:]]+push[^;&|]*[[:space:]](--force|-f)([[:space:]]|$)'; then
+# Anchored to a command position so prose mentioning the flag (commit messages,
+# heredocs) is not mistaken for an actual push.
+if echo "$SAFE_STRIPPED" | grep -qE '(^|[;&|][[:space:]]*)git[[:space:]]+push[^;&|]*[[:space:]](--force|-f)([[:space:]]|$)'; then
   echo "BLOCKED: use --force-with-lease instead of --force/-f." >&2
   exit 2
 fi
