@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# Regenerate Homebrew tap trust list from the Brewfile (single source of truth).
+# Reruns only when the Brewfile changes.
+# Brewfile hash: {{ include "dot_local/share/Brewfile" | sha256sum }}
+trust="${XDG_CONFIG_HOME:-$HOME/.config}/homebrew/trust.json"
+mkdir -p "$(dirname "$trust")"
+grep '^tap ' "$HOME/.local/share/Brewfile" \
+  | sed -E 's/.*"([^"]+)".*/\1/' | sort -u \
+  | jq -R . | jq -s '{trustedtaps: .}' >"$trust"
