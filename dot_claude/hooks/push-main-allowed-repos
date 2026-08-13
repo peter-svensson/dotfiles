@@ -9,3 +9,4 @@ cmd-contains: ssh peter@homeassistant
 ~/source/stc/messaging/go-messaging-nats
 ~/source/stc/messaging/node-messaging-amqp
 ~/source/stc/messaging/node-messaging-amqp
+~/source/stc/messaging/claude-config
