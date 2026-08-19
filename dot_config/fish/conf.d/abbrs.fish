@@ -16,4 +16,4 @@ abbr -a -- sc stern --context
 abbr -a -- pre-commit prek
 
 abbr -a -- gup git up
-abbr -a -- ggone "git branch -vv | grep ': gone]' | awk '{print \$1}' | xargs git branch -D"
+abbr -a -- ggone "git for-each-ref --format='%(refname:short) %(upstream:track)' refs/heads | awk '\$2 == \"[gone]\" {print \$1}' | xargs -r git branch -D"
