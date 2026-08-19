@@ -4,13 +4,44 @@
        ~/source/intersolia/.scw/config.yaml directly — edit this template.
        Switch profile per shell with `scw-profile <name>`; rotate by updating
        Proton Pass and re-running `chezmoi apply`.
-       One Scaleway account => one organization id, shared across projects. */ -}}
+       One Scaleway account => one organization id, shared across projects.
+
+       ONE PROFILE PER SCALEWAY PROJECT, because each project holds a whole
+       environment (cluster, RDB, Secret Manager, registry) and almost every
+       `scw` subcommand is project-scoped. Without a profile per project you end
+       up passing `project-id=...` by hand on every call, or silently reading the
+       wrong environment. The per-project kubeconfigs under
+       ~/source/intersolia/.kube/intersolia-<env>-k8s.yaml name these profiles in
+       their exec block, so a missing profile breaks `kubectl` for that cluster
+       with `scaleway-sdk-go: given profile <p> does not exist`.
+
+       CREDENTIAL SCOPE — READ THIS BEFORE ASSUMING ISOLATION.
+       All four profiles currently share ONE credential, the `scw-staging`
+       Proton Pass item, and differ only by `default_project_id`. That key is
+       org-wide: it reads (and can administer) the dev, staging, platform AND
+       prod projects — verified by reading all four Kapsule clusters with it.
+       So these profiles give project *defaulting*, not privilege separation. A
+       profile named `staging` still holds production access.
+
+       The fix is per-project IAM applications + keys in
+       infrastructure/terraform/scaleway/iam, each with its own Proton Pass item
+       (`scw-dev`, `scw-platform`, `scw-prod`), then swap the `protonPass` paths
+       below. Tracked as ESTER-1168. Until then, treat every profile here as
+       production-capable. */ -}}
 {{- $org := "94dd90e5-5110-46df-a475-16333418e670" -}}
+{{- /* Project ids mirror terraform/scaleway/project-config/main.tf. Not secret. */ -}}
+{{- $projects := dict
+      "dev"      "0c533b04-bb1e-4b68-b181-c8f2f1b00044"
+      "staging"  "a0c4af66-3064-4ffa-8be3-f780f597b8f7"
+      "platform" "2bacf4f3-7fa5-4892-a9dd-6c469e6e835e"
+      "prod"     "ccce8328-d17a-4d4c-a598-374b78de2cbc" -}}
 profiles:
-  staging:
+{{- range $env, $project := $projects }}
+  {{ $env }}:
     access_key: {{ protonPass "pass://Intersolia/scw-staging/access_key" | trim }}
     secret_key: {{ protonPass "pass://Intersolia/scw-staging/secret_key" | trim }}
-    default_project_id: {{ protonPass "pass://Intersolia/scw-staging/project_id" | trim }}
+    default_project_id: {{ $project }}
     default_organization_id: {{ $org }}
     default_region: fr-par
     default_zone: fr-par-1
+{{- end }}
