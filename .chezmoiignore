@@ -30,3 +30,6 @@ CLAUDE.md
 .claude/plugins/installed_plugins.json
 .claude/plugins/known_marketplaces.json
 .claude/plugins/repos
+
+# Base content for the .claude/settings.json modify_ script; not deployed itself.
+.claude/settings.base.json
