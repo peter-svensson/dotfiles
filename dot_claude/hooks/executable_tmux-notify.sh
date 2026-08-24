@@ -1,9 +1,10 @@
 #!/bin/sh
-# Claude Code hook: send bell on Stop and Notification events
+# Claude Code hook: send bell on Stop, StopFailure and Notification events
 # Bell triggers tmux monitor-bell (window coloring) and alert-bell (macOS notification)
 #
 # Also records what kind of attention this agent wants in @agent: blocked
-# (waiting on a permission prompt, so the agent is idle) or done (turn finished).
+# (waiting on a permission prompt, so the agent is idle), done (turn finished)
+# or error (turn ended on an API error: 529 overloaded, rate limit, outage).
 #
 # @agent is pane-scoped (-p), not window-scoped: several agents commonly share
 # one window, and a window-scoped value would be last-writer-wins and get
@@ -37,6 +38,11 @@ case "$event" in
     Stop)
         tmux set-option -p -t "$TMUX_PANE" @agent 'done'
         tmux set-option -p -t "$TMUX_PANE" pane-border-style 'fg=colour2'
+        printf '\a' > "$pane_tty"
+        ;;
+    StopFailure)
+        tmux set-option -p -t "$TMUX_PANE" @agent error
+        tmux set-option -p -t "$TMUX_PANE" pane-border-style 'fg=colour3,bold'
         printf '\a' > "$pane_tty"
         ;;
 esac
