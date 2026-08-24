@@ -47,6 +47,7 @@
     ]
   },
   "enableAllProjectMcpServers": false,
+  "outputStyle": "Caveman Ponytail",
   "hooks": {
     "PreToolUse": [
       {
@@ -159,9 +160,7 @@
     "hookify@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
     "codex@openai-codex": false,
-    "caveman@caveman": true,
-    "context7@claude-plugins-official": true,
-    "ponytail@ponytail": true
+    "context7@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "worktrunk": {
@@ -174,18 +173,6 @@
       "source": {
         "source": "github",
         "repo": "openai/codex-plugin-cc"
-      }
-    },
-    "caveman": {
-      "source": {
-        "source": "github",
-        "repo": "juliusbrussee/caveman"
-      }
-    },
-    "ponytail": {
-      "source": {
-        "source": "github",
-        "repo": "DietrichGebert/ponytail"
       }
     }
   },
