@@ -26,9 +26,14 @@ done
 [[ -d "$root/node_modules/eslint" ]] || exit 0
 
 cd "$root"
+# The binary is invoked directly rather than through `npx --no-install`, which
+# cost ~530ms of node startup before eslint even began — on every TS/JS edit.
+eslint_bin="$root/node_modules/.bin/eslint"
+[[ -x "$eslint_bin" ]] || exit 0
+
 # ponytail: single-file eslint only; no tsc --noEmit (whole-program, too slow per edit).
 # Add typecheck here if type errors start reaching CI.
-if ! out=$(timeout 60 npx --no-install eslint --fix "$file_path" 2>&1); then
+if ! out=$(timeout 60 "$eslint_bin" --fix "$file_path" 2>&1); then
   {
     echo "eslint failed on $file_path — fix before continuing:"
     echo "$out"

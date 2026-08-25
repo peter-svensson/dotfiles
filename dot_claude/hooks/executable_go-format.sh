@@ -11,6 +11,7 @@ file_path=$(echo "$input" | jq -r '.tool_input.file_path // empty')
 command -v gofumpt &>/dev/null && gofumpt -w "$file_path" 2>/dev/null || true
 command -v goimports &>/dev/null && goimports -w "$file_path" 2>/dev/null || true
 
-# Run go vet on the package containing the edited file
-pkg_dir=$(dirname "$file_path")
-command -v go &>/dev/null && go vet "./$pkg_dir/..." 2>&1 || true
+# ponytail: format only. `go vet ./$pkg_dir/...` used to run here, but file_path is
+# absolute so the pattern expanded to ".//Users/..." and vet never actually ran.
+# Vetting for real costs seconds per edit and re-runs on every keystroke-sized
+# change; CI already vets. Add it back here if vet failures start reaching CI.

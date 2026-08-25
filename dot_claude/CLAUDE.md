@@ -1,6 +1,7 @@
 - Always unzip files to a temporary directory
 - Always add all files to git before running pre-commit (it stashes unstaged files)
 - I use GNU versions of rm and cp which ask for confirmation on replace and remove
+- `sed` is GNU sed. In-place edits are `sed -i 's/x/y/' file` — the BSD form `sed -i '' 's/x/y/' file` fails, because GNU `-i` takes its suffix attached (`-i.bak`) and the empty string gets eaten as the script
 - My interactive shell is fish, but the Bash tool and `!` prompt commands eval in zsh. Write POSIX/zsh syntax there: `&&` not `; and`, `for x in $(cmd); do ...; done` not `... ; end`.
 - Loops, conditionals and multi-command sequences run through `bash -c '...'` (with `set -euo pipefail`). Do not fall back to running the commands one at a time.
 - Use fish syntax only for commands I will run myself in my own shell.
