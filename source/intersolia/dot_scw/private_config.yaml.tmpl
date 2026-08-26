@@ -1,4 +1,4 @@
-{{- /* Scaleway per-root profiles for intersolia.
+{{- /* Scaleway per-project profiles for intersolia.
        Secrets pulled from Proton Pass at `chezmoi apply` time.
        Rendered file is mode 0600 (private_ prefix). Do NOT edit the rendered
        ~/source/intersolia/.scw/config.yaml directly — edit this template.
@@ -16,31 +16,29 @@
        with `scaleway-sdk-go: given profile <p> does not exist`.
 
        CREDENTIAL SCOPE — READ THIS BEFORE ASSUMING ISOLATION.
-       All four profiles currently share ONE credential, the `scw-staging`
-       Proton Pass item, and differ only by `default_project_id`. That key is
-       org-wide: it reads (and can administer) the dev, staging, platform AND
-       prod projects — verified by reading all four Kapsule clusters with it.
-       So these profiles give project *defaulting*, not privilege separation. A
-       profile named `staging` still holds production access.
+       Each profile now carries its OWN API key (`peter-<env>`, minted on the
+       personal user account, expiring 2027-08-26). Each key's server-side
+       `default_project_id` matches the profile, which is what Object Storage
+       reads: S3 credentials resolve to a project, so bucket access is now
+       correctly per-environment. This replaced a single shared key whose
+       default project was staging for every profile.
 
-       The fix is per-project IAM applications + keys in
-       infrastructure/terraform/scaleway/iam, each with its own Proton Pass item
-       (`scw-dev`, `scw-platform`, `scw-prod`), then swap the `protonPass` paths
-       below. Tracked as ESTER-1168. Until then, treat every profile here as
-       production-capable. */ -}}
+       These are still USER keys, so they inherit full account rights. The
+       per-project scoping fixes bucket addressing, NOT privilege separation —
+       a profile named `dev` can still administer prod. Real separation needs
+       per-project IAM applications + policies, which live in terraform
+       (terraform/scaleway/iam in the infra repo, alongside the tf-ester-<env>
+       apply identities). Tracked as ESTER-1168. Until then, treat every
+       profile here as production-capable. */ -}}
 {{- $org := "94dd90e5-5110-46df-a475-16333418e670" -}}
 {{- /* Project ids mirror terraform/scaleway/project-config/main.tf. Not secret. */ -}}
-{{- $projects := dict
-      "dev"      "0c533b04-bb1e-4b68-b181-c8f2f1b00044"
-      "staging"  "a0c4af66-3064-4ffa-8be3-f780f597b8f7"
-      "platform" "2bacf4f3-7fa5-4892-a9dd-6c469e6e835e"
-      "prod"     "ccce8328-d17a-4d4c-a598-374b78de2cbc" -}}
+{{- $envs := list "dev" "staging" "platform" "prod" -}}
 profiles:
-{{- range $env, $project := $projects }}
+{{- range $env := $envs }}
   {{ $env }}:
-    access_key: {{ protonPass "pass://Intersolia/scw-staging/access_key" | trim }}
-    secret_key: {{ protonPass "pass://Intersolia/scw-staging/secret_key" | trim }}
-    default_project_id: {{ $project }}
+    access_key: {{ protonPass (printf "pass://Intersolia/scw-%s/access_key" $env) | trim }}
+    secret_key: {{ protonPass (printf "pass://Intersolia/scw-%s/secret_key" $env) | trim }}
+    default_project_id: {{ protonPass (printf "pass://Intersolia/scw-%s/project_id" $env) | trim }}
     default_organization_id: {{ $org }}
     default_region: fr-par
     default_zone: fr-par-1
