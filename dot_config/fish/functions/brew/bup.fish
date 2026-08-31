@@ -19,7 +19,7 @@ function bup -d "Update homebrew, upgrade installed packages, and cleanup"
   end
 
   echo "Brewfile matches installation, updating packages"
-  brew update && brew upgrade; brew cleanup
+  brew update && brew upgrade
 
   # Clean up stale caskroom directories left by failed upgrades (e.g. rename errors)
   set -l caskroom (brew --caskroom)
@@ -80,4 +80,7 @@ function bup -d "Update homebrew, upgrade installed packages, and cleanup"
       echo "$cask:$current is latest version"
     end
   end
+
+  # Last: cask upgrades above leave downloads behind too
+  brew cleanup
 end
