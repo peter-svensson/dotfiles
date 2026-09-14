@@ -39,11 +39,13 @@ set fish_greeting
 # Initialize starship.
 if type -q starship
   set -gx STARSHIP_CONFIG $__fish_config_dir/themes/starship.toml
-  if not test -r $__fish_cache_dir/starship_init.fish
+  if not test -s $__fish_cache_dir/starship_init.fish
       starship init fish --print-full-init >$__fish_cache_dir/starship_init.fish
   end
-  source $__fish_cache_dir/starship_init.fish
-  enable_transience
+  if test -s $__fish_cache_dir/starship_init.fish
+      source $__fish_cache_dir/starship_init.fish
+      enable_transience
+  end
 end
 
 #
