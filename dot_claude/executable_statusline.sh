@@ -65,6 +65,32 @@ if cd "$current_dir" 2>/dev/null; then
     git_root=$(git -c core.useBuiltinFSMonitor=false rev-parse --show-toplevel 2>/dev/null)
 fi
 
+# Git status markers (starship-style): ✓ clean, ⇡N ahead, ⇣N behind
+git_status_marker=""
+if [ -n "$git_branch" ]; then
+    ahead_behind=$(git -c core.useBuiltinFSMonitor=false rev-list --left-right --count '@{upstream}...HEAD' 2>/dev/null)
+    if [ -n "$ahead_behind" ]; then
+        behind_count=$(echo "$ahead_behind" | cut -f1)
+        ahead_count=$(echo "$ahead_behind" | cut -f2)
+    else
+        behind_count=0
+        ahead_count=0
+    fi
+    is_dirty=$(git -c core.useBuiltinFSMonitor=false status --porcelain 2>/dev/null)
+
+    marker=""
+    if [ "$ahead_count" -gt 0 ] 2>/dev/null; then
+        marker="$marker$(printf '\033[32m⇡%s\033[0m' "$ahead_count")"
+    fi
+    if [ "$behind_count" -gt 0 ] 2>/dev/null; then
+        marker="$marker$(printf '\033[31m⇣%s\033[0m' "$behind_count")"
+    fi
+    if [ -z "$marker" ] && [ -z "$is_dirty" ]; then
+        marker=$(printf '\033[32m✓\033[0m')
+    fi
+    git_status_marker="$marker"
+fi
+
 # Build repo path display (folder name only for brevity)
 if [ -n "$git_root" ]; then
     repo_name=$(basename "$git_root")
@@ -125,6 +151,53 @@ else
     session_time=""
 fi
 
+# SCW_PROFILE (starship-style): purple, 🪐 prefix, only when set
+scw_segment=""
+if [ -n "$SCW_PROFILE" ]; then
+    scw_segment=$(printf '\033[35m🪐 %s\033[0m' "$SCW_PROFILE")
+fi
+
+# Kubernetes context/namespace (starship-style):  symbol, "context (namespace)"
+# Cheap file read only — never shell out to kubectl on every render.
+k8s_segment=""
+# KUBECONFIG may be a colon-separated LIST of files (it is on this machine).
+# kubectl merges them and the first file setting current-context wins, so take
+# the first readable entry that declares one.
+# Take the first entry that declares a NON-EMPTY context: several files here
+# carry `current-context: ""` or leave it blank, and those must not win.
+kube_config=""
+k8s_context=""
+for candidate in $(printf '%s' "${KUBECONFIG:-$HOME/.kube/config}" | tr ':' ' '); do
+    [ -f "$candidate" ] || continue
+    candidate_ctx=$(awk '/^current-context:/ { print $2; exit }' "$candidate" 2>/dev/null | tr -d '"'"'"'')
+    if [ -n "$candidate_ctx" ]; then
+        kube_config="$candidate"
+        k8s_context="$candidate_ctx"
+        break
+    fi
+done
+if [ -n "$kube_config" ]; then
+    if [ -n "$k8s_context" ]; then
+        # Find the "- name: <ctx>" entry under contexts:, then take the first
+        # "namespace:" before the next "- name:". Context entries are indented
+        # under `contexts:`, so match the dash anywhere on the line and compare
+        # the field after "name:" rather than a fixed column.
+        k8s_namespace=$(awk -v ctx="$k8s_context" '
+            /^[[:space:]]*-[[:space:]]*name:/ {
+                sub(/^[^:]*:[[:space:]]*/, "")
+                in_target = ($0 == ctx)
+                next
+            }
+            in_target && /^[[:space:]]*namespace:/ { print $2; exit }
+        ' "$kube_config" 2>/dev/null)
+        if [ -n "$k8s_namespace" ]; then
+            k8s_segment=$(printf '\033[36m %s (%s)\033[0m' "$k8s_context" "$k8s_namespace")
+        else
+            k8s_segment=$(printf '\033[36m %s\033[0m' "$k8s_context")
+        fi
+    fi
+fi
+
 # Separator
 SEP='\033[2m│\033[0m'
 
@@ -153,8 +226,17 @@ if [ -n "$caveman_badge" ]; then
     line1="$caveman_badge $line1"
 fi
 line1="$line1 $(printf '\033[94m📁 %s\033[0m' "$folder_name")"
-if [ -n "$git_branch" ]; then
-    line1="$line1 $(printf '%b \033[96m🌿 %s\033[0m' "$SEP" "$git_branch")"
+if [ -n "$git_branch" ] && [ "$git_branch" != "main" ]; then
+    line1="$line1 $(printf '%b \033[32m %s\033[0m' "$SEP" "$git_branch")"
+    if [ -n "$git_status_marker" ]; then
+        line1="$line1 $(printf '%b' "$git_status_marker")"
+    fi
+fi
+if [ -n "$scw_segment" ]; then
+    line1="$line1 $(printf '%b %b' "$SEP" "$scw_segment")"
+fi
+if [ -n "$k8s_segment" ]; then
+    line1="$line1 $(printf '%b %b' "$SEP" "$k8s_segment")"
 fi
 
 # LINE 2: Progress bar | Context % | cost | duration
