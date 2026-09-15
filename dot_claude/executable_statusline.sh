@@ -65,7 +65,7 @@ if cd "$current_dir" 2>/dev/null; then
     git_root=$(git -c core.useBuiltinFSMonitor=false rev-parse --show-toplevel 2>/dev/null)
 fi
 
-# Git status markers (starship-style): ✓ clean, ⇡N ahead, ⇣N behind
+# Git status markers (starship-style): ✓ clean, ⇡N ahead, ⇣N behind, ! dirty
 git_status_marker=""
 if [ -n "$git_branch" ]; then
     ahead_behind=$(git -c core.useBuiltinFSMonitor=false rev-list --left-right --count '@{upstream}...HEAD' 2>/dev/null)
@@ -85,7 +85,10 @@ if [ -n "$git_branch" ]; then
     if [ "$behind_count" -gt 0 ] 2>/dev/null; then
         marker="$marker$(printf '\033[31m⇣%s\033[0m' "$behind_count")"
     fi
-    if [ -z "$marker" ] && [ -z "$is_dirty" ]; then
+    if [ -n "$is_dirty" ]; then
+        marker="$marker$(printf '\033[33m!\033[0m')"
+    fi
+    if [ -z "$marker" ]; then
         marker=$(printf '\033[32m✓\033[0m')
     fi
     git_status_marker="$marker"
@@ -226,11 +229,14 @@ if [ -n "$caveman_badge" ]; then
     line1="$caveman_badge $line1"
 fi
 line1="$line1 $(printf '\033[94m📁 %s\033[0m' "$folder_name")"
+# Branch name is noise on main - but its status markers are not.
 if [ -n "$git_branch" ] && [ "$git_branch" != "main" ]; then
     line1="$line1 $(printf '%b \033[32m %s\033[0m' "$SEP" "$git_branch")"
     if [ -n "$git_status_marker" ]; then
         line1="$line1 $(printf '%b' "$git_status_marker")"
     fi
+elif [ -n "$git_status_marker" ]; then
+    line1="$line1 $(printf '%b %b' "$SEP" "$git_status_marker")"
 fi
 if [ -n "$scw_segment" ]; then
     line1="$line1 $(printf '%b %b' "$SEP" "$scw_segment")"
