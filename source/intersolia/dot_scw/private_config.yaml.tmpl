@@ -32,7 +32,11 @@
        profile here as production-capable. */ -}}
 {{- $org := "94dd90e5-5110-46df-a475-16333418e670" -}}
 {{- /* Project ids mirror terraform/scaleway/project-config/main.tf. Not secret. */ -}}
-{{- $envs := list "dev" "staging" "platform" "prod" -}}
+{{- /* staging dropped: environment removed by ESTER-1510 (2026-09-09). Its
+       Project and API key are gone, so rendering the profile produced one that
+       403s on every call. The `pass://Intersolia/scw-staging` Proton Pass entry
+       is now dead too and can be deleted. */ -}}
+{{- $envs := list "dev" "platform" "prod" -}}
 profiles:
 {{- range $env := $envs }}
   {{ $env }}:

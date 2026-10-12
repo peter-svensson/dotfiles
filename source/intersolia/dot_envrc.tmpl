@@ -36,6 +36,9 @@ export TURBO_TEAMID=team_intersolia
 # No SCW_ACCESS_KEY/SECRET_KEY here: env vars override the profile in scw's
 # precedence, which would pin one key and ignore SCW_PROFILE.
 export SCW_CONFIG_PATH=${PWD}/.scw/config.yaml
-export SCW_PROFILE=staging
+# dev, not staging: that environment was removed by ESTER-1510 (2026-09-09) and
+# its API key no longer exists, so every `scw` call under the old default failed
+# with `denied authentication: API key does not exist`.
+export SCW_PROFILE=dev
 
 #KUBECONFIG_KEY=142c1281-6019-498d-9a1f-145106181bbe
