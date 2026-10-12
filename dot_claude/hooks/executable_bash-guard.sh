@@ -117,6 +117,19 @@ if [[ "$FLAT" =~ (^|[[:space:]\;\&\|])git[[:space:]]+add([[:space:]]|$) ]]; then
         echo "$1" | grep -qiE '\.(png|jpe?g|webp|avif|svg|gif|mp4|webm)$'
     }
 
+    # Committed codegen output (gqlgen's graph/generated/generated.go, graphql-
+    # codegen's graphql/generated/operations.ts). It is regenerated from a
+    # schema, is already tracked, and has to land in the same commit as that
+    # schema or the build breaks -- so the size cap only produces a dead end.
+    # Exempts the size check ONLY: the binary-extension check still applies, and
+    # the file must already be tracked, so a new blob cannot arrive under a
+    # generated-looking path.
+    is_tracked_generated_code() {
+      echo "$1" | grep -qE '(^|/)generated/' &&
+        echo "$1" | grep -qiE '\.(go|ts)$' &&
+        git ls-files --error-unmatch "$1" >/dev/null 2>&1
+    }
+
     while IFS= read -r f; do
       [[ -z "$f" ]] && continue
       f="${f%\"}" f="${f#\"}"
@@ -136,7 +149,7 @@ if [[ "$FLAT" =~ (^|[[:space:]\;\&\|])git[[:space:]]+add([[:space:]]|$) ]]; then
         size=$(stat -f%z "$full" 2>/dev/null || stat -c%s "$full" 2>/dev/null || echo 0)
         limit=1048576
         is_web_public_media "$f" && limit=3145728
-        if [[ "$size" -gt "$limit" ]]; then
+        if [[ "$size" -gt "$limit" ]] && ! is_tracked_generated_code "$f"; then
           echo "BLOCKED: file >$((limit / 1048576))MB ($((size / 1024))KB): $f" >&2
           echo "Large files rarely belong in source PRs. Use git-lfs or add to .gitignore." >&2
           exit 2

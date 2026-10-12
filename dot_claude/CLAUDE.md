@@ -4,6 +4,7 @@
 - `sed` is GNU sed. In-place edits are `sed -i 's/x/y/' file` — the BSD form `sed -i '' 's/x/y/' file` fails, because GNU `-i` takes its suffix attached (`-i.bak`) and the empty string gets eaten as the script
 - My interactive shell is fish, but the Bash tool and `!` prompt commands eval in zsh. Write POSIX/zsh syntax there: `&&` not `; and`, `for x in $(cmd); do ...; done` not `... ; end`.
 - Loops, conditionals and multi-command sequences run through `bash -c '...'` (with `set -euo pipefail`). Do not fall back to running the commands one at a time.
+- Never `cd` inside a Bash tool command. A `Read()` deny rule is configured, so any relative path after a `cd` cannot be resolved and triggers a permission prompt that hooks cannot bypass. Use absolute paths, `git -C <dir>`, `npm --prefix <dir>`, or `--file <abs>` flags instead. If a tool truly needs cwd, run it as the only command: `cd /abs/dir && cmd` with no relative file arguments.
 - Use fish syntax only for commands I will run myself in my own shell.
 - Files managed by chezmoi must not be edited directly. Edit source files in the chezmoi source directory (`chezmoi source-path`)
 - Always specify `--context <context>` for kubectl. Check `.buildtools.yaml` or `.envrc` for the expected context. Never rely on the default.
