@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Prune regenerable developer caches. Every step is skipped when its tool is missing.
+set -euo pipefail
+
+STALE_DAYS=30
+SOURCE_DIR="$HOME/source"
+
+has() { command -v "$1" >/dev/null 2>&1; }
+
+step() {
+  local name=$1
+  shift
+  echo "==> $name"
+  "$@" || echo "!! $name failed (exit $?)"
+}
+
+size_of() { du -sh "$@" 2>/dev/null | sort -h || true; }
+
+report() {
+  size_of "$HOME/.cache"/* "$HOME/go/pkg/mod" "$HOME/.npm" "$HOME/.bun" "$(brew --cache 2>/dev/null || echo /nonexistent)"
+}
+
+prune_terraform_providers() {
+  [ -d "$SOURCE_DIR" ] || return 0
+  # Provider binaries are re-downloaded by terraform init; skip dirs touched recently.
+  fd -H -I -t d --prune --full-path -g '**/.terraform/providers' "$SOURCE_DIR" \
+    --changed-before "${STALE_DAYS}d" -X trash
+}
+
+echo "### before"
+report
+
+has go && step "go modcache" go clean -modcache
+has npm && step "npm cache" npm cache clean --force
+has uv && step "uv cache" uv cache prune
+has prek && step "prek cache" prek cache gc
+# pre-commit was replaced by prek; its cache is dead weight once the tool is gone.
+if ! has pre-commit && [ -d "$HOME/.cache/pre-commit" ]; then
+  step "legacy pre-commit cache" trash "$HOME/.cache/pre-commit"
+fi
+# bun pm cache rm refuses to run outside a project, so drop the cache dir directly.
+[ -d "$HOME/.bun/install/cache" ] && step "bun cache" trash "$HOME/.bun/install/cache"
+has brew && step "brew cleanup" brew cleanup --prune="$STALE_DAYS"
+has fd && has trash && step "stale terraform providers" prune_terraform_providers
+
+echo "### after"
+report

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Reload the dev-cache-prune launch agent whenever its plist changes.
+# plist hash: {{ include "Library/LaunchAgents/com.sparetimecoders.dev-cache-prune.plist.tmpl" | sha256sum }}
+set -euo pipefail
+
+label=com.sparetimecoders.dev-cache-prune
+plist="$HOME/Library/LaunchAgents/$label.plist"
+domain="gui/$(id -u)"
+
+launchctl bootout "$domain/$label" 2>/dev/null || true
+launchctl bootstrap "$domain" "$plist"
