@@ -9,9 +9,13 @@ set -gx LANGUAGE en_US.UTF-8
 # https://github.com/fish-shell/fish-shell/blob/da32b6c172dcfe54c9dc4f19e46f35680fc8a91a/share/config.fish#L257-L269
 
 if status is-interactive
-  # Only cd to HOME if not in tmux (to preserve tmux-resurrect working directories)
-  if not set -q TMUX
+  # Only cd to HOME outside a multiplexer, so tmux-resurrect and Rex splits keep their cwd
+  if not set -q TMUX; and not set -q REX_BLOCK
     cd $HOME
+  end
+  # Rex puts its own rex CLI first in PATH; keep it there after conf.d reorders PATH
+  if set -q REX_BIN_DIR
+    fish_add_path --path --prepend --move $REX_BIN_DIR
   end
 end
 
@@ -57,7 +61,8 @@ fish_config theme choose $FISH_THEME
 #
 # Tmux
 #
-status is-interactive; and begin
+# Rex is the multiplexer in Rex terminals; no tmux inside it
+status is-interactive; and not set -q REX_BLOCK; and begin
   set fish_tmux_default_session_name default
   set fish_tmux_autostart_once true
   set fish_tmux_autostart true
