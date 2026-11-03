@@ -27,7 +27,10 @@
 # and the macOS notification; alert-bell fires after this script, so a state
 # written into @bell would be clobbered.
 
-event=$(jq -r '.hook_event_name // empty')
+# One jq call; tab-separated so an empty tool_name stays an empty field
+IFS='	' read -r event tool <<EOF
+$(jq -r '[.hook_event_name // "", .tool_name // ""] | @tsv')
+EOF
 
 # Hooks run without a controlling terminal, so walk up the process tree to
 # the first ancestor that has one: the Claude process itself.
@@ -51,6 +54,14 @@ rex_status() {
     case "$event" in
         UserPromptSubmit | PostToolUse) state='working' ;;
         Notification) state='blocked:kind=permission' ;;
+        # These tools wait on the user without firing a Notification event
+        PreToolUse)
+            case "$tool" in
+                AskUserQuestion) state='blocked:kind=question' ;;
+                ExitPlanMode) state='blocked:kind=permission' ;;
+                *) exit 0 ;;
+            esac
+            ;;
         Stop) state='done' ;;
         StopFailure) state='error' ;;
         *) exit 0 ;;

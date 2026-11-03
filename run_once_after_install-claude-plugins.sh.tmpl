@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# hash: 2026-06-23-v2
+# hash: 2026-11-03-v1
 # Installs user-scoped Claude Code plugins idempotently.
 # chezmoi re-runs this script when the hash comment above changes.
 
@@ -30,11 +30,8 @@ install_plugin() {
 
 # claude-plugins-official is a built-in default marketplace; the rest must be added.
 add_marketplace "goland-claude-marketplace" "JetBrains/go-modern-guidelines"
-add_marketplace "Mixedbread-Grep" "https://github.com/mixedbread-ai/mgrep.git"
 add_marketplace "openai-codex" "openai/codex-plugin-cc"
-add_marketplace "caveman" "juliusbrussee/caveman"
 add_marketplace "worktrunk" "max-sixty/worktrunk"
-add_marketplace "ponytail" "DietrichGebert/ponytail"
 
 install_plugin "frontend-design@claude-plugins-official"
 install_plugin "code-review@claude-plugins-official"
@@ -43,10 +40,7 @@ install_plugin "hookify@claude-plugins-official"
 install_plugin "security-guidance@claude-plugins-official"
 install_plugin "context7@claude-plugins-official"
 install_plugin "modern-go-guidelines@goland-claude-marketplace"
-install_plugin "mgrep@Mixedbread-Grep"
 install_plugin "codex@openai-codex"
-install_plugin "caveman@caveman"
 install_plugin "worktrunk@worktrunk"
-install_plugin "ponytail@ponytail"
 
 echo "Claude Code plugins installed."

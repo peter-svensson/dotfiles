@@ -59,6 +59,17 @@
             "timeout": 15
           }
         ]
+      },
+      {
+        "matcher": "AskUserQuestion|ExitPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/agent-status.sh",
+            "timeout": 5,
+            "async": true
+          }
+        ]
       }
     ],
     "PostToolUse": [
@@ -81,7 +92,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/hooks/tmux-notify.sh",
+            "command": "~/.claude/hooks/agent-status.sh",
             "timeout": 5,
             "async": true
           }
@@ -93,7 +104,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/hooks/tmux-notify.sh",
+            "command": "~/.claude/hooks/agent-status.sh",
             "timeout": 5,
             "async": true
           }
@@ -105,7 +116,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/hooks/tmux-notify.sh",
+            "command": "~/.claude/hooks/agent-status.sh",
             "timeout": 5,
             "async": true
           },
@@ -124,7 +135,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/hooks/tmux-notify.sh",
+            "command": "~/.claude/hooks/agent-status.sh",
             "timeout": 5,
             "async": true
           }
@@ -136,7 +147,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/hooks/tmux-notify.sh",
+            "command": "~/.claude/hooks/agent-status.sh",
             "timeout": 5,
             "async": true
           }
@@ -148,7 +159,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/bin/sh -c 'rex __internal session-start --agent claude --feature-session-naming=false 2>/dev/null || true'",
+            "command": "/bin/sh -c 'rex __internal session-start --agent claude 2>/dev/null || true'",
             "timeout": 5
           }
         ]
