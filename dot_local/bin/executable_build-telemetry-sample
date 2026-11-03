@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Append one machine-load sample to ~/.local/state/build-telemetry/system.jsonl.
+# Run every 15s by the com.sparetimecoders.build-telemetry-sample launch agent.
+# Paired with the agent build log (~/.claude/hooks/build-log.sh) by
+# build-telemetry-report to show whether builds ran on a saturated machine.
+set -euo pipefail
+
+dir="$HOME/.local/state/build-telemetry"
+mkdir -p "$dir"
+
+# top needs two samples: the first is the average since boot.
+cpu=$(top -l 2 -n 0 -s 1 | awk '/CPU usage/ {u=$3; s=$5; i=$7} END {gsub("%","",u); gsub("%","",s); gsub("%","",i); print u, s, i}')
+read -r cpu_user cpu_sys cpu_idle <<<"$cpu"
+
+read -r _ load1 load5 _ <<<"$(sysctl -n vm.loadavg)"
+mem_free=$(memory_pressure | awk -F': ' '/free percentage/ {gsub("%","",$2); print $2}')
+swap_mb=$(sysctl -n vm.swapusage | awk '{gsub("M","",$6); print $6}')
+
+# ponytail: ps %cpu is a decaying average, not instantaneous. Good enough to rank
+# what ate the cores; switch to proc_pid_rusage deltas if that ever misleads.
+procs=$(ps -A -o %cpu=,comm= | awk '
+	{ cpu=$1; $1=""; n=split($0, p, "/"); name=p[n]; sub(/^ +/, "", name); sum[name]+=cpu }
+	END { for (k in sum) if (sum[k] >= 5) printf "%s\t%.1f\n", k, sum[k] }' |
+  sort -t$'\t' -k2 -rn | head -8 |
+  jq -R -s 'split("\n") | map(select(length > 0) | split("\t") | {(.[0]): (.[1] | tonumber)}) | add // {}')
+
+jq -cn \
+  --argjson ts "$(date +%s)" \
+  --argjson ncpu "$(sysctl -n hw.ncpu)" \
+  --argjson load1 "$load1" --argjson load5 "$load5" \
+  --argjson user "$cpu_user" --argjson sys "$cpu_sys" --argjson idle "$cpu_idle" \
+  --argjson mem_free_pct "$mem_free" --argjson swap_mb "$swap_mb" \
+  --argjson procs "$procs" \
+  '{ts: $ts, ncpu: $ncpu, load1: $load1, load5: $load5,
+	  cpu: {user: $user, sys: $sys, idle: $idle},
+	  mem_free_pct: $mem_free_pct, swap_mb: $swap_mb, procs: $procs}' \
+  >>"$dir/system.jsonl"

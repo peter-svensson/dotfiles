@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+# Summarise agent build times and whether they ran on a saturated machine.
+#
+# Usage: build-telemetry-report [days]   (default 7)
+#
+# Reads ~/.local/state/build-telemetry/{builds,system}.jsonl, written by
+# ~/.claude/hooks/build-log.sh and the build-telemetry-sample launch agent.
+set -euo pipefail
+
+days=${1:-7}
+[[ "$days" =~ ^[0-9]+$ ]] || {
+  echo "usage: build-telemetry-report [days]" >&2
+  exit 2
+}
+
+dir="$HOME/.local/state/build-telemetry"
+builds="$dir/builds.jsonl"
+system="$dir/system.jsonl"
+for f in "$builds" "$system"; do
+  [[ -s "$f" ]] || {
+    echo "no data yet: $f" >&2
+    exit 1
+  }
+done
+
+since=$(($(date +%s) - days * 86400))
+
+# A sample is saturated when the CPU is nearly all busy. Load average is not
+# used: macOS counts threads blocked on I/O, so a post-wake Spotlight/Time
+# Machine backlog reads as load 100+ with half the CPU idle.
+jq -rn --argjson since "$since" --argjson days "$days" \
+  --slurpfile b "$builds" --slurpfile s "$system" '
+  def sat: .cpu.idle < 15;
+  def pct(p): sort | .[([(length * p | ceil) - 1, 0] | max)];
+  def mins: . / 60000 | . * 10 | round / 10;
+  def pad(n): tostring | if length < n then . + (" " * (n - length)) else . + " " end;
+  def row(cols): [cols[0] | pad(26)] + (cols[1:] | map(pad(11))) | join("");
+
+  ($s | map(select(.ts >= $since))) as $samples
+  | ($samples | map({key: (.ts / 15 | floor | tostring), value: .}) | from_entries) as $by_bucket
+  | ($b | map(select(.ts_end >= $since and .background == false and .duration_ms != null))
+      | map(. + {ts_start: (.ts_end - .duration_ms / 1000)})) as $runs
+  | ($runs | map(. as $r
+      # ±1 bucket: samples land every ~17s, so a short build can sit in an empty bucket.
+      | [range(($r.ts_start / 15 | floor) - 1; ($r.ts_end / 15 | floor) + 2) | tostring | $by_bucket[.] // empty]
+      | . as $w
+      | $r + {saturated: (($w | length) > 0 and (($w | map(select(sat)) | length) * 2 >= ($w | length)))})) as $tagged
+  | ([$runs[] | [.ts_start, 1], [.ts_end, -1]] | sort
+      | reduce .[] as $e ({cur: 0, max: 0}; .cur += $e[1] | .max = ([.max, .cur] | max)) | .max) as $peak
+
+  | "== Agent builds, last \($days) days (\($runs | length) runs, peak \($peak) concurrent)",
+    row(["class", "runs", "fail", "p50_s", "p95_s", "total_min", "on_saturated_min"]),
+    ($tagged | group_by(.class) | map({
+        class: .[0].class, runs: length,
+        fail: (map(select(.status != "ok")) | length),
+        p50: (map(.duration_ms) | pct(0.5) / 1000 | round),
+        p95: (map(.duration_ms) | pct(0.95) / 1000 | round),
+        total: (map(.duration_ms) | add),
+        sat: (map(select(.saturated) | .duration_ms) | add // 0)})
+      | sort_by(-.total)[]
+      | row([.class, .runs, .fail, .p50, .p95, (.total | mins), (.sat | mins)])),
+    "",
+    "== By repo (minutes)",
+    ($tagged | group_by(.repo) | map({repo: .[0].repo, total: (map(.duration_ms) | add)})
+      | sort_by(-.total) | .[:10][] | row([.repo, (.total | mins)])),
+    "",
+    "== Machine, \($samples | length) samples",
+    "saturated: \(if ($samples | length) > 0 then ($samples | map(select(sat)) | length) * 100 / ($samples | length) | round else 0 end)% of samples",
+    "load1 p50/p95/max: \($samples | map(.load1) | [pct(0.5), pct(0.95), max] | map(. * 10 | round / 10) | join(" / ")) on \($samples[0].ncpu // "?") cores",
+    "min free memory: \($samples | map(.mem_free_pct) | min)%  max swap: \($samples | map(.swap_mb) | max) MB",
+    "",
+    "== Top CPU while saturated (avg % of one core)",
+    ($samples | map(select(sat)) | length) as $nsat
+    | ($samples | map(select(sat) | .procs | to_entries[]) | group_by(.key)
+      | map({name: .[0].key, avg: (map(.value) | add / $nsat | round)})
+      | sort_by(-.avg) | .[:8][] | row([.name, .avg]))
+'

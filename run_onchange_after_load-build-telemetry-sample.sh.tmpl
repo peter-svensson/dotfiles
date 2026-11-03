@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Reload the build-telemetry-sample launch agent whenever its plist changes.
+# plist hash: {{ include "Library/LaunchAgents/com.sparetimecoders.build-telemetry-sample.plist.tmpl" | sha256sum }}
+set -euo pipefail
+
+label=com.sparetimecoders.build-telemetry-sample
+plist="$HOME/Library/LaunchAgents/$label.plist"
+domain="gui/$(id -u)"
+
+launchctl bootout "$domain/$label" 2>/dev/null || true
+launchctl bootstrap "$domain" "$plist"
