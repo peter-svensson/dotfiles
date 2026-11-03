@@ -1,0 +1,63 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Rex for Mac keeps its Settings window choices in the app's defaults domain,
+# not in ~/.config/rex/init.lua. chezmoi re-runs this when a value below or the
+# theme file changes.
+# custom themes hash: {{ include ".chezmoitemplates/rex-custom-themes.json" | sha256sum }}
+#
+# ponytail: these are Rex's private preference keys, not a documented API. If
+# an update renames one, the write is ignored; set it in the UI and update here.
+# Runtime state (window frames, last focused session, seen activity, cached
+# server route, Sparkle bookkeeping) is deliberately left out.
+
+domain=com.superlogical.rex
+
+while read -r key type value; do
+  defaults write "$domain" "$key" "$type" "$value"
+done <<'EOF'
+Workspace.animationStyle                       -string snappy
+Workspace.appIcon                              -string default
+Workspace.cursorShadersEnabled                 -bool   false
+Workspace.darkThemeID                          -string custom-75185F7E-2689-469F-89B4-2257A91F0766
+Workspace.focusFollowsMouse                    -bool   true
+Workspace.inactivePaneFadeMode                 -string both
+Workspace.interfaceStyle                       -string useTheme
+Workspace.lightThemeID                         -string merino-light
+Workspace.paneDensity                          -string compact
+Workspace.shellIconTheme                       -string themedAlt
+Workspace.showsActivePaneBorder                -bool   true
+Workspace.showsPaneHeaders                     -bool   true
+Workspace.sidebarCollapsed                     -bool   false
+Workspace.sidebarShowsActivity                 -bool   false
+Workspace.tabIconColorMode                     -string always
+Workspace.tabIconCount                         -int    1
+Workspace.tabIconTintMode                      -string off
+Workspace.tabStyle                             -string vertical
+Workspace.terminalAllowsLigatures              -bool   true
+Workspace.terminalCopyOnSelect                 -bool   true
+Workspace.terminalCursorStyle                  -string block
+Workspace.terminalCursorStyleForced            -bool   false
+Workspace.terminalCustomSchemeLinks            -string ask
+Workspace.terminalFontName                     -string JetBrainsMonoNL Nerd Font Mono
+Workspace.terminalFontPointSize                -float  12.0
+Workspace.terminalSmoothScrolling              -bool   true
+Workspace.terminalUseThemePalette              -bool   false
+Workspace.tintsPanesWithProgramBackground      -bool   true
+Workspace.usesPaneGlass                        -bool   false
+Workspace.usesStandardInactiveWindowPaneStyles -bool   true
+RexAppUpdateAutomation                         -string install
+rex.agents.names-sessions                      -bool   true
+rex.client.remoteControl                       -bool   true
+rex.developer-mode-enabled                     -bool   true
+rex.server.automatic-restart-enabled           -bool   true
+rex.server.block-plugin-reload-enabled         -bool   false
+rex.server.run-mode                            -string bundled
+EOF
+
+# Rex stores its custom themes as a JSON blob in a data value; darkThemeID
+# above points at the Catppuccin Mocha entry in it.
+themes={{ joinPath .chezmoi.sourceDir ".chezmoitemplates/rex-custom-themes.json" | quote }}
+defaults write "$domain" Workspace.customThemes -data "$(xxd -p "$themes" | tr -d '\n')"
+{{ end -}}
