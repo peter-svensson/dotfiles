@@ -41,4 +41,14 @@ export SCW_CONFIG_PATH=${PWD}/.scw/config.yaml
 # with `denied authentication: API key does not exist`.
 export SCW_PROFILE=dev
 
+# Frostmoln — fm login for the Intersolia tenant. Not chezmoi-managed: fm and the
+# Terraform provider write rotated OIDC tokens back to it. fm reads FM_CONFIG,
+# the Terraform provider FROSTMOLN_CLI_CONFIG.
+export FM_CONFIG=${PWD}/.fm/config.yaml
+export FROSTMOLN_CLI_CONFIG=${FM_CONFIG}
+
 #KUBECONFIG_KEY=142c1281-6019-498d-9a1f-145106181bbe
+
+# Superagent MCP — organization API key, read by the superagent entry in ~/.mcp.json.
+# Rendered at chezmoi apply time: re-apply after changing the key in 1Password.
+export SUPERAGENT_API_KEY={{ onepasswordRead "op://Employee/Superagent API key/credential" | trim }}
